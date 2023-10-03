@@ -3,13 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import { darkTheme } from './theme';
+
+import { PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
+import { msalConfig } from './authConfig';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+export const msalInstance = new PublicClientApplication(msalConfig);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <MsalProvider instance={msalInstance}>
+      <ChakraProvider theme={darkTheme}>
+        <ColorModeScript initialColorMode={darkTheme.config.initialColorMode} />
+        <App />
+      </ChakraProvider>
+    </MsalProvider>
   </React.StrictMode>
 );
 
