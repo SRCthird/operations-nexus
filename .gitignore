@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 /backend/node_modules
+departments.json
+display.json
 /.pnp
 .pnp.js
 
