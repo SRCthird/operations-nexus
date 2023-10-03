@@ -2,6 +2,7 @@
   "name": "operations-nexus",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:5000/",
   "dependencies": {
     "@azure/msal-browser": "^3.1.0",
     "@azure/msal-react": "^2.0.3",
