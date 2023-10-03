@@ -13,6 +13,9 @@
 /backend/static/*
 departments.json
 display.json
+config.ts
+__pycache__/
+test.*
 
 # production
 /build
