@@ -1,12 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import fs from 'fs';
+import * as departments from './src/departments.json';
+import * as displaysJSON from './src/display.json';
 
 const app = express();
 const PORT = 5000;
 const STATIC_DIR = path.join(__dirname, 'static');
 
-type Display = {
+interface Display {
     ID: number;
     Main: string;
     Sub: string;
@@ -46,11 +48,28 @@ app.get('/api/delay', (req: Request, res: Response) => {
 });
 
 app.get('/api/display', (req: Request, res: Response) => {
-    // TODO Impliment displays output
+    let displays: Display[] = displaysJSON;
+    
+    const queryParameters = req.query;
+
+    if ('departments' in queryParameters) {
+        const selectedDepartment = queryParameters['departments'] as string;
+        displays = displays.filter(display => display['Department'] === selectedDepartment);
+    }
+
+    if ('search' in queryParameters) {
+        const searchQuery = (queryParameters['search'] as string).toLowerCase();
+        displays = displays.filter(display => 
+            display['Main'].toLowerCase().includes(searchQuery) ||
+            display['Sub'].toLowerCase().includes(searchQuery) ||
+            display['Department'].toLowerCase().includes(searchQuery) ||
+            display['Display'].toLowerCase().includes(searchQuery)
+        );
+    }
 });
 
 app.get('/api/departments', (req: Request, res: Response) => {
-    // TODO Impliment departments output
+    res.json(departments);
 });
 
 app.listen(PORT, () => {
