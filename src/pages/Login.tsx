@@ -61,14 +61,15 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
     }, [isAuthenticated, handleOAuth, onLogin, navigate]);
 
     /**
-     * Handles the logging in of the user through the form submission.
+     * Handles the logging in of the user through the form submission.\
+     * Not really used in this application, but could be used in the future.
      * 
      * @param {FormEvent<HTMLFormElement>} event - The form submission event.
      */
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (username === 'admin' && password === 'password') {
-            onLogin(true);
+            onLogin(true); // Using admin/password will result in no token being generated. For testing purposes only.
             navigate('/');
         } else {
             alert("You are not permitted to access this page.");
