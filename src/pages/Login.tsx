@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { FormControl, FormLabel, Input, Button, Flex, Box, Heading, Image } from '@chakra-ui/react'
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
-import useOAuth from "../webhooks/useOAuth";
 
 /**
  * The login interface properties.
@@ -30,14 +29,6 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
-    
-    const { authenticate } = useOAuth({
-        getToken: (token: string) => {
-            onTokenReceive(token);
-        }
-    });
-
 
     /**
      * Handles the logging in of the user through Azure OAuth.
@@ -76,7 +67,12 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
      */
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        authenticate(username, password);
+        if (username === 'admin' && password === 'password') {
+            onLogin(true);
+            navigate('/');
+        } else {
+            alert("You are not permitted to access this page.");
+        }
     };
 
     return (
