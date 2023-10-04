@@ -1,4 +1,4 @@
-import {tenantId, clientId, authorityUrl, redirectUri, scopes} from "./Config";
+import { clientId, authorityUrl, redirectUri, scopes} from "./Config";
 import { Configuration, LogLevel  } from "@azure/msal-browser";
 import { msalInstance } from "./index";
 
