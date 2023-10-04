@@ -3,10 +3,16 @@ import path from 'path';
 import fs from 'fs';
 import * as departments from './src/departments.json';
 import * as displaysJSON from './src/display.json';
+import axios from 'axios';
+import { tenantId, clientId, clientSecret } from '../src/Config';
+import bodyParser from 'body-parser';
+import qs from 'qs';
 
 const app = express();
 const PORT = 5000;
 const STATIC_DIR = path.join(__dirname, 'static');
+
+app.use(bodyParser.json());
 
 /**
  * Represents the Display object that will be returned to the client.
@@ -62,6 +68,44 @@ function slides(req: Request, res: Response, location: string): void {
         res.json(imageFiles);
     });
 }
+
+app.post('/api/AzureADUserService', async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+
+
+    try {
+        const tokenResponse = await axios.post(
+            `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, 
+            null,
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                params: {
+                    grant_type: "password",
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                    resource: "https://graph.microsoft.com",
+                    scope: "User.Read",
+                    username,
+                    password,
+                }
+            }
+        );
+        res.json(tokenResponse.data.access_token);
+    } catch (error: any) {
+        console.error('Error:', error);
+        console.error('Error Details:', error.response?.data); // Ensure the response exists
+        res.status(500).send(error);
+    }
+});
+
+// Use the access token to communicate with PowerBI (or other Microsoft Graph endpoints)
+// const result = await axios.get('YOUR_POWERBI_ENDPOINT', {
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//   },
+// });
 
 app.get('/api/MainSlides', (req: Request, res: Response) => {
     slides(req, res, 'main');
