@@ -21,7 +21,7 @@ export interface Departments {
  * @param {string} errpr - The error message recieved from the backend.
  * @param {boolean} isLoading - Whether or not the data is currently being fetched.
  */
-type useDepartments = {
+type typeDepartments = {
   departments: Departments[];
   error: string;
   isLoading: boolean;
@@ -30,9 +30,9 @@ type useDepartments = {
 /**
  * The webhook that fetches the departments from the backend.
  * 
- * @returns {useDepartments} Returns the array of Departments objects, errors and a boolean: isLoading.
+ * @returns {typeDepartments} Returns the array of Departments objects, errors and a boolean: isLoading.
  */
-const useDepartment = (): useDepartments => {
+const useDepartment = (): typeDepartments => {
     const [departments, setDepartment] = useState<Departments[]>([]);
     const [error, setError] = useState('');
     const [isLoading, setLoading]= useState(false);

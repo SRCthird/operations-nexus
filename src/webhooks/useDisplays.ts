@@ -27,7 +27,7 @@ export interface Displays {
  * @param {string} error - The error message recieved from the backend.
  * @param {boolean} isLoading - Whether or not the data is currently being fetched.
  */
-type useDisplays = {
+type typeDisplays = {
   displays: Displays[];
   error: string;
   isLoading: boolean;
@@ -37,9 +37,9 @@ type useDisplays = {
  * The webhook that fetches the displays from the backend.
  * 
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
- * @returns {useDisplays}
+ * @returns {typeDisplays}
  */
-const useDisplay = (displayQuery: DisplayQuery): useDisplays => {
+const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
   const [displays, setDisplay] = useState<Displays[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
  * @param {number} delay - The number of milliseconds to delay.
  * @param {string} delayError - The error message if the delay cannot be retrieved.
  */
-type useDelay = {
+type typeDelay = {
   delay: number;
   delayError: string;
 }
@@ -15,9 +15,9 @@ type useDelay = {
 /**
  * Retrieve the set delay in milliseconds for slides.
  * 
- * @returns {useDelay} The set delay in milliseconds as number and any errors as string.
+ * @returns {typeDelay} The set delay in milliseconds as number and any errors as string.
  */
-const useDelay = (): useDelay => {
+const useDelay = (): typeDelay => {
     const [delay, setDelay] = useState(30000); // Default delay is 30 seconds if error
     const [delayError, setError] = useState('');
 
