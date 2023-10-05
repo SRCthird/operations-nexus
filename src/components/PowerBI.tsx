@@ -56,11 +56,11 @@ const PowerBI = ({ reportId, groupId, customEmbedUrl, pageName, accessToken, tok
           }
       }
       fetchToken();
-  }, [accessToken]);
+  }, []);
 
   // Refreshes the component every hour.
   useEffect(() => {
-    const refreshInterval = 60 * 1000; // every hours
+    const refreshInterval = 60 * 60 * 1000; // every hours
 
     const interval = setInterval(() => {
       if (report) {
