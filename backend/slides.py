@@ -195,8 +195,8 @@ class Slides:
 if __name__ == '__main__':
     def stop():
         try:
-            r = requests.get('http://localhost:3000')
-            return r.status_code == 200
+            r = requests.get('http://localhost:5000')
+            return True
         except Exception as e:
             print(e)
         return False
