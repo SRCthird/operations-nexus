@@ -96,7 +96,7 @@ export const getPowerBIToken = async (): Promise<string|null>  => {
 }
 
 /**
- * Export skopes of the AAD app.
+ * Export scopes of the AAD app.
  */
 export const loginRequest = {
     scopes: scopes
