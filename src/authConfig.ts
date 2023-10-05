@@ -1,5 +1,5 @@
 import { clientId, authorityUrl, redirectUri, scopes} from "./Config";
-import { Configuration, LogLevel  } from "@azure/msal-browser";
+import { Configuration, InteractionRequiredAuthError, LogLevel  } from "@azure/msal-browser";
 import { msalInstance } from "./index";
 
 /**
@@ -74,7 +74,7 @@ export const msalConfig: Configuration = {
  * 
  * @return {Promise<string|null>} - This function returns the access token for the Power BI API.
  */
-export const getPowerBIToken = async (): Promise<string|null>  => {
+export const getPowerBIToken = async (): Promise<string>  => {
     try {
         const account = msalInstance.getAllAccounts()[0];
 
@@ -91,9 +91,48 @@ export const getPowerBIToken = async (): Promise<string|null>  => {
         return response.accessToken;
     } catch (error) {
         console.error("Error obtaining token", error);
-        return null;
+        return "";
     }
 }
+
+/**
+ * 
+ * @returns {Promise<string>} - This function returns the access token for the AAD API.
+ */
+export const refreshAADToken = async (): Promise<string> => {
+    try {
+        const account = msalInstance.getAllAccounts()[0];
+
+        if (!account) {
+            await msalInstance.loginPopup();
+        }
+
+        const response = await msalInstance.acquireTokenSilent({
+            account: msalInstance.getAllAccounts()[0],
+            scopes: loginRequest.scopes,
+        });
+        return response.accessToken;
+    } catch (error) {
+        if (error instanceof InteractionRequiredAuthError) {
+            return msalInstance
+                .acquireTokenPopup(loginRequest)
+                .then((response) => {
+                    if (response && response.accessToken) {
+                        return response.accessToken;
+                    }
+                    return "";
+                })
+                .catch((e) => {
+                    console.error("Login failed:\n", e);
+                    alert("Login failed. Please try again.");
+                    return "";
+                });
+        } else {
+            console.error(error);
+            return "";
+        }
+    }
+};
 
 /**
  * Export scopes of the AAD app.
