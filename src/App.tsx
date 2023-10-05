@@ -5,6 +5,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import ThreeOnTwo from './components/ThreeOnTwo';
+import PowerBI from './components/PowerBI';
+import Slideshow from './components/Slideshow';
+import { reportId, groupId, pageName } from './Config';
 
 /**
  * Renders the application.
@@ -33,6 +37,46 @@ const Pages = (): JSX.Element => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/SSC" element={
+            <ThreeOnTwo
+              title="SSC MOS Board"
+              backgroundColor="#231942"
+              backgroundGradiant="#e0b1cb"
+              information={<Slideshow location='SSC' />}
+              data1={
+                <PowerBI
+                  reportId={reportId[0]}
+                  groupId={groupId[0]}
+                  pageName={pageName[0]}
+                  accessToken={token}
+                />
+              }
+              data2={
+                <PowerBI
+                  reportId={reportId[0]}
+                  groupId={groupId[0]}
+                  pageName={pageName[1]}
+                  accessToken={token}
+                />
+              }
+              data3={
+                <PowerBI
+                  reportId={reportId[0]}
+                  groupId={groupId[0]}
+                  pageName={pageName[2]}
+                  accessToken={token}
+                />
+              }
+              data4={
+                <PowerBI
+                reportId={reportId[0]}
+                groupId={groupId[0]}
+                pageName={pageName[3]}
+                accessToken={token}
+                />
+              }
+            />
+          } />
           <Route path="/login" element={
             <Login
               isLoggedOn={isLoggedOn}
