@@ -1,0 +1,25 @@
+.ThreeOnTwo {
+    margin: 20px;
+}
+
+.ThreeOnTwo .Containers {
+    overflow: hidden;
+    position: relative;
+}
+
+.ThreeOnTwo .Containers .slideshow-container image {
+    width: max-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.ThreeOnTwo .Containers,
+.ThreeOnTwo .Title {
+    background-color: rgba(128, 128, 128, 0.25); 
+    border: solid;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
