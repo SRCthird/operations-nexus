@@ -88,7 +88,7 @@ app.get('/api/delay', (req: Request, res: Response) => {
 });
 
 app.get('/api/display', (req: Request, res: Response) => {
-    let displays: Display[] = displaysJSON;
+    let displays: Display[] = displaysJSON.displays;
     
     const queryParameters = req.query;
 
@@ -106,11 +106,11 @@ app.get('/api/display', (req: Request, res: Response) => {
             display['Display'].toLowerCase().includes(searchQuery)
         );
     }
-    res.json(departments);
+    res.json(displays);
 });
 
 app.get('/api/departments', (req: Request, res: Response) => {
-    res.json(departments);
+    res.json(departments.departments);
 });
 
 app.listen(PORT, () => {
