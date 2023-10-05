@@ -4,14 +4,25 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import 'bootstrap/dist/css/bootstrap.css'
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
+import Home from './pages/Home';
 
-const App = () => {
+/**
+ * Renders the application.
+ * 
+ * @returns {JSX.Element} - Returns the App component.
+ */
+const App = (): JSX.Element => {
   return (
     <Pages />
   );
 }
 
-const Pages = () => {
+/**
+ * Pages routes the application into multiple pages and handles logging and tokens.
+ * 
+ * @returns {JSX.Element} - Returns the page specified by the path.
+ */
+const Pages = (): JSX.Element => {
   const [token, setToken] = useState<string>("");
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
@@ -21,6 +32,7 @@ const Pages = () => {
     return (
       <Router>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={
             <Login
               isLoggedOn={isLoggedOn}
