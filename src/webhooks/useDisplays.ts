@@ -44,17 +44,16 @@ const useDisplay = (displayQuery: DisplayQuery): useDisplays => {
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
-  const requestConfig: AxiosRequestConfig = displayQuery.department?.Department === "All" ? {} : {
-    params: { 
-      departments: displayQuery.department?.Department,
-      search: displayQuery.searchText
-    },
-  };
-
-  const dependencies: any[] = [displayQuery];
-
   useEffect(() => {
     const controller = new AbortController();
+
+    const requestConfig: AxiosRequestConfig = displayQuery.department?.Department === "All" ? {} : {
+      params: { 
+        departments: displayQuery.department?.Department,
+        search: displayQuery.searchText
+      },
+    };
+
     setLoading(true);
 
     console.log("Request config:", requestConfig);
@@ -70,7 +69,7 @@ const useDisplay = (displayQuery: DisplayQuery): useDisplays => {
       });
 
     return () => controller.abort();
-  }, dependencies ? [...dependencies] : []);
+  }, [displayQuery]);
 
   return { displays, error, isLoading };
 }
