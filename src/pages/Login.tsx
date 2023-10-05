@@ -1,7 +1,7 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FormControl, FormLabel, Input, Button, Flex, Box, Heading, Image } from '@chakra-ui/react'
-import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
 
 /**
@@ -24,7 +24,6 @@ interface LoginProps {
  */
 const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
     const { instance } = useMsal();
-    const isAuthenticated = useIsAuthenticated();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -50,15 +49,6 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
                 alert("Login failed. Please try again.");
             });
     };
-
-    // If user is logged in, it has them log in again to generate a new token.
-    useEffect(() => {
-        if (isAuthenticated) {
-            handleOAuth();
-            onLogin(true);
-            navigate('/');
-        }
-    }, [isAuthenticated, handleOAuth, onLogin, navigate]);
 
     /**
      * Handles the logging in of the user through the form submission.\
