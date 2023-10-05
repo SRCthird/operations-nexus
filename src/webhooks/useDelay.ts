@@ -2,11 +2,22 @@ import axios, { CanceledError } from 'axios';
 import { useEffect, useState } from 'react'
 
 /**
+ * The return type of the useDelay webhook.
+ * 
+ * @param {number} delay - The number of milliseconds to delay.
+ * @param {string} delayError - The error message if the delay cannot be retrieved.
+ */
+type useDelay = {
+  delay: number;
+  delayError: string;
+}
+
+/**
  * Retrieve the set delay in milliseconds for slides.
  * 
- * @returns {object} The set delay in milliseconds as number and any errors as string.
+ * @returns {useDelay} The set delay in milliseconds as number and any errors as string.
  */
-const useDelay = (): object => {
+const useDelay = (): useDelay => {
     const [delay, setDelay] = useState(30000); // Default delay is 30 seconds if error
     const [delayError, setError] = useState('');
 
