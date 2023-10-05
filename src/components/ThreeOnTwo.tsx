@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { Grid, GridItem, Text } from '@chakra-ui/react';
-import './ThreeOnTwo.css';
+import '../styles/ThreeOnTwo.css';
 
 /**
  * Properties for the ThreeOnTwo component.
@@ -38,12 +38,12 @@ const ThreeOnTwo = ({ title, backgroundColor, backgroundGradiant, data1, data2, 
         if (backgroundGradiant) {
             document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradiant}`;
         } else {
-            document.body.style.background = backgroundColor
+            document.body.style.background = backgroundColor;
         }
         return () => {
             document.body.style.background = "none";
         };
-    }, []);
+    }, [backgroundColor, backgroundGradiant]);
 
     return (
         <div className="ThreeOnTwo">
