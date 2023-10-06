@@ -15,14 +15,16 @@ Operations Nexus is a meticulously crafted web application, developed utilizing 
 5. More to come!
 ## Tech Stack
 
+The application is built with a variety of modern technologies to ensure efficiency, scalability, and performance.
+
 **Frontend:**
-- React.js
-- TypeScript
+- **React.js**: A JavaScript library for building user interfaces.
+- **TypeScript**: Superset of JavaScript that adds static types, enhancing developer productivity and code predictability.
 
 **Backend:**
-- Node.js
-- TypeScript
-- Python
+- **Node.js**: JavaScript runtime built on Chrome's V8 JavaScript engine, facilitating non-blocking, event-driven architecture.
+- **TypeScript**: For leveraging static typing and object-oriented components.
+- **Python**: Employed for src file monitoring.
 
 ## Getting Started
 
@@ -58,17 +60,17 @@ npm i
 
 ### Configuration
 
-1. Config.ts
-    - Config.ts is the document that hold all of you Azure information. To set this up find [Config.blank.ts](./src/Config.blank.ts) and rename it to Config.ts.
+1. `Config.ts`
+    - `Config.ts` is the document that hold all Azure information. To set this up find [Config.blank.ts](./src/Config.blank.ts) and rename it to `Config.ts`.
     - There you will be able to update any information required.
 
-2. departments.json
-    - departments.json is the document that holds all of the departments, or groups. To set this up find [departments.blank.json](./backend/src/departments.blank.json) and rename it to departments.json.
-    - You will then be able to add and manage new or exsisting departments.
+2. `departments.json`
+    - `departments.json` is the document that holds all of the departments, or groups. To set this up find [departments.blank.json](./backend/src/departments.blank.json) and rename it to `departments.json.`
+    - For the ablility to add and manage new or exsisting departments.
 
-3. display.json
-    - display.json is the document that holds all of the displays for any given department. To set this up find [display.json](./backend/src/display.blank.json) and rename it to display.json.
-    - You will then be able to add and manage new or existing displays connecting them to each department.
+3. `display.json`
+    - `display.json` is the document that holds all of the displays for any given department. To set this up find [display.json](./backend/src/display.blank.json) and rename it to `display.json`.
+    - For the ablility to add and manage new or existing displays connecting them to each department.
 
 ### Running the Application
 
@@ -95,6 +97,8 @@ From the frontend directory use the command:
 ```bash
 npm run test-slides
 ```
+
+test-slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/slides.py).
 
 ### API Endpoints
 
