@@ -20,7 +20,7 @@ interface Props {
   reportId: string,
   groupId: string,
   customEmbedUrl?: string,
-  pageName: string,
+  pageName?: string,
   accessToken: string,
   tokenType?: 0 | 1
 }
