@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models, Report } from 'powerbi-client';
 import { tryRefreshUserPermissions } from './AzureUtils';
-import { getPowerBIToken, refreshAADToken } from "../authConfig";
+import { getPowerBIToken, refreshAADToken } from "./AzureUtils"; 
 import '../styles/PowerBI.css';
 import { msalInstance } from '..';
 
