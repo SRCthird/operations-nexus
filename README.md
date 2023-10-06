@@ -1,46 +1,109 @@
-# Getting Started with Create React App
+# Operations Nexus
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Operations Nexus is a meticulously crafted web application, developed utilizing the robustness of React and the precision of TypeScript, designed to streamline and enhance the visualization of essential data and metrics for operations displays. It establishes a centralized hub that curates, manages, and controls visual displays across multiple screens in a manufacturing setting, ensuring that the right information is consistently presented where it’s most impactful.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+1. Power BI Embedding:
+    - Embed Power BI reports and dashboards directly within the application, offering vivid and *real-time* analytical data to be displayed on the manufacturing floor.
+2. Slideshows:
+    - Create and deploy dynamic slideshows, combining Power Points, images, and more to deliver diversified and engaging content on the floor.
+3. Multi-Screen Management:
+    - Implement logical screen grouping, allowing for the simultaneous control and alteration of displays within specified groups.
+4. Azure OAuth 2.0:
+    - Creates an interactive environment for users based on their current role, and allows seamless access to reports and resources.
+5. More to come!
+## Tech Stack
 
-### `npm start`
+**Frontend:**
+- React.js
+- TypeScript
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Backend:**
+- Node.js
+- TypeScript
+- Python
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js: [Download & Install Node.js](https://nodejs.org/en/download/)
+- Python: [Download & Install Python](https://www.python.org/downloads/)
+- Register your application within [Azure AD](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
 
-### `npm run build`
+### Installation & Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/SRCthird/operations-nexus.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to project directory and Install dependencies for the frontend
 
-### `npm run eject`
+```bash
+cd operations-nexus
+npm i
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Navigate to project directory and Install dependencies for the backend
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd backend
+npm i
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Set up configuration
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Configuration
 
-## Learn More
+1. Config.ts
+    - Config.ts is the document that hold all of you Azure information. To set this up find [Config.blank.ts](./src/Config.blank.ts) and rename it to Config.ts.
+    - There you will be able to update any information required.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. departments.json
+    - departments.json is the document that holds all of the departments, or groups. To set this up find [departments.blank.json](./backend/src/departments.blank.json) and rename it to departments.json.
+    - You will then be able to add and manage new or exsisting departments.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. display.json
+    - display.json is the document that holds all of the displays for any given department. To set this up find [display.json](./backend/src/display.blank.json) and rename it to display.json.
+    - You will then be able to add and manage new or existing displays connecting them to each department.
+
+### Running the Application
+
+**Running the Frontend**
+
+Navigate to the frontend directory and run the following command:
+
+```bash
+npm run test-frontend
+```
+
+**Running the Backend**
+
+From the frontend directory use the command:
+
+```bash
+npm run test-backend
+```
+
+**Running the Slideshow change checker**
+
+From the frontend directory use the command:
+
+```bash
+npm run test-slides
+```
+
+### API Endpoints
+
+**Azure API Endpoint**
+Azure API endpoints refer to the URL patterns that Azure services utilize to provide access to their API functionality. The endpoint that Operations Nexus relies on most is Microsoft Entra ID, or the endpoint for your tenet authority. This allows you to log in with an Azure account and view Power BI components without needing to connect to [Power BI](app.powerbi.com).
+
+**Power BI API Endpoint**
+The Power BI API offers a robust and versatile interface for developers and administrators to interact programmatically with Power BI, a popular business analytics service provided by Microsoft. This application provides easy access to the Power BI API with only a few steps. After you have regestered your application in the Azure Active Directory you will be able to enter the client id and Azure Endpoints for your company.
+
+## License
+
+[License details](./LICENSE)
