@@ -10,7 +10,7 @@ import '../styles/FullDisplay.css';
  * @param {string} backgroundGradiant - The gradient of the background if applicable.
  * @param {ReactNode} child - The child-node displayed in the component.
  */
-interface Props{
+interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradiant?: string;
@@ -20,7 +20,7 @@ interface Props{
 /**
  * The display used for a title card and one large item in the middle of the page.
  * 
- * @param {object} props - The properties of the FullDisplay component. 
+ * @param {object} Props - The properties of the FullDisplay component. 
  * @returns {JSX.Element} - Returns the FullDisplay component.  
  */
 const FullDisplay = ({ title, child, backgroundColor, backgroundGradiant }: Props): JSX.Element => {

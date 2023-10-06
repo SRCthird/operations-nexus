@@ -31,8 +31,6 @@ const Pages = (): JSX.Element => {
   const [token, setToken] = useState<string>("");
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
-  console.log(`Azure Token: ${token}`);
-
   if (isLoggedOn) {
     return (
       <Router>
