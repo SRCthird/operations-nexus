@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-
 import 'bootstrap/dist/css/bootstrap.css'
+
+import { reportId, groupId, pageName } from './Config';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import ThreeOnTwo from './components/ThreeOnTwo';
 import PowerBI from './components/PowerBI';
 import Slideshow from './components/Slideshow';
-import { reportId, groupId, pageName } from './Config';
+import FullDisplay from './components/FullDisplay';
 
 /**
  * Renders the application.
@@ -42,7 +43,7 @@ const Pages = (): JSX.Element => {
               title="SSC MOS Board"
               backgroundColor="#231942"
               backgroundGradiant="#e0b1cb"
-              information={<Slideshow location='SSC' />}
+              information={<Slideshow location='SSC' main={true} />}
               data1={
                 <PowerBI
                   reportId={reportId[0]}
@@ -75,6 +76,14 @@ const Pages = (): JSX.Element => {
                 accessToken={token}
                 />
               }
+            />
+          } />
+          <Route path="/Encapsulation-1" element={
+            <FullDisplay
+              title="Test"
+              backgroundColor="#231942"
+              backgroundGradiant="#e0b1cb"
+              child={<Slideshow main={true}/>}
             />
           } />
           <Route path="/login" element={
