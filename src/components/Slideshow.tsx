@@ -2,6 +2,8 @@ import { useEffect, useState} from 'react';
 import useMainSlides from '../webhooks/useMainSlides';
 import useDelay from '../webhooks/useDelay';
 import useSecondarySlides from '../webhooks/useSecondarySlides';
+import '../styles/Slideshow.css';
+
 /**
  * Properties for the Slideshow component.
  * 
@@ -9,7 +11,7 @@ import useSecondarySlides from '../webhooks/useSecondarySlides';
  * @param {'SSC' | 'Encapsulation'} locations - Location of the folder in the backend.
  */
 interface Props {
-  includeMain?: boolean;
+  main: boolean;
   location?: 'SSC' | 'Encapsulation'
 }
 
@@ -19,7 +21,7 @@ interface Props {
  * @param {object} Props - Properties for the Slideshow component. 
  * @returns {JSX.Element} - Returns the Slideshow component.
  */
-const Slideshow = ({includeMain, location}:Props): JSX.Element => {
+const Slideshow = ({main, location}:Props): JSX.Element => {
   const { mainSlides, slideError } = useMainSlides();
   const { secondarySlides, secondarySlideError } = useSecondarySlides({ location: location });
   const { delay, delayError } = useDelay();
@@ -27,7 +29,7 @@ const Slideshow = ({includeMain, location}:Props): JSX.Element => {
   console.log(secondarySlideError);
 
   // If includeMain is true, then the main slides will be appeded
-  const slides = includeMain
+  const slides = main
     ? [...mainSlides, ...secondarySlides] 
     : secondarySlides;
 

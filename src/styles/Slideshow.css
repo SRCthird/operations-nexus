@@ -1,0 +1,9 @@
+.slideshow-container {
+    width:fit-content;
+    height:fit-content;    
+    overflow:hidden;
+}
+
+.slide {
+    min-width:100%;
+}
