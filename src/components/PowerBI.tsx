@@ -17,12 +17,11 @@ import { msalInstance } from '..';
  * @param {0 | 1} tokenType - The type of the access token. 1 == Embed, 0 == AAD. Default is 0.
  */
 interface Props {
+  type?: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
   reportId: string,
   groupId: string,
   customEmbedUrl?: string,
-  pageName?: string,
-  accessToken: string,
-  tokenType?: 0 | 1
+  pageName?: string
 }
 
 /**
@@ -31,16 +30,44 @@ interface Props {
  * @param {interface} Props - The properties of the Power BI component. 
  * @returns {JSX.Element} - Returns the Power BI component.  
  */
-const PowerBI = ({ reportId, groupId, customEmbedUrl, pageName, accessToken: initialAccessToken, tokenType }: Props): JSX.Element => {
+const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): JSX.Element => {
   const [report, setReport] = useState<Report | null>(null);
-  const [accessToken, setAccessToken] = useState(initialAccessToken);
+  const [accessToken, setAccessToken] = useState("");
   const [powerBIToken, setPowerBIToken] = useState("");
 
   const embedUrl = !customEmbedUrl
     ? `https://app.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${groupId}&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1GLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19`
     : customEmbedUrl;
+  
+  const viewType = type? type: 'report';
 
-  const errorHandler = async (event: any) => {
+  /** Refreshes the access token.*/ 
+  const fetchAADToken = async () => {
+    try {
+        const token = await refreshAADToken();
+        if (token) setAccessToken(token);
+    } catch (error) {
+        console.error('Error getting AAD token:', error);
+    }
+  }
+
+  /** Refreshes the Power BI token.*/ 
+  const fetchPBIToken = async () => {
+      try {
+          const token = await getPowerBIToken();
+          if (token) setPowerBIToken(token);
+      } catch (error) {
+          console.error('Error getting PowerBI token:', error);
+      }
+  }
+
+  /**
+   * Handles the error of the Power BI report.
+   * 
+   * @param {any} event - The event object. 
+   * @returns {Promise<void>} - Returns an asyn void.
+   */
+  const errorHandler = async (event: any): Promise<void> => {
     console.log(event);
     if (event.detail?.message?.includes("401")) {
       const account = msalInstance.getAllAccounts()[0];
@@ -49,42 +76,19 @@ const PowerBI = ({ reportId, groupId, customEmbedUrl, pageName, accessToken: ini
           // If no account found, ask the user to log in
           await msalInstance.loginPopup();
       }
+      fetchAADToken();
       tryRefreshUserPermissions(accessToken);
     }
   };
 
+  // Refresh Power BI token every 50 minutes.
   useEffect(() => {
-      const fetchToken = async () => {
-          try {
-              const token = await getPowerBIToken();
-              if (token) setPowerBIToken(token);
-          } catch (error) {
-              console.error('Error getting PowerBI token:', error);
-          }
-      }
-      fetchToken();
-  }, []);
+    fetchPBIToken();
 
-  // Refresh tokens every 50 minutes.
-  useEffect(() => {
     const refreshInterval = 50 * 60 * 1000;
-  
-    const refreshTokensAndReloadReport = async () => {
-      try {
-        const [powerBiToken, aadToken] = await Promise.all([
-          getPowerBIToken(),
-          refreshAADToken()
-        ]);
-  
-        if (powerBiToken) setPowerBIToken(powerBiToken);
-        if (aadToken) setAccessToken(aadToken);
-      } catch (error) {
-        console.error('Error refreshing tokens: ', error);
-      }
-    };
-  
+
     const interval = setInterval(() => {
-      refreshTokensAndReloadReport();
+      fetchPBIToken();
     }, refreshInterval);
   
     return () => {
@@ -92,12 +96,13 @@ const PowerBI = ({ reportId, groupId, customEmbedUrl, pageName, accessToken: ini
     };
   }, []);
 
-  // Refreshes the component every three hours.
+  // Refreshes the report every hour.
   useEffect(() => {
-    const refreshInterval =  3 * 60 * 60 * 1000;
+    const refreshInterval =  60 * 60 * 1000;
 
     const interval = setInterval(() => {
       if (report) {
+        console.log('Attempting to reload report...');
         report.reload().catch((error) => {
           console.error("Error reloading report:", error);
         });
@@ -112,11 +117,11 @@ const PowerBI = ({ reportId, groupId, customEmbedUrl, pageName, accessToken: ini
   return (
     <PowerBIEmbed
       embedConfig={{
-        type: 'report',
+        type: viewType,
         id: reportId,
         embedUrl: embedUrl,
         accessToken: powerBIToken,
-        tokenType: tokenType === 1 ? models.TokenType.Embed : models.TokenType.Aad,
+        tokenType: models.TokenType.Aad,
         pageName: pageName,
         settings: {
           panes: {
