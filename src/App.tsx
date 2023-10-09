@@ -28,7 +28,7 @@ const App = (): JSX.Element => {
  * @returns {JSX.Element} - Returns the page specified by the path.
  */
 const Pages = (): JSX.Element => {
-  const [token, setToken] = useState<string>("");
+  //const [token, setToken] = useState<string>("");
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
   if (isLoggedOn) {
@@ -47,7 +47,6 @@ const Pages = (): JSX.Element => {
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[0]}
-                  accessToken={token}
                 />
               }
               data2={
@@ -55,7 +54,6 @@ const Pages = (): JSX.Element => {
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[1]}
-                  accessToken={token}
                 />
               }
               data3={
@@ -63,7 +61,6 @@ const Pages = (): JSX.Element => {
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[2]}
-                  accessToken={token}
                 />
               }
               data4={
@@ -71,7 +68,6 @@ const Pages = (): JSX.Element => {
                 reportId={reportId[0]}
                 groupId={groupId[0]}
                 pageName={pageName[3]}
-                accessToken={token}
                 />
               }
             />
@@ -88,7 +84,8 @@ const Pages = (): JSX.Element => {
             <Login
               isLoggedOn={isLoggedOn}
               onLogin={(status) => setIsLoggedOn(status)}
-              onTokenReceive={(receivedToken) => setToken(receivedToken)}
+              onTokenReceive={(receivedToken) => receivedToken ?? console.log("Token recieved")}
+              //onTokenReceive={(receivedToken) => setToken(receivedToken)} 
             />
           } />
           <Route path="/*" element={<NotFound />} />
@@ -103,7 +100,8 @@ const Pages = (): JSX.Element => {
             <Login
               isLoggedOn={isLoggedOn}
               onLogin={(status) => setIsLoggedOn(status)}
-              onTokenReceive={(receivedToken) => setToken(receivedToken)}
+              onTokenReceive={(receivedToken) => receivedToken ?? console.log("Token recieved")}
+              //onTokenReceive={(receivedToken) => setToken(receivedToken)} 
             />
           } />
           <Route path="/*" element={<Navigate to="/login" />} />
