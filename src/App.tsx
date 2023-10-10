@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -22,15 +22,26 @@ const App = (): JSX.Element => {
   );
 }
 
+
+
 /**
  * Pages routes the application into multiple pages and handles logging and tokens.
  * 
  * @returns {JSX.Element} - Returns the page specified by the path.
  */
 const Pages = (): JSX.Element => {
+  const [key, setKey] = useState<number>(0);
   //const [token, setToken] = useState<string>("");
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+        setKey((prevKey: number) => prevKey + 1);  // changing key will re-mount the component
+    }, 60 * 1000); // 60 minutes
+  
+    return () => clearInterval(timer); // cleanup the interval on component unmount
+  }, []);
+  
   if (isLoggedOn) {
     return (
       <Router>
@@ -44,6 +55,8 @@ const Pages = (): JSX.Element => {
               information={<Slideshow location='SSC' main={true} />}
               data1={
                 <PowerBI
+                  key={key}
+                  type={'report'}
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[0]}
@@ -51,6 +64,8 @@ const Pages = (): JSX.Element => {
               }
               data2={
                 <PowerBI
+                  key={key}
+                  type={'report'}
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[1]}
@@ -58,6 +73,8 @@ const Pages = (): JSX.Element => {
               }
               data3={
                 <PowerBI
+                  key={key}
+                  type={'report'}
                   reportId={reportId[0]}
                   groupId={groupId[0]}
                   pageName={pageName[2]}
@@ -65,9 +82,11 @@ const Pages = (): JSX.Element => {
               }
               data4={
                 <PowerBI
-                reportId={reportId[0]}
-                groupId={groupId[0]}
-                pageName={pageName[3]}
+                  key={key}
+                  type={'report'}
+                  reportId={reportId[0]}
+                  groupId={groupId[0]}
+                  pageName={pageName[3]}
                 />
               }
             />
