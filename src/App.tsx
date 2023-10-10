@@ -37,7 +37,7 @@ const Pages = (): JSX.Element => {
   useEffect(() => {
     const timer = setInterval(() => {
         setKey((prevKey: number) => prevKey + 1);  // changing key will re-mount the component
-    }, 60 * 1000); // 60 minutes
+    }, 60 * 60 * 1000); // 60 minutes
   
     return () => clearInterval(timer); // cleanup the interval on component unmount
   }, []);
