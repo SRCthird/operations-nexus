@@ -17,7 +17,7 @@ import { msalInstance } from '..';
  * @param {0 | 1} tokenType - The type of the access token. 1 == Embed, 0 == AAD. Default is 0.
  */
 interface Props {
-  type?: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
+  type: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
   reportId: string,
   groupId: string,
   customEmbedUrl?: string,
@@ -38,8 +38,6 @@ const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): 
   const embedUrl = !customEmbedUrl
     ? `https://app.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${groupId}&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1GLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19`
     : customEmbedUrl;
-  
-  const viewType = type? type: 'report';
 
   /** Refreshes the access token.*/ 
   const fetchAADToken = async () => {
@@ -49,16 +47,6 @@ const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): 
     } catch (error) {
         console.error('Error getting AAD token:', error);
     }
-  }
-
-  /** Refreshes the Power BI token.*/ 
-  const fetchPBIToken = async () => {
-      try {
-          const token = await getPowerBIToken();
-          if (token) setPowerBIToken(token);
-      } catch (error) {
-          console.error('Error getting PowerBI token:', error);
-      }
   }
 
   /**
@@ -79,45 +67,30 @@ const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): 
       fetchAADToken();
       tryRefreshUserPermissions(accessToken);
     }
+    report?.reload();
   };
 
-  // Refresh Power BI token every 50 minutes.
+  // Gets the Power BI token on mount.
   useEffect(() => {
-    fetchPBIToken();
+    /** Refreshes the Power BI token.*/ 
+    const fetchPBIToken = async () => {
+      try {
+          const token = await getPowerBIToken();
+          if (token) setPowerBIToken(token);
+      } catch (error) {
+          console.error('Error getting PowerBI token:', error);
+      }
+    }
 
-    const refreshInterval = 50 * 60 * 1000;
-
-    const interval = setInterval(() => {
-      fetchPBIToken();
-    }, refreshInterval);
-  
     return () => {
-      clearInterval(interval);
+      fetchPBIToken();
     };
   }, []);
-
-  // Refreshes the report every hour.
-  useEffect(() => {
-    const refreshInterval =  60 * 60 * 1000;
-
-    const interval = setInterval(() => {
-      if (report) {
-        console.log('Attempting to reload report...');
-        report.reload().catch((error) => {
-          console.error("Error reloading report:", error);
-        });
-      }
-    }, refreshInterval);
-
-    return () => {
-      clearInterval(interval);
-    }
-  }, [report]);
 
   return (
     <PowerBIEmbed
       embedConfig={{
-        type: viewType,
+        type: type,
         id: reportId,
         embedUrl: embedUrl,
         accessToken: powerBIToken,
