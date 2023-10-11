@@ -22,24 +22,37 @@ const App = (): JSX.Element => {
   );
 }
 
-
-
 /**
  * Pages routes the application into multiple pages and handles logging and tokens.
  * 
  * @returns {JSX.Element} - Returns the page specified by the path.
  */
 const Pages = (): JSX.Element => {
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [key, setKey] = useState<number>(0);
-  //const [token, setToken] = useState<string>("");
+  const [token, setToken] = useState<string>("");
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
+  // Update the time every second
+  useEffect(() => {
+    const timerID = setInterval(() => setCurrentTime(new Date()), 1000);
+    
+    return function cleanup() {
+      clearInterval(timerID);
+    };
+  });
+
+
+  // Use effect to re-mount the component forcing a new token and report.
   useEffect(() => {
     const timer = setInterval(() => {
         setKey((prevKey: number) => prevKey + 1);  // changing key will re-mount the component
+        console.log(`Re-mounting component at ${currentTime.toLocaleTimeString()}`);
     }, 60 * 60 * 1000); // 60 minutes
   
-    return () => clearInterval(timer); // cleanup the interval on component unmount
+    return () => {
+      clearInterval(timer) // cleanup the interval on component unmount
+    }; 
   }, []);
   
   if (isLoggedOn) {
@@ -103,8 +116,7 @@ const Pages = (): JSX.Element => {
             <Login
               isLoggedOn={isLoggedOn}
               onLogin={(status) => setIsLoggedOn(status)}
-              onTokenReceive={(receivedToken) => receivedToken ?? console.log("Token recieved")}
-              //onTokenReceive={(receivedToken) => setToken(receivedToken)} 
+              onTokenReceive={(receivedToken) => setToken(receivedToken)} 
             />
           } />
           <Route path="/*" element={<NotFound />} />
@@ -119,8 +131,7 @@ const Pages = (): JSX.Element => {
             <Login
               isLoggedOn={isLoggedOn}
               onLogin={(status) => setIsLoggedOn(status)}
-              onTokenReceive={(receivedToken) => receivedToken ?? console.log("Token recieved")}
-              //onTokenReceive={(receivedToken) => setToken(receivedToken)} 
+              onTokenReceive={(receivedToken) => setToken(receivedToken)} 
             />
           } />
           <Route path="/*" element={<Navigate to="/login" />} />
