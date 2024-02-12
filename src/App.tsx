@@ -10,6 +10,7 @@ import ThreeOnTwo from './components/ThreeOnTwo';
 import PowerBI from './components/PowerBI';
 import Slideshow from './components/Slideshow';
 import FullDisplay from './components/FullDisplay';
+import OneByThree from './components/OneByThree';
 
 /**
  * Renders the application.
@@ -110,6 +111,13 @@ const Pages = (): JSX.Element => {
                             backgroundColor="#231942"
                             backgroundGradiant="#e0b1cb"
                             child={<Slideshow main={true} />}
+                        />
+                    } />
+                    <Route path="/Encapsulation-2" element={
+                        <OneByThree
+                            title="Test2"
+                            backgroundColor="#231942"
+                            backgroundGradiant="#e0b1cb"
                         />
                     } />
                     <Route path="/login" element={
