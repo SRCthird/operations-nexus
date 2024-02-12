@@ -7,7 +7,7 @@ import '../styles/ThreeOnTwo.css';
  * 
  * @param {string} title - The title of the ThreeOnTwo component.
  * @param {string} backgroundColor - The background color of the component.
- * @param {string} backgroundGradient - The background gradient of the component if applicable.
+ * @param {string} backgroundGradiant - The background gradient of the component if applicable.
  * @param {ReactNode} data1 - The data for the first block.
  * @param {ReactNode} data2 - The data for the second block.
  * @param {ReactNode} data3 - The data for the third block.

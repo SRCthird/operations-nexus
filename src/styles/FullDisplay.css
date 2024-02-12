@@ -5,6 +5,7 @@
 .full-display .Containers {
     overflow: hidden;
     position: relative;
+    height: 80vh;
 }
 
 .full-display .Containers,
