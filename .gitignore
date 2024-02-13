@@ -8,8 +8,9 @@
 
 # testing
 /coverage
-/backend/src/main/*
-/backend/src/ssc
+/backend/src/*
+!/backend/src/display.blank.json
+!/backend/src/departments.blank.json
 /backend/static/*
 departments.json
 display.json

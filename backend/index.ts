@@ -46,12 +46,6 @@ interface Display {
     Background: string;
 };
 
-// Setting static routes
-app.use('/static/main', express.static(path.join(STATIC_DIR, 'main')));
-app.use('/static/ssc', express.static(path.join(STATIC_DIR, 'ssc')));
-app.use('/static', express.static(STATIC_DIR));
-app.use(bodyParser.json());
-
 /**
  * Return the list of PNG converted PowerPoint files in the source location specified by `location`.
  *
@@ -60,26 +54,50 @@ app.use(bodyParser.json());
  * @param {string} location - The name of the subfolder under "static".
  * @returns {void} - This function processes the response but does not return anything.
  */
-function slides(req: Request, res: Response, location: string): void {
+const slides = (req: Request, res: Response, location: string): void => {
     const dir = path.join(STATIC_DIR, location);
-    fs.readdir(dir, (err, files) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to read directory' });
-        }
-        
-        const imageFiles = files.filter(file => file.toLowerCase().endsWith('.png'))
-                                .map(file => path.join(location, file));
-        res.json(imageFiles);
-    });
+    const readDirectory = () => {
+        fs.readdir(dir, (err, files) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to read directory' });
+            }
+
+            const imageFiles = files.filter(file => file.toLowerCase().endsWith('.png'))
+            .map(file => path.join(location, file));
+            res.json(imageFiles);
+        });
+    }
+
+    // Check if the directory exists, if not, create it
+    if (!fs.existsSync(dir)) {
+        fs.mkdir(dir, { recursive: true }, (mkdirErr) => {
+            if (mkdirErr) {
+                return res.status(500).json({ error: 'Failed to create directory' });
+            }
+            // Directory created or exists, now continue with readdir
+            readDirectory();
+        });
+    } else {
+        readDirectory();
+    }
 }
+
+// Setting static routes
+departments.departments.forEach(department => {
+    const departmentPath = department.Department.replace(/\s+/g, '-');
+    app.use(`/static/${departmentPath}`, express.static(path.join(STATIC_DIR, departmentPath)));
+    app.get(`/api/${departmentPath}`, (req: Request, res: Response) => {
+        slides(req, res, departmentPath);
+    });
+});
+app.use('/static/main', express.static(path.join(STATIC_DIR, 'main')));
+app.use('/static', express.static(STATIC_DIR));
+app.use(bodyParser.json());
 
 app.get('/api/MainSlides', (req: Request, res: Response) => {
     slides(req, res, 'main');
 });
 
-app.get('/api/SSC', (req: Request, res: Response) => {
-    slides(req, res, 'ssc');
-});
 
 // TODO: Make a more suitable place to hold the delay option for response
 app.get('/api/delay', (req: Request, res: Response) => {
