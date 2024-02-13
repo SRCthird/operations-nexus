@@ -72,16 +72,16 @@ const Pages = (): JSX.Element => {
                                 <PowerBI
                                     key={key}
                                     type={'report'}
-                                    reportId={reportId[0]}
+                                    reportId={reportId[1]}
                                     groupId={groupId[0]}
-                                    pageName={pageName[0]}
+                                    pageName={pageName[4]}
                                 />
                             }
                             data2={
                                 <PowerBI
                                     key={key}
                                     type={'report'}
-                                    reportId={reportId[0]}
+                                    reportId={reportId[1]}
                                     groupId={groupId[0]}
                                     pageName={pageName[1]}
                                 />
