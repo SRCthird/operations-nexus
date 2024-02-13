@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
 import { ReactNode, useEffect } from "react";
 import '../styles/FullDisplay.css';
+import Title from "./Title";
 
 /**
  * Properties for the FullDisplay component.
@@ -38,14 +39,8 @@ const FullDisplay = ({ title, child, backgroundColor, backgroundGradiant }: Prop
 
     return (
         <div className="full-display">
-            <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-                <GridItem className="Empty" w="100%" h="100px" />
-                <GridItem className="Title" w="100%" h="100px">
-                    <Text className='text-center my-3 title' fontSize={44}>{title}</Text>
-                </GridItem>
-                <GridItem className="Empty" w="100%" h="100px" />
-            </Grid>
-            <Box gap={6} marginTop={6} marginLeft="6%" marginRight="6%" className="Containers">
+            <Title title={title} />
+            <Box gap={6} margin={6} className="Containers">
                 {child}
             </Box>
         </div>
