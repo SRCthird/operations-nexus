@@ -11,24 +11,22 @@ class Slides:
     A class to manage PowerPoint slide files, convert them to PNG, and store them for use in the web app.
     """
 
-    # Constructor
-    def __init__(self):
-        self.locations = []
+    def __init__(self, locations: list=list()):
+        self.locations: list[str] = locations
         self.root = os.path.dirname(os.path.realpath(__file__))
-        self.locationDict = {}
-
-    # Constructor with locations
-    def __init__(self, locations):
-        self.locations = locations
-        self.root = os.path.dirname(os.path.realpath(__file__))
-        self.locationDict = {location: "" for location in self.locations}
+        self.locationDict: dict[str, list[str]] = {location: [] for location in self.locations}
 
     def initializeDict(self):
+        """
+        Initializes the dictionary with the files in the given locations
+
+        :rtype: void
+        """
         if len(self.locations) > 0: # If locations are not empty
             for location in self.locations:
                 self.locationDict[location] = self.getUpdate(location)
     
-    def updateDict(self, location):
+    def updateDict(self, location: str):
         """
         Update the location dictionary.
         
@@ -54,7 +52,7 @@ class Slides:
         """
         return self.locations
     
-    def setLocations(self, locations):
+    def setLocations(self, locations: list[str]):
         """
         Manually add all locations to the locations list.
         
@@ -62,7 +60,7 @@ class Slides:
         """
         self.locations = locations
 
-    def addLocation(self, location):
+    def addLocation(self, location: str):
         """
         Manually add a location to the locations list.
         
@@ -70,7 +68,7 @@ class Slides:
         """
         self.locations.append(location)
 
-    def source(self, location):
+    def source(self, location: str):
         """
         Get the location of a specific sub folder in the "src" folder.
         
@@ -80,7 +78,7 @@ class Slides:
         """
         return os.path.join(self.root, f"src\\{location}")
     
-    def static(self, location):
+    def static(self, location: str):
         """
         Get the location of a specific sub folder in the "static" folder.
         
@@ -90,7 +88,7 @@ class Slides:
         """
         return os.path.join(self.root, f"static\\{location}")
 
-    def checkUpdate(self, previous, current):
+    def checkUpdate(self, previous: list[str] | None, current: list[str]):
         """
         Compairs the values of the previouse listed items in a folder and the current items.
         
@@ -100,7 +98,7 @@ class Slides:
         """
         return (previous == current)
 
-    def getUpdate(self, location):
+    def getUpdate(self, location: str):
         """
         Return the list of PowerPoint files in the source location.
         
@@ -108,10 +106,10 @@ class Slides:
         :return: List of PowerPoint file names.
         :rtype: list
         """
-        path = self.source(location)
+        path: str = self.source(location)
         return [file for file in os.listdir(path) if file.endswith(".pptx")]
     
-    def convertToPNG(self, file, location):
+    def convertToPNG(self, file: str, location: str):
         """
         Convert a PowerPoint file to a PNG file.
         
@@ -132,7 +130,7 @@ class Slides:
         presentation.Close()
         powerpoint.Quit()
 
-    def refreshAll(self, location):
+    def refreshAll(self, location: str):
         """
         Refresh all png files in a specific "static" sub folder, by calling the convertToPNG method.
         
@@ -149,7 +147,7 @@ class Slides:
             self.convertToPNG(file, location)
         print(f"[{datetime.now()}] Files successfuly exported")
 
-    def deleteOld(self, location):
+    def deleteOld(self, location: str):
         """
         Delete all png files in a specific "static" sub folder.
         
@@ -162,7 +160,7 @@ class Slides:
         except Exception as e:
             print(f'Failed to recreate folder {path}. Reason: {e}')
 
-    def check(self, location):
+    def check(self, location: str):
         """
         Check if the contents of a specific "static" sub folder has changed.
         
@@ -195,7 +193,7 @@ class Slides:
 if __name__ == '__main__':
     def stop():
         try:
-            r = requests.get('http://localhost:5000')
+            requests.get('http://localhost:5000')
             return True
         except Exception as e:
             print(e)
