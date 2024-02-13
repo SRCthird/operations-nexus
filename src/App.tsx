@@ -109,16 +109,15 @@ const Pages = (): JSX.Element => {
                     <Route path="/Encapsulation-1" element={
                         <FullDisplay
                             title="Test"
-                            backgroundColor="#231942"
-                            backgroundGradiant="#e0b1cb"
+                            backgroundColor="#005A87"
+                            backgroundGradiant="#FF6B6B"
                             child={<Slideshow main={true} />}
                         />
                     } />
                     <Route path="/Encapsulation-2" element={
                         <OneByThree
                             title="Test2"
-                            backgroundColor="#231942"
-                            backgroundGradiant="#e0b1cb"
+                            backgroundColor="#008080"
                         />
                     } />
                     <Route path="/login" element={

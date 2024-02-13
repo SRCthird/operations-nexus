@@ -12,7 +12,7 @@ import '../styles/Slideshow.css';
  */
 interface Props {
   main: boolean;
-  location?: 'SSC' | 'Encapsulation'
+  location?: string;
 }
 
 /**
