@@ -6,11 +6,12 @@ import { reportId, groupId, pageName } from './Config';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import ThreeOnTwo from './components/ThreeOnTwo';
+import ThreeOnTwo from './pages/ThreeOnTwo';
 import PowerBI from './components/PowerBI';
 import Slideshow from './components/Slideshow';
-import FullDisplay from './components/FullDisplay';
-import OneByThree from './components/OneByThree';
+import FullDisplay from './pages/FullDisplay';
+import OneByThree from './pages/OneByThree';
+import RedirectLogin from './components/RedirectLogin';
 
 /**
  * Renders the application.
@@ -142,7 +143,7 @@ const Pages = (): JSX.Element => {
                             onTokenReceive={(receivedToken) => setToken(receivedToken)}
                         />
                     } />
-                    <Route path="/*" element={<Navigate to="/login" />} />
+                    <Route path="/*" element={<RedirectLogin />} />
                 </Routes>
             </Router>
         );

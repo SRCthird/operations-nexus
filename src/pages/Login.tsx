@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FormControl, FormLabel, Input, Button, Flex, Box, Heading, Image } from '@chakra-ui/react'
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
@@ -28,6 +28,8 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from || '/';
 
     /**
      * Handles the logging in of the user through Azure OAuth.
@@ -40,7 +42,7 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
                     if (response.accessToken) {
                         onTokenReceive(response.accessToken);
                     }
-                    navigate('/');
+                    navigate(from, { replace: true });
                 }
             })
             .catch((e) => {
@@ -52,7 +54,7 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
 
     /**
      * Handles the logging in of the user through the form submission.\
-     * Not really used in this application, but could be used in the future.
+     * Not really used in this application, but was usefull in development.
      * 
      * @param {FormEvent<HTMLFormElement>} event - The form submission event.
      */
@@ -60,7 +62,7 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
         event.preventDefault();
         if (username === 'admin' && password === 'password') {
             onLogin(true); // Using admin/password will result in no token being generated. For testing purposes only.
-            navigate('/');
+            navigate(from, { replace: true });
         } else {
             alert("You are not permitted to access this page.");
         }
