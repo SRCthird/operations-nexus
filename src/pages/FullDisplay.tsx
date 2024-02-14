@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { ReactNode, useEffect } from "react";
 import '../styles/FullDisplay.css';
 import Title from "./Title";

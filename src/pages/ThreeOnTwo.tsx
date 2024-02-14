@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { Grid, GridItem, Text } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import '../styles/ThreeOnTwo.css';
 import Title from './Title';
 
