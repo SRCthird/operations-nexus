@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 
-import { reportId, groupId, pageName } from './Config';
+import { reportId, groupId, pageName, dashboardID } from './Config';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -14,6 +14,7 @@ import OneByThree from './pages/OneByThree';
 import RedirectLogin from './components/RedirectLogin';
 import TwoByTwo from './pages/TwoByTwo';
 import SplitScreen from './pages/SplitScreen';
+import FullWithCircle from './pages/FullWithCircle';
 
 /**
  * Renders the application.
@@ -117,9 +118,18 @@ const Pages = (): JSX.Element => {
                         />
                     } />
                     <Route path="/Encapsulation-2" element={
-                        <SplitScreen
+                        <FullWithCircle
                             title="Test2"
                             backgroundColor="#008080"
+                            mainChild={<Slideshow main={true}/>}
+                            circleChild={
+                                <PowerBI
+                                    key={key}
+                                    type={'dashboard'}
+                                    reportId={dashboardID[0]}
+                                    groupId={groupId[0]}
+                                />
+                            }
                         />
                     } />
                     <Route path="/login" element={
