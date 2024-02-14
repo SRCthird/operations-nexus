@@ -12,6 +12,8 @@ import Slideshow from './components/Slideshow';
 import FullDisplay from './pages/FullDisplay';
 import OneByThree from './pages/OneByThree';
 import RedirectLogin from './components/RedirectLogin';
+import TwoByTwo from './pages/TwoByTwo';
+import SplitScreen from './pages/SplitScreen';
 
 /**
  * Renders the application.
@@ -115,7 +117,7 @@ const Pages = (): JSX.Element => {
                         />
                     } />
                     <Route path="/Encapsulation-2" element={
-                        <OneByThree
+                        <SplitScreen
                             title="Test2"
                             backgroundColor="#008080"
                         />
