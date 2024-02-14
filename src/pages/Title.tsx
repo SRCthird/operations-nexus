@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Grid, GridItem, Text } from '@chakra-ui/react';
 
 interface Props {
