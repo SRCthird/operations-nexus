@@ -1,7 +1,8 @@
-import { ReactNode, useEffect } from 'react';
-import { Grid, GridItem, Text } from '@chakra-ui/react';
+import { ReactNode } from 'react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import '../styles/OneByThree.css';
 import Title from './Title';
+import useBackgroundEffect from '../webhooks/useBackgroundEffect';
 
 /**
  * Properties for the OneByThree component.
@@ -17,7 +18,7 @@ import Title from './Title';
 interface Props {
     title: string;
     backgroundColor: string;
-    backgroundGradiant?: string;
+    backgroundGradient?: string;
     leftPanel?: ReactNode;
     data1?: ReactNode;
     data2?: ReactNode;
@@ -30,19 +31,9 @@ interface Props {
  * @param {interface} Props - The properties of the ThreeOnTwo component.  
  * @returns {JSX.Element} - Returns the ThreeOnTwo component.  
  */
-const OneByThree = ({ title, backgroundColor, backgroundGradiant, leftPanel, data1, data2, data3 }: Props): JSX.Element => {
-
-    // If gradiant is not provided, default to solid background.
-    useEffect(() => {
-        if (backgroundGradiant) {
-            document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradiant}`;
-        } else {
-            document.body.style.background = backgroundColor;
-        }
-        return () => {
-            document.body.style.background = "none";
-        };
-    }, [backgroundColor, backgroundGradiant]);
+const OneByThree = ({ title, backgroundColor, backgroundGradient, leftPanel, data1, data2, data3 }: Props): JSX.Element => {
+    // Use webhook to set background
+    useBackgroundEffect(backgroundColor, backgroundGradient);
 
     return (
         <div className="OneByThree">

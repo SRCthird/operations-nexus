@@ -1,7 +1,8 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
 import '../styles/SplitScreen.css';
 import Title from './Title';
+import useBackgroundEffect from '../webhooks/useBackgroundEffect';
 
 /**
  * Properties for the SplitScreen component.
@@ -27,16 +28,8 @@ interface Props {
  * @returns {JSX.Element} - Returns the SplitScreen component.  
  */
 const SplitScreen = ({ title, backgroundColor, backgroundGradient, leftSection, rightSection }: Props): JSX.Element => {
-    useEffect(() => {
-        if (backgroundGradient) {
-            document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradient}`;
-        } else {
-            document.body.style.background = backgroundColor;
-        }
-        return () => {
-            document.body.style.background = "none";
-        };
-    }, [backgroundColor, backgroundGradient]);
+    // Use webhook to set background colors
+    useBackgroundEffect(backgroundColor, backgroundGradient);
 
     return (
         <div className="SplitScreen">

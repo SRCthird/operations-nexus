@@ -68,7 +68,7 @@ const Pages = (): JSX.Element => {
                         <ThreeOnTwo
                             title="SSC MOS Board"
                             backgroundColor="#231942"
-                            backgroundGradiant="#e0b1cb"
+                            backgroundGradient="#e0b1cb"
                             information={<Slideshow location='SSC' main={true} />}
                             data1={
                                 <PowerBI
@@ -112,7 +112,7 @@ const Pages = (): JSX.Element => {
                         <FullDisplay
                             title="Test"
                             backgroundColor="#005A87"
-                            backgroundGradiant="#FF6B6B"
+                            backgroundGradient="#FF6B6B"
                             child={<Slideshow main={true} />}
                         />
                     } />

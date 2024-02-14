@@ -1,7 +1,8 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
 import '../styles/TwoByTwo.css';
 import Title from './Title';
+import useBackgroundEffect from '../webhooks/useBackgroundEffect';
 
 /**
  * Properties for the TwoByTwo component.
@@ -31,16 +32,8 @@ interface Props {
  * @returns {JSX.Element} - Returns the TwoByTwo component.  
  */
 const TwoByTwo = ({ title, backgroundColor, backgroundGradient, topLeft, topRight, bottomLeft, bottomRight }: Props): JSX.Element => {
-    useEffect(() => {
-        if (backgroundGradient) {
-            document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradient}`;
-        } else {
-            document.body.style.background = backgroundColor;
-        }
-        return () => {
-            document.body.style.background = "none";
-        };
-    }, [backgroundColor, backgroundGradient]);
+    // Use webhook to set background
+    useBackgroundEffect(backgroundColor, backgroundGradient);
 
     return (
         <div className="TwoByTwo">

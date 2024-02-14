@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { ReactNode, useEffect } from "react";
 import '../styles/FullDisplay.css';
+import useBackgroundEffect from "../webhooks/useBackgroundEffect";
 import Title from "./Title";
 
 /**
@@ -8,13 +9,13 @@ import Title from "./Title";
  * 
  * @param {string} title - The title of the FullDisplay component.
  * @param {string} backgroundColor - The color of the background.
- * @param {string} backgroundGradiant - The gradient of the background if applicable.
+ * @param {string} backgroundGradient - The gradient of the background if applicable.
  * @param {ReactNode} child - The child-node displayed in the component.
  */
 interface Props {
     title: string;
     backgroundColor: string;
-    backgroundGradiant?: string;
+    backgroundGradient?: string;
     child: ReactNode;
 }
 
@@ -24,18 +25,9 @@ interface Props {
  * @param {object} Props - The properties of the FullDisplay component. 
  * @returns {JSX.Element} - Returns the FullDisplay component.  
  */
-const FullDisplay = ({ title, child, backgroundColor, backgroundGradiant }: Props): JSX.Element => {
-    // If gradiant is not provided, default to solid background.
-    useEffect(() => {
-        if (backgroundGradiant) {
-            document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradiant}`;
-        } else {
-            document.body.style.background = backgroundColor;
-        }
-        return () => {
-            document.body.style.background = "none";
-        };
-    }, [backgroundColor, backgroundGradiant]);
+const FullDisplay = ({ title, child, backgroundColor, backgroundGradient }: Props): JSX.Element => {
+    // Use webhook to set background colors
+    useBackgroundEffect(backgroundColor, backgroundGradient);
 
     return (
         <div className="full-display">
