@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import '../styles/FullDisplay.css';
 import useBackgroundEffect from "../webhooks/useBackgroundEffect";
 import Title from "./Title";
