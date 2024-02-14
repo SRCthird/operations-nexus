@@ -1,0 +1,36 @@
+.full-with-circle {
+    margin: 20px;
+    padding-right: 2vw;
+}
+
+.full-with-circle .Containers {
+    overflow: hidden;
+    position: relative;
+}
+
+.full-with-circle .Circle {
+    overflow: hidden;
+    position: absolute;
+    bottom: 5vh;
+    left: 5vh;
+    background-color: rgba(128, 128, 128, 0.25); 
+    border: solid;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.full-with-circle .Containers .slideshow-container img {
+    width: max-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.full-with-circle .Containers,
+.full-with-circle .Title {
+    background-color: rgba(128, 128, 128, 0.25); 
+    border: solid;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
