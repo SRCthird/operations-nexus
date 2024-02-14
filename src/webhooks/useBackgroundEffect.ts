@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 
-const useBackgroundEffect = (backgroundColor: string, backgroundGradient: string) => {
+/**
+ * Sets the background based off the given information.
+ *
+ * @param {string} backgroundColor The main color of the background.
+ * @param {string} backgroundGradient The optional gradient color.
+ *
+ * @returns {void}
+ */
+const useBackgroundEffect = (backgroundColor: string, backgroundGradient?: string): void => {
     useEffect(() => {
         if (backgroundGradient) {
             document.body.style.background = `linear-gradient(to right, ${backgroundColor}, ${backgroundGradient})`;
