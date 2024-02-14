@@ -7,6 +7,7 @@
 .pnp.js
 
 # testing
+/src/Pages.tsx
 /coverage
 /backend/src/*
 !/backend/src/display.blank.json
