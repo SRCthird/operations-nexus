@@ -178,8 +178,8 @@ class Slides:
         """
         Run the Slides class on loop until CTL+C is pressed.
         
-        :param should_continue: A function returning a boolean whether to continue the loop. 
-                                Defaults to a function returning True.
+        :param boolFunc: A function returning a boolean whether to continue the loop. 
+                         Defaults to a function returning True.
         """
         try:
             while boolFunc():
