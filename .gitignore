@@ -10,10 +10,6 @@
 /backup.backend/
 /src/Pages.tsx
 /coverage
-/backend/src/*
-!/backend/src/display.blank.json
-!/backend/src/departments.blank.json
-/backend/static/*
 departments.json
 display.json
 config.ts
