@@ -32,9 +32,9 @@
   },
   "scripts": {
     "start": "npm-run-all -p start-db start-backend start-proxy start-frontend",
-    "test-backend": "cd backend && npm run dev",
-    "test-frontend": "react-scripts start",
-    "test-slides": "cd backend && python slides.py",
+    "backend:dev": "cd backend && npm run start:dev",
+    "frontend:dev": "react-scripts start",
+    "slides": "cd backend/src && python slides.py",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -56,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
