@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `departments` ADD COLUMN `PPTXVersion` INTEGER NOT NULL DEFAULT 1;
