@@ -26,3 +26,8 @@ model display {
     Display     String  @unique
     Background  String?
 }
+
+model settings {
+    ID          Int     @id @default(autoincrement())
+    Display     Int     @default(30000)
+}

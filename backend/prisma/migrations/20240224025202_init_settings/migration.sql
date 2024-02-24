@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE `settings` (
+    `ID` INTEGER NOT NULL AUTO_INCREMENT,
+    `Display` INTEGER NOT NULL DEFAULT 30000,
+
+    PRIMARY KEY (`ID`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
