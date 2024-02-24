@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Patch } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +8,15 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('delay')
+  async getDelay(): Promise<number> {
+    return this.appService.getDelay();
+  }
+
+  @Get('delay/:delay')
+  async setDelay(@Param('delay') delay: string): Promise<string> {
+    return this.appService.setDelay(+delay);
   }
 }
