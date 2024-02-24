@@ -1,26 +1,55 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDisplayDto } from './dto/create-display.dto';
-import { UpdateDisplayDto } from './dto/update-display.dto';
+import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class DisplaysService {
-  create(createDisplayDto: CreateDisplayDto) {
-    return 'This action adds a new display';
+
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  async create(createDisplayDto: Prisma.displayCreateInput) {
+    return this.databaseService.display.create({
+      data: createDisplayDto
+    });
   }
 
-  findAll() {
-    return `This action returns all displays`;
+  async findAll(department?: string, search?: string) {
+    let query: any = {};
+
+    if (department) {
+      query.Department = department;
+    }
+
+    if (search) {
+      query.OR = [
+        { ID: { contains: search } },
+        { Main: { contains: search } },
+        { Sub: { contains: search } },
+        { Department: { contains: search } },
+        { Display: { contains: search } },
+        { Background: { contains: search } },
+      ];
+    }
+
+    return this.databaseService.display.findMany({ where: query });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} display`;
+  async findOne(id: number) {
+    return this.databaseService.display.findUnique({ 
+      where: {ID: id} 
+    });
   }
 
-  update(id: number, updateDisplayDto: UpdateDisplayDto) {
-    return `This action updates a #${id} display`;
+  async update(id: number, updateDisplayDto: Prisma.displayUpdateInput) {
+    return this.databaseService.display.update({
+      where: {ID: id},
+      data: updateDisplayDto
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} display`;
+  async remove(id: number) {
+    return this.databaseService.display.delete({ 
+      where: {ID: id} 
+    });
   }
 }

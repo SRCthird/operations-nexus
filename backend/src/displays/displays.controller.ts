@@ -1,20 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DisplaysService } from './displays.service';
-import { CreateDisplayDto } from './dto/create-display.dto';
-import { UpdateDisplayDto } from './dto/update-display.dto';
+import { Prisma } from '@prisma/client';
 
-@Controller('displays')
+@Controller('display')
 export class DisplaysController {
   constructor(private readonly displaysService: DisplaysService) {}
 
   @Post()
-  create(@Body() createDisplayDto: CreateDisplayDto) {
+  create(@Body() createDisplayDto: Prisma.displayCreateInput) {
     return this.displaysService.create(createDisplayDto);
   }
 
   @Get()
-  findAll() {
-    return this.displaysService.findAll();
+  findAll(@Query('departments') department?: string, @Query('search') search?: string) {
+    return this.displaysService.findAll(department, search);
   }
 
   @Get(':id')
@@ -23,7 +22,7 @@ export class DisplaysController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDisplayDto: UpdateDisplayDto) {
+  update(@Param('id') id: string, @Body() updateDisplayDto: Prisma.displayUpdateInput) {
     return this.displaysService.update(+id, updateDisplayDto);
   }
 
