@@ -33,11 +33,14 @@
   "scripts": {
     "start": "npm-run-all -p start-db start-backend start-proxy start-frontend",
     "backend:dev": "cd backend && npm run start:dev",
+    "backend:build": "cd backend && npm run build",
+    "backend:prod": "cd backend && npm run start:prod",
+    "backend:slides": "cd backend/src && python slides.py",
     "frontend:dev": "react-scripts start",
-    "slides": "cd backend/src && python slides.py",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "frontend:build": "react-scripts build",
+    "frontend:prod": "serve -s build",
+    "frontend:test": "react-scripts test",
+    "frontend:eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
