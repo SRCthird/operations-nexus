@@ -29,5 +29,5 @@ model display {
 
 model settings {
     ID          Int     @id @default(autoincrement())
-    Display     Int     @default(30000)
+    Delay     Int     @default(30000)
 }
