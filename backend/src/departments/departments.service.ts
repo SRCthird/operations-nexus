@@ -1,26 +1,76 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/database/database.service';
+
+interface findOneParam {
+  id?: number;
+  name?: string;
+}
+interface updateParam {
+  id?: number;
+  name?: string;
+  updateDepartmentDto: Prisma.departmentsUpdateInput;
+}
 
 @Injectable()
 export class DepartmentsService {
-  create(createDepartmentDto: CreateDepartmentDto) {
-    return 'This action adds a new department';
+
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  async create(createDepartmentDto: Prisma.departmentsCreateInput) {
+    return this.databaseService.departments.create({
+      data: createDepartmentDto
+    });
   }
 
-  findAll() {
-    return `This action returns all departments`;
+  async findAll(search?: string) {
+    let query: any = {};
+
+    if (search) {
+      query.OR = [
+        { ID: {contains: search}},
+        { Main: {contains: search}},
+        { Department: {contains: search}},
+        { Background: {contains: search}}
+      ]
+    }
+
+    return this.databaseService.departments.findMany({
+      where: query
+    }); 
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} department`;
+  async findOne({id, name}: findOneParam) {
+    let conditions: any;
+    if (id !== undefined) {
+      conditions = { ID: id };
+    }
+    if (name !== undefined) {
+      conditions = { Department: name };
+    }
+
+    return this.databaseService.departments.findFirst({
+      where: conditions 
+    });
   }
 
-  update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
-    return `This action updates a #${id} department`;
+  async update({id, name, updateDepartmentDto}: updateParam) {
+    let conditions: any;
+    if (id !== undefined) {
+      conditions = { ID: id };
+    }
+    if (name !== undefined) {
+      conditions = { Department: name };
+    }
+    return this.databaseService.departments.update({
+      where: conditions,
+      data: updateDepartmentDto
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} department`;
+  async remove(id: number) {
+    return this.databaseService.departments.delete({
+      where: {ID: id}
+    });
   }
 }

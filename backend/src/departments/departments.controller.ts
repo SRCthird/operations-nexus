@@ -1,30 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('departments')
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
-  create(@Body() createDepartmentDto: CreateDepartmentDto) {
+  create(@Body() createDepartmentDto: Prisma.departmentsCreateInput) {
     return this.departmentsService.create(createDepartmentDto);
   }
 
   @Get()
-  findAll() {
-    return this.departmentsService.findAll();
+  findAll(@Query('search') search?: string) {
+    return this.departmentsService.findAll(search);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.departmentsService.findOne(+id);
+  @Get(':param')
+  findOne(@Param('param') param: string) {
+    const parsedParam = parseInt(param, 10);
+    if (!isNaN(parsedParam)) {
+      return this.departmentsService.findOne({ id: parsedParam });
+    }
+    return this.departmentsService.findOne({ name: param });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
-    return this.departmentsService.update(+id, updateDepartmentDto);
+  @Patch(':param')
+  update(@Param('param') param: string, @Body() updateDepartmentDto: Prisma.departmentsUpdateInput) {
+    const parsedParam = parseInt(param, 10);
+    if(!isNaN(parsedParam)) {
+      return this.departmentsService.update({
+        id: parsedParam, 
+        updateDepartmentDto: updateDepartmentDto
+      });
+    }
+    return this.departmentsService.update({
+      name: param, 
+      updateDepartmentDto: updateDepartmentDto
+    });
   }
 
   @Delete(':id')
