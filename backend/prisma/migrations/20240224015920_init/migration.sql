@@ -4,6 +4,7 @@ CREATE TABLE `departments` (
     `Main` VARCHAR(191) NOT NULL,
     `Department` VARCHAR(191) NOT NULL,
     `Background` VARCHAR(191) NULL,
+    `PPTXVersion` INTEGER NOT NULL DEFAULT 1,
 
     UNIQUE INDEX `departments_Department_key`(`Department`),
     PRIMARY KEY (`ID`)
