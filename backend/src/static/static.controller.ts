@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Patch, 
+         Param, Delete, UseInterceptors, 
+         UploadedFile, ParseFilePipe, 
+         MaxFileSizeValidator, FileTypeValidator, 
+         Res, 
+         Header} from '@nestjs/common';
 import { StaticService } from './static.service';
-import { CreateStaticDto } from './dto/create-static.dto';
-import { UpdateStaticDto } from './dto/update-static.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 
 @Controller('static')
 export class StaticController {
   constructor(private readonly staticService: StaticService) {}
 
-  @Post()
-  create(@Body() createStaticDto: CreateStaticDto) {
-    return this.staticService.create(createStaticDto);
+  @Post(':location')
+  @UseInterceptors(FileInterceptor('file'))
+  async create(@Param('location') location: string, @UploadedFile(
+    new ParseFilePipe({
+      validators: [
+        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }), // Allow up to 1 GB
+        new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+      ],
+    }),
+  ) file: Express.Multer.File) {
+    return this.staticService.create(location, file);
   }
 
-  @Get()
-  findAll() {
-    return this.staticService.findAll();
+  @Get(':location')
+  async findAll(@Param('location') location?: string) {
+    return this.staticService.findAll(location);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.staticService.findOne(+id);
+  @Get(':location/:name')
+  @Header('Content-Type', 'image')
+  async findOne(@Param('location') location: string, @Param('name') encodedName: string, @Res() res: Response) {
+    const name = decodeURIComponent(encodedName);
+    const filePath = await this.staticService.findOne(location, name);
+    res.sendFile(filePath);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStaticDto: UpdateStaticDto) {
-    return this.staticService.update(+id, updateStaticDto);
+  @Patch(':location/:name')
+  @UseInterceptors(FileInterceptor('file'))
+  async update(@Param('location') location: string, @Param('name') encodedName: string, @UploadedFile(
+    new ParseFilePipe({
+      validators: [
+        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }), // Allow up to 1 GB
+        new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+      ],
+    }),
+  ) file: Express.Multer.File) {
+    const name = decodeURIComponent(encodedName);
+    return this.staticService.update(location, name, file);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.staticService.remove(+id);
+  @Delete(':location/:name')
+  async remove(@Param('location') location: string, @Param('name') name: string) {
+    return this.staticService.remove(location, name);
   }
 }
