@@ -19,10 +19,9 @@ export class DisplaysService {
     if (department) {
       query.Department = department;
     }
-
+    console.log(search);
     if (search) {
       query.OR = [
-        { ID: { contains: search } },
         { Main: { contains: search } },
         { Sub: { contains: search } },
         { Department: { contains: search } },
