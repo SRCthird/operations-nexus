@@ -39,13 +39,22 @@ const Home = (): JSX.Element => {
             }}
         >
             <GridItem area='nav'>
-                <NavBar onSearch={(searchText) => setDisplayQuery({...displayQuery, department: null, searchText})}/>
+                <NavBar onSearch={
+                  (searchText) => {
+                    setDisplayQuery({...displayQuery, department: null, searchText});
+                  }
+                }/>
             </GridItem>
             <Show above='lg'>
                 <GridItem area='aside' paddingTop={5}>
                     <DepartmentList 
                         selectedDepartment={displayQuery.department} 
-                        onSelectDepartment={(department) => setDisplayQuery({ ...displayQuery, department, searchText: ''})}/>
+                        onSelectDepartment={
+                          (department) => {
+                            setDisplayQuery({ ...displayQuery, department, searchText: ''});
+                          }
+                        }
+                      />
                 </GridItem>
             </Show>
             <GridItem area='main'>
