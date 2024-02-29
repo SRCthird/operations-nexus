@@ -20,9 +20,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
-
   const { departments, isLoading } = useDepartments(searchText);
-
   return (
     <>
       <Heading fontSize={'2xl'} paddingLeft={8} marginBottom={3}>Departments</Heading>
@@ -32,7 +30,15 @@ const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: 
           <ListItem key={department.ID}>
             <HStack>
               <Image objectFit='cover' boxSize='32px' borderRadius={8} src={department.Background} />
-              <Button whiteSpace={'normal'} textAlign={'left'} fontWeight={department.Department === selectedDepartment?.Department ? 'bold' : 'noraml'} onClick={() => (onSelectDepartment(department))} fontSize='lg' variant='link' padding={3}>{department.Department}</Button>
+              <Button 
+                whiteSpace={'normal'} 
+                textAlign={'left'} 
+                fontWeight={department.Department === selectedDepartment?.Department ? 'bold' : 'noraml'} 
+                onClick={() => (onSelectDepartment(department))} 
+                fontSize='lg' 
+                variant='link' 
+                padding={3}>{department.Department}
+              </Button>
             </HStack>
           </ListItem>
         ))}
