@@ -39,17 +39,11 @@ const useDepartment = (searchText?: string): typeDepartments => {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const requestConfig: AxiosRequestConfig = searchText ? {} : {
-      params: {
-        search: searchText
-      },
-    };
-
     const controller = new AbortController();
     setLoading(true);
     let url: string;
     searchText ?
-      url = `/api/departments/?search=${searchText}`:
+      url = `/api/departments/?search=${searchText}` :
       url = '/api/departments';
     axios.get(url, { signal: controller.signal })
       .then(response => {

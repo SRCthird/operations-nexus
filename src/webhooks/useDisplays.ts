@@ -10,7 +10,7 @@ import { Departments } from "./useDepartments";
  */
 export interface DisplayQuery {
   department: Departments | null;
-  searchText: string;
+  searchText?: string;
 }
 
 /**
@@ -56,8 +56,6 @@ const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const requestConfig: AxiosRequestConfig = displayQuery.department?.Department === "All" ? {} : {
       params: {
         departments: displayQuery.department?.Department,
@@ -65,6 +63,7 @@ const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
       },
     };
 
+    const controller = new AbortController();
     setLoading(true);
 
     axios.get('/api/display', { signal: controller.signal, ...requestConfig })
