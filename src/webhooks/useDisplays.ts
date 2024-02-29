@@ -9,8 +9,8 @@ import { Departments } from "./useDepartments";
  * @param {string} searchText - The search text entered by the user in SearchInput.tsx.
  */
 export interface DisplayQuery {
-    department: Departments | null;
-    searchText: string;
+  department: Departments | null;
+  searchText: string;
 }
 
 /**
@@ -59,7 +59,7 @@ const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
     const controller = new AbortController();
 
     const requestConfig: AxiosRequestConfig = displayQuery.department?.Department === "All" ? {} : {
-      params: { 
+      params: {
         departments: displayQuery.department?.Department,
         search: displayQuery.searchText
       },
@@ -67,7 +67,6 @@ const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
 
     setLoading(true);
 
-    console.log("Request config:", requestConfig);
     axios.get('/api/display', { signal: controller.signal, ...requestConfig })
       .then(response => {
         setDisplay(response.data);
