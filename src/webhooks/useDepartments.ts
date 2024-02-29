@@ -14,6 +14,7 @@ export interface Departments {
     Main: string;
     Department: string;
     Background: string; 
+    PPTXVersion: number;
 }
 
 /**
