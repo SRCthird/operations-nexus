@@ -1,0 +1,57 @@
+.Admin-Container {
+    width: 100vw;
+    height: 100vh;
+    padding: 16px;
+}
+
+.Admin-Title {
+    border-radius: 10px;
+    background: teal;
+}
+
+.Admin-Body {
+    padding: 10px;
+    overflow-y: hidden;
+}
+
+.Admin-Right {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 84vh;
+}
+
+.Admin-NewRecord {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #8d99ae;
+    height: 44px;
+    padding: 10px;
+}
+
+.Admin-SelectedRecord {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #8d99ae;
+    padding: 15px;
+}
+
+.Admin-SideBar {
+    padding-top: 10px;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 84vh;
+}
+
+.Admin-DepartmentList {
+    overflow-y: auto;
+    height: 70vh;
+}
+
+.Admin-Form {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #8d99ae;
+    padding: 5px;
+}
+
