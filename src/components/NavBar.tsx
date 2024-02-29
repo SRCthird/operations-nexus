@@ -23,7 +23,7 @@ const NavBar = ({ onSearch }:Props): JSX.Element => {
   return (
     <HStack>
         <Image src={Logo} boxSize='80px' margin='10px' marginLeft='30px'/>
-        <SearchInput onSearch={onSearch}/>
+        <SearchInput onSearch={onSearch} />
         <ColorModeSwitch />
     </HStack>
   )
