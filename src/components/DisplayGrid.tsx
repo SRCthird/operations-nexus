@@ -1,8 +1,7 @@
 import { SimpleGrid } from '@chakra-ui/react';
-import useDisplays from '../webhooks/useDisplays';
+import useDisplays, { DisplayQuery } from '../webhooks/useDisplays';
 import DisplayCard from './DisplayCard';
 import SkeletonCard from './SkeletonCard';
-import { DisplayQuery } from '../pages/Home';
 
 /**
  * Properties for the DisplayCard component.

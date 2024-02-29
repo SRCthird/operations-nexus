@@ -1,6 +1,17 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { DisplayQuery } from "../pages/Home";
+import { Departments } from "./useDepartments";
+
+/**
+ * The query object used to specify displays from the backend.
+ * 
+ * @param {Departments | null} department - The selected department.
+ * @param {string} searchText - The search text entered by the user in SearchInput.tsx.
+ */
+export interface DisplayQuery {
+    department: Departments | null;
+    searchText: string;
+}
 
 /**
  * Represents the Display object that will be returned to the client.

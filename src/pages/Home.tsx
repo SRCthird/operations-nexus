@@ -3,19 +3,8 @@ import { Box, Grid, GridItem, Show } from '@chakra-ui/react'
 import NavBar from '../components/NavBar';
 import DisplayGrid from '../components/DisplayGrid';
 import DepartmentList from '../components/DepartmentList';
-import { Departments } from '../webhooks/useDepartments';
 import DisplayHeading from '../components/DisplayHeading';
-
-/**
- * The query object used to specify displays from the backend.
- * 
- * @param {Departments | null} department - The selected department.
- * @param {string} searchText - The search text entered by the user in SearchInput.tsx.
- */
-export interface DisplayQuery {
-    department: Departments | null;
-    searchText: string;
-}
+import { DisplayQuery } from '../webhooks/useDisplays';
 
 /**
  * The home page of the application. Used to select the display.
