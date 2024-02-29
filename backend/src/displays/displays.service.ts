@@ -19,7 +19,6 @@ export class DisplaysService {
     if (department) {
       query.Department = department;
     }
-    console.log(search);
     if (search) {
       query.OR = [
         { Main: { contains: search } },
