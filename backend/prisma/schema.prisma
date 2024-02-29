@@ -11,23 +11,46 @@ datasource db {
 }
 
 model departments {
-    ID          Int     @id @default(autoincrement())
+    ID          Int         @id @default(autoincrement())
     Main        String
-    Department  String  @unique
+    Department  String      @unique
     Background  String?
-    PPTXVersion Int     @default(1)
+    PPTXVersion Int         @default(1)
 }
 
 model display {
-    ID          Int     @id @default(autoincrement())
+    ID          Int         @id @default(autoincrement())
     Main        String
     Sub         String
     Department  String
-    Display     String  @unique
+    Display     String      @unique
     Background  String?
 }
 
 model settings {
-    ID          Int     @id @default(autoincrement())
-    Delay     Int     @default(30000)
+    ID          Int         @id @default(autoincrement())
+    Delay       Int         @default(30000)
+}
+
+model action_tracker {
+    ID          Int         @id @default(autoincrement())
+    Date_Opened DateTime    @db.Date
+    Category    Category
+    Action      String
+    Updates     String?
+    Owner       String
+    Date_Due    DateTime?   @db.Date
+    Status      Status
+    Date_Closed DateTime?   @db.Date
+}
+
+enum Status {
+    Active
+    Closed
+}
+
+enum Category {
+    Downtime
+    Maintenance
+    Output
 }
