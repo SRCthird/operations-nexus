@@ -2,15 +2,6 @@ import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 /**
- * The query object used to specify displays from the backend.
- * 
- * @param {string} searchText - The search text entered by the user in SearchInput.tsx.
- */
-export interface DepartmentQuery {
-  searchText: string;
-}
-
-/**
  * Represents the Department object that will be returned to Home.tsx.
  * 
  * @param {number} ID - The ID of the department.
@@ -42,22 +33,25 @@ type typeDepartments = {
  * 
  * @returns {typeDepartments} Returns the array of Departments objects, errors and a boolean: isLoading.
  */
-const useDepartment = (departmentQuery?: DepartmentQuery): typeDepartments => {
+const useDepartment = (searchText?: string): typeDepartments => {
   const [departments, setDepartment] = useState<Departments[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const requestConfig: AxiosRequestConfig = departmentQuery?.searchText ? {} : {
+    const requestConfig: AxiosRequestConfig = searchText ? {} : {
       params: {
-        search: departmentQuery?.searchText
+        search: searchText
       },
     };
 
     const controller = new AbortController();
     setLoading(true);
-
-    axios.get('/api/departments', { signal: controller.signal, ...requestConfig })
+    let url: string;
+    searchText ?
+      url = `/api/departments/?search=${searchText}`:
+      url = '/api/departments';
+    axios.get(url, { signal: controller.signal })
       .then(response => {
         setDepartment(response.data);
         setLoading(false);
@@ -68,7 +62,7 @@ const useDepartment = (departmentQuery?: DepartmentQuery): typeDepartments => {
         setLoading(false);
       });
     return () => controller.abort();
-  }, [departmentQuery]);
+  }, [searchText]);
 
   return { departments, error, isLoading }
 }

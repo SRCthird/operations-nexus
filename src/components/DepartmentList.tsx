@@ -9,7 +9,8 @@ import useDepartments, { Departments } from "../webhooks/useDepartments";
  */
 interface Props {
   onSelectDepartment: (department: Departments) => void;
-  selectedDepartment: Departments | null
+  selectedDepartment: Departments | null;
+  searchText?: string;
 }
 
 /**
@@ -18,9 +19,9 @@ interface Props {
  * @param {interface} Props - Properties of the Departments List component 
  * @returns {JSX.Element} - Returns the Departments List component 
  */
-const DepartmentList = ({onSelectDepartment, selectedDepartment}: Props): JSX.Element => {
+const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
 
-  const {departments, isLoading} = useDepartments();
+  const { departments, isLoading } = useDepartments(searchText);
 
   return (
     <>
@@ -31,7 +32,7 @@ const DepartmentList = ({onSelectDepartment, selectedDepartment}: Props): JSX.El
           <ListItem key={department.ID}>
             <HStack>
               <Image objectFit='cover' boxSize='32px' borderRadius={8} src={department.Background} />
-                <Button whiteSpace={'normal'} textAlign={'left'} fontWeight={department.Department === selectedDepartment?.Department ? 'bold' : 'noraml'} onClick={ () => (onSelectDepartment(department))} fontSize='lg' variant='link' padding={3}>{department.Department}</Button>
+              <Button whiteSpace={'normal'} textAlign={'left'} fontWeight={department.Department === selectedDepartment?.Department ? 'bold' : 'noraml'} onClick={() => (onSelectDepartment(department))} fontSize='lg' variant='link' padding={3}>{department.Department}</Button>
             </HStack>
           </ListItem>
         ))}
