@@ -28,7 +28,6 @@ export class DepartmentsService {
 
     if (search) {
       query.OR = [
-        { ID: {contains: search}},
         { Main: {contains: search}},
         { Department: {contains: search}},
         { Background: {contains: search}}
