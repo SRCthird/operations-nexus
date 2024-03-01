@@ -61,7 +61,7 @@ const AdminBody = ({ resetForm, onSearch, setEditMode, editMode, handleCreate, h
     setEditMode(false);
     remount();
   }
-
+  
   return (
     <Grid className="Admin-Body"
       templateRows={'1fr'}
