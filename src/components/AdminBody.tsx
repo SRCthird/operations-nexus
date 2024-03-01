@@ -32,6 +32,8 @@ interface Props {
   header: string;
   setEditMode: (toggle: boolean) => void;
   editMode: boolean;
+  toggleSelected: (toggle: boolean) => void;
+  itemSelected: boolean;
   error: string;
   data: any;
   form: ReactNode;
@@ -44,10 +46,9 @@ interface Props {
  * @param {Props} The properties of the Admin Body
  * @returns {JSX.Element} Returns the Admin Body element
  */
-const AdminBody = ({ resetForm, onSearch, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount }: Props): JSX.Element => {
+const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount }: Props): JSX.Element => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const [createMode, setCreateMode] = useState(false);
-  const [itemSelected, setSelected] = useState(false);
   const [SizeSmall, SizeMed, SizeLarge, SizeXL] = useMediaQuery(['(max-width: 600px)', '(max-width: 900px)', '(max-width: 1280px)', '(min-width: 1280px)']);
   const layout = SizeMed ? '1fr' : '30vw 1fr';
 
@@ -79,7 +80,7 @@ const AdminBody = ({ resetForm, onSearch, setEditMode, editMode, handleCreate, h
             <AddIcon boxSize={'25px'} onClick={() => {
               setCreateMode(true);
               resetForm();
-              setSelected(true);
+              toggleSelected(true);
               setEditMode(true);
             }} />
             <Box />
@@ -94,7 +95,12 @@ const AdminBody = ({ resetForm, onSearch, setEditMode, editMode, handleCreate, h
       {(!SizeMed || itemSelected) &&
         <Grid className="Admin-Right" gridTemplateRows={'60px 1fr'} gap={5}>
           <Grid className="Admin-SelectedRecord" templateColumns="repeat(10, 1fr)" gap={0}>
-            {SizeMed && <ArrowLeftIcon boxSize={'25px'} onClick={() => { setSelected(false) }} />}
+            {SizeMed && <ArrowLeftIcon boxSize={'25px'} 
+              onClick={() => {
+                toggleSelected(false);
+                setEditMode(false);
+              }} 
+            />}
             <GridItem colSpan={SizeMed ? 7 : 8}>
               <Heading marginTop={'-6px'} as="h2" size="lg" noOfLines={1}>
                 {header}

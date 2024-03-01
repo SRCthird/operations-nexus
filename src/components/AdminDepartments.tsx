@@ -15,7 +15,7 @@ import DepartmentList from "./DepartmentList";
  */
 const AdminDepartments = (): JSX.Element => {
   const [key, updateKey] = useState(0);
-  const [isSelected, toggleSelected] = useState(false);
+  const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formID, setFormID] = useState(-1);
   const [formMain, setFormMain] = useState("");
@@ -115,6 +115,8 @@ const AdminDepartments = (): JSX.Element => {
         setEditMode(toggle);
       }}
       editMode={editMode}
+      toggleSelected={toggleSelected}
+      itemSelected={itemSelected}
       error={error}
       data={data}
       form={
