@@ -32,7 +32,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "npm-run-all -p start-db start-backend start-proxy start-frontend",
+    "init": "npm i && cd backend && npm i",
+    "start": "npm-run-all -p backend:prod frontend:prod",
+    "start:dev": "npm-run-all -p backend:dev frontend:dev",
     "backend:dev": "cd backend && npm run start:dev",
     "backend:build": "cd backend && npm run build",
     "backend:prod": "cd backend && npm run start:prod",
