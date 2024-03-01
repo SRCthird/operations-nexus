@@ -42,21 +42,14 @@ The application is built with a variety of modern technologies to ensure efficie
 git clone https://github.com/SRCthird/operations-nexus.git
 ```
 
-2. Navigate to project directory and Install dependencies for the frontend
+2. Navigate to project directory and Install dependencies for the frontend and backend
 
 ```bash
 cd operations-nexus
-npm i
+npm run init
 ```
 
-3. Navigate to project directory and Install dependencies for the backend
-
-```bash
-cd backend
-npm i
-```
-
-4. Set up configuration
+3. Set up configuration
 
 ### Configuration
 
@@ -64,13 +57,8 @@ npm i
     - `Config.ts` is the document that hold all Azure information. To set this up find [Config.blank.ts](./src/Config.blank.ts) and rename it to `Config.ts`.
     - There you will be able to update any information required.
 
-2. `departments.json`
-    - `departments.json` is the document that holds all of the departments, or groups. To set this up find [departments.blank.json](./backend/src/departments.blank.json) and rename it to `departments.json.`
-    - For the ablility to add and manage new or exsisting departments.
-
-3. `display.json`
-    - `display.json` is the document that holds all of the displays for any given department. To set this up find [display.json](./backend/src/display.blank.json) and rename it to `display.json`.
-    - For the ablility to add and manage new or existing displays connecting them to each department.
+2. `.env`
+    - `.env` will be created on initialization of Prisma in `/backend`. You will need to add an endpoint to your database.
 
 ### Running the Application
 
@@ -79,7 +67,7 @@ npm i
 Navigate to the frontend directory and run the following command:
 
 ```bash
-npm run test-frontend
+npm run frontend:dev
 ```
 
 **Running the Backend**
@@ -87,7 +75,7 @@ npm run test-frontend
 From the frontend directory use the command:
 
 ```bash
-npm run test-backend
+npm run backend:dev
 ```
 
 **Running the Slideshow change checker**
@@ -95,10 +83,10 @@ npm run test-backend
 From the frontend directory use the command:
 
 ```bash
-npm run test-slides
+npm run slides
 ```
 
-test-slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/slides.py).
+test-slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/src/slides.py).
 
 ### API Endpoints
 
