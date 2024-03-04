@@ -5,8 +5,9 @@
 }
 
 .Admin-Title {
+    margin: 10px;
     border-radius: 10px;
-    background: teal;
+    background: #0077b6;
 }
 
 .Admin-Body {
@@ -15,9 +16,14 @@
 }
 
 .Admin-Right {
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 15px;
     height: 84vh;
+}
+
+.chakra-icon:hover {
+    opacity: .5;
 }
 
 .Admin-NewRecord {
@@ -31,27 +37,35 @@
 .Admin-SelectedRecord {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #8d99ae;
+    background: grey;
     padding: 15px;
 }
 
 .Admin-SideBar {
-    padding-top: 10px;
-    padding-bottom: 0;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 10px 16px 0 16px;
     height: 84vh;
+    border-radius: 15px;
+    border: 10px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, .5);
+    background: grey;
+}
+
+.Admin-SideBar form {
+    border-radius: 20px;
+    color: grey;
+    background: white;
 }
 
 .Admin-DepartmentList {
     overflow-y: auto;
-    height: 70vh;
+    height: 67vh;
 }
 
 .Admin-Form {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #8d99ae;
+    background: grey;
     padding: 5px;
 }
 
