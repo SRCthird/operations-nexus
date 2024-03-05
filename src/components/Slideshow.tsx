@@ -26,7 +26,7 @@ const Slideshow = ({main, location}:Props): JSX.Element => {
   const { secondarySlides, secondarySlideError } = useSecondarySlides({ location: location });
   const { delay, delayError } = useDelay();
   const [slideIndex, setSlideIndex] = useState<number>(0);
-  console.log(secondarySlideError);
+  if (secondarySlideError) console.log(secondarySlideError);
 
   // If includeMain is true, then the main slides will be appeded
   const slides = main
@@ -49,7 +49,7 @@ const Slideshow = ({main, location}:Props): JSX.Element => {
     return () => clearInterval(interval);
   }, [slideIndex, slides.length, delay]);
 
-  console.log({slideError, delayError});
+  if (slideError ?? delayError) console.log({slideError, delayError});
   
   return (
     <div id="slideshow-container">
