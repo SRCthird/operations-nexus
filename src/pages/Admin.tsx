@@ -1,8 +1,9 @@
-import {Box, Grid, Heading, Button,} from "@chakra-ui/react"
+import { Box, Grid, Heading, Button, } from "@chakra-ui/react"
 import { useState } from "react";
 import "../styles/Admin.css"
 import AdminDisplays from "../components/AdminDisplays";
 import AdminDepartments from "../components/AdminDepartments";
+import AdminPowerPoints from "../components/AdminPowerPoints";
 
 /**
  * Properties for the Admin dashboard.
@@ -28,10 +29,11 @@ const Admin = ({ title }: Props): JSX.Element => {
         <Heading as="h1" h="max-content">{title}</Heading>
         <Button alignSelf={'center'} onClick={() => { setDisplay(0) }}> Departments</Button>
         <Button alignSelf={'center'} onClick={() => { setDisplay(1) }}> Displays</Button>
-        <Button alignSelf={'center'} onClick={() => { setDisplay(2) }}> Actions</Button>
+        <Button alignSelf={'center'} onClick={() => { setDisplay(2) }}> SlideShows</Button>
       </Grid>
-      {display === 1 && <AdminDisplays />}
       {display === 0 && <AdminDepartments />}
+      {display === 1 && <AdminDisplays />}
+      {display === 2 && <AdminPowerPoints />}
     </Box>
   )
 }
