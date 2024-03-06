@@ -14,6 +14,8 @@ interface Props {
 
 const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handleDelete, department }: Props) => {
   const { powerPoints, pptxError, isLoading } = usePowerPoints(department);
+  
+  if (pptxError) alert(`Error: ${pptxError}`);
 
   return (
     <Box className="Admin-Form">
@@ -21,22 +23,24 @@ const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handle
         <Input type="file" accept=".pptx" onChange={handleFileChange} />
         <AddIcon boxSize={'34px'} onClick={handleUpload} />
       </Grid>
-      {isLoading && 
+      {isLoading &&
         <Box paddingLeft={'40%'} paddingTop={'10vh'}>
-          <Spinner padding={'20%'} boxSize={'50px'}/>
+          <Spinner padding={'20%'} boxSize={'50px'} />
         </Box>
       }
       {powerPoints.map(powerPoint => {
-        return (<PowerPointListItem
-          key={powerPoint.length}
-          title={powerPoint}
-          onDownload={() => {
-            handleDownload(powerPoint);
-          }}
-          onDelete={() => {
-            handleDelete(powerPoint);
-          }}
-        />)
+        return (
+          <PowerPointListItem
+            key={powerPoint.length}
+            title={powerPoint}
+            onDownload={() => {
+              handleDownload(powerPoint);
+            }}
+            onDelete={() => {
+              handleDelete(powerPoint);
+            }}
+          />
+        )
       })}
     </Box>
   )
