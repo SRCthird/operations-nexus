@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Grid, Input } from "@chakra-ui/react";
+import { Box, Grid, Input, Spinner } from "@chakra-ui/react";
 import usePowerPoints from "../webhooks/usePowerPoints";
 import PowerPointListItem from "./PowerPointListItem";
 
@@ -21,6 +21,11 @@ const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handle
         <Input type="file" accept=".pptx" onChange={handleFileChange} />
         <AddIcon boxSize={'34px'} onClick={handleUpload} />
       </Grid>
+      {isLoading && 
+        <Box paddingLeft={'40%'} paddingTop={'10vh'}>
+          <Spinner padding={'20%'} boxSize={'50px'}/>
+        </Box>
+      }
       {powerPoints.map(powerPoint => {
         return (<PowerPointListItem
           key={powerPoint.length}

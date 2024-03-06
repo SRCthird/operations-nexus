@@ -113,6 +113,7 @@ const AdminPowerPoints = (): JSX.Element => {
             (department) => {
               setDepartment(department.Department);
               toggleSelected(true);
+              remount();
             }
           }
         />
