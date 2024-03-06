@@ -25,10 +25,10 @@ import DeleteConfirmation from "../components/DeleteConfirmation";
 interface Props {
   resetForm: () => void;
   onSearch: (searchText: string) => void;
-  handleCreate: (Data: any) => void;
+  handleCreate: (Data: any, location?: string) => void;
   handleRead: ReactNode;
-  handleUpdate: (Data: any) => void;
-  handleDelete: (ID: number) => void;
+  handleUpdate: (Data: any, location?: string) => void;
+  handleDelete: (ID: string, location?: string) => void;
   header: string;
   setEditMode: (toggle: boolean) => void;
   editMode: boolean;
@@ -38,6 +38,7 @@ interface Props {
   data: any;
   form: ReactNode;
   remount: () => void;
+  hideAffects?: boolean;
 }
 
 /**
@@ -46,7 +47,7 @@ interface Props {
  * @param {Props} The properties of the Admin Body
  * @returns {JSX.Element} Returns the Admin Body element
  */
-const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount }: Props): JSX.Element => {
+const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const [createMode, setCreateMode] = useState(false);
   const [SizeSmall, SizeMed, SizeLarge, SizeXL] = useMediaQuery(['(max-width: 600px)', '(max-width: 900px)', '(max-width: 1280px)', '(min-width: 1280px)']);
@@ -62,7 +63,7 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
     setEditMode(false);
     remount();
   }
-  
+
   return (
     <Grid className="Admin-Body"
       templateRows={'1fr'}
@@ -77,12 +78,15 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
             }}
           />
           <Grid className="Admin-NewRecord" gridTemplateColumns={'34px 1fr 34px'}>
-            <AddIcon boxSize={'25px'} onClick={() => {
-              setCreateMode(true);
-              resetForm();
-              toggleSelected(true);
-              setEditMode(true);
-            }} />
+            <AddIcon
+              visibility={hideAffects ? 'hidden' : 'visible'}
+              boxSize={'25px'} 
+              onClick={() => {
+                setCreateMode(true);
+                resetForm();
+                toggleSelected(true);
+                setEditMode(true);
+              }} />
             <Box />
             <RepeatIcon boxSize={'25px'} onClick={() => remount()} />
           </Grid>
@@ -95,11 +99,11 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
       {(!SizeMed || itemSelected) &&
         <Grid className="Admin-Right" gridTemplateRows={'60px 1fr'} gap={5}>
           <Grid className="Admin-SelectedRecord" templateColumns="repeat(10, 1fr)" gap={0}>
-            {SizeMed && <ArrowLeftIcon boxSize={'25px'} 
+            {SizeMed && <ArrowLeftIcon boxSize={'25px'}
               onClick={() => {
                 toggleSelected(false);
                 setEditMode(false);
-              }} 
+              }}
             />}
             <GridItem colSpan={SizeMed ? 7 : 8}>
               <Heading marginTop={'-6px'} as="h2" size="lg" noOfLines={1}>
@@ -110,11 +114,13 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
               <>
                 <CheckIcon
                   boxSize={'25px'}
+                  visibility={hideAffects ? 'hidden' : 'visible'}
                   onClick={() => { handleCheck(data); }}
                   justifySelf="end"
                 />
                 <CloseIcon
                   boxSize={'25px'}
+                  visibility={hideAffects ? 'hidden' : 'visible'}
                   onClick={() => {
                     setEditMode(false);
                     setCreateMode(false);
@@ -125,6 +131,7 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
               <>
                 <EditIcon
                   boxSize={'25px'}
+                  visibility={hideAffects ? 'hidden' : 'visible'}
                   onClick={() => {
                     setEditMode(true);
                     setCreateMode(false);
@@ -133,6 +140,7 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
                 />
                 <DeleteIcon
                   boxSize={'25px'}
+                  visibility={hideAffects ? 'hidden' : 'visible'}
                   onClick={onToggle}
                   justifySelf="end"
                 />
