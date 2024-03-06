@@ -31,7 +31,6 @@ const AdminDepartments = (): JSX.Element => {
   });
 
   const handleCreate = (Data: Departments) => {
-    console.log(Data);
     const { ID: _, ...newData } = Data;
     const controller = new AbortController();
     axios.post(`/api/departments`, newData)
@@ -43,7 +42,6 @@ const AdminDepartments = (): JSX.Element => {
   }
 
   const handleUpdate = (Data: Departments) => {
-    console.log(Data);
     if (Data.ID === -1) return;
     const controller = new AbortController();
     axios.patch(`/api/departments/${Data.ID}`, Data)
@@ -54,8 +52,8 @@ const AdminDepartments = (): JSX.Element => {
     return () => controller.abort();
   }
 
-  const handleDelete = (ID: number) => {
-    if (ID === -1) return;
+  const handleDelete = (ID: string) => {
+    if (+ID === -1) return;
     const controller = new AbortController();
     axios.delete(`/api/departments/${ID}`)
       .catch(err => {
