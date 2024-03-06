@@ -31,7 +31,6 @@ const AdminDisplays = () => {
   });
 
   const handleCreate = (Data: Displays) => {
-    console.log(Data);
     const { ID: _, ...newData } = Data;
     const controller = new AbortController();
     axios.post(`/api/display`, newData)
@@ -43,7 +42,6 @@ const AdminDisplays = () => {
   }
 
   const handleUpdate = (Data: Displays) => {
-    console.log(Data);
     if (Data.ID === -1) return;
     const controller = new AbortController();
     axios.patch(`/api/display/${Data.ID}`, Data)
@@ -54,8 +52,8 @@ const AdminDisplays = () => {
     return () => controller.abort();
   }
 
-  const handleDelete = (ID: number) => {
-    if (ID === -1) return;
+  const handleDelete = (ID: string) => {
+    if (+ID === -1) return;
     const controller = new AbortController();
     axios.delete(`/api/display/${ID}`)
       .catch(err => {
