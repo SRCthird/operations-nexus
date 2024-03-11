@@ -15,8 +15,6 @@ interface Props {
 const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handleDelete, department }: Props) => {
   const { powerPoints, pptxError, isLoading } = usePowerPoints(department);
   
-  if (pptxError) alert(`Error: ${pptxError}`);
-
   return (
     <Box className="Admin-Form">
       <Grid templateColumns={'1fr 34px'} padding={'15px'} gap={'16px'}>

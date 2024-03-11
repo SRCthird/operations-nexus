@@ -56,7 +56,9 @@ const AdminPowerPoints = (): JSX.Element => {
   const handleCreate = (_: any) => { };
 
   const handleDownload = (filename: string) => {
-    axios.get(`/api/powerpoint/${filename}`, {
+    const [location, name] = filename.split("\\");
+    const encodedName = encodeURIComponent(name);
+    axios.get(`/api/powerpoint/${location}/${encodedName}`, {
       responseType: 'blob',
       signal: new AbortController().signal
     })
@@ -80,8 +82,10 @@ const AdminPowerPoints = (): JSX.Element => {
   const handleUpdate = (_: any) => { };
 
   const handleDelete = (filename: string) => {
+    const [location, name] = filename.split("\\");
+    const encodedName = encodeURIComponent(name);
     const controller = new AbortController();
-    axios.delete(`/api/powerpoint/${filename}`)
+    axios.delete(`/api/powerpoint/${location}/${encodedName}`)
       .then(_ => {
         remount()
       })
