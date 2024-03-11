@@ -16,7 +16,7 @@ export class PowerpointController {
   async create(@Param('location') location: string, @UploadedFile(
     new ParseFilePipe({
       validators: [
-        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }), // Allow up to 1 GB
+        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }),
         new FileTypeValidator({ fileType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }),
       ],
     }),
@@ -30,8 +30,7 @@ export class PowerpointController {
   }
 
   @Get(':location/:name')
-  async findOne(@Param('location') location: string, @Param('name') encodedName: string, @Res() res: Response) {
-    const name = decodeURIComponent(encodedName);
+  async findOne(@Param('location') location: string, @Param('name') name: string, @Res() res: Response) {
     const filePath = await this.powerpointService.findOne(location, name);
     res.setHeader('Content-Disposition', `attachment; filename="${name}"`);
     res.sendFile(filePath);
@@ -39,15 +38,14 @@ export class PowerpointController {
 
   @Patch(':location/:name')
   @UseInterceptors(FileInterceptor('file'))
-  async update(@Param('location') location: string, @Param('name') encodedName: string, @UploadedFile(
+  async update(@Param('location') location: string, @Param('name') name: string, @UploadedFile(
     new ParseFilePipe({
       validators: [
-        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }), // Allow up to 1 GB
+        new MaxFileSizeValidator({ maxSize: 1_073_741_824 }),
         new FileTypeValidator({ fileType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' }),
       ],
     }),
   ) file: Express.Multer.File) {
-    const name = decodeURIComponent(encodedName);
     return this.powerpointService.update(location, name, file);
   }
 
