@@ -14,7 +14,6 @@ import { msalInstance } from '..';
  * @param {string} customEmbedUrl - The URL of the Power BI custom embed is necessary.
  * @param {string} pageName - The name of the page in the Power BI report.
  * @param {string} accessToken - The access token provided on login request.
- * @param {0 | 1} tokenType - The type of the access token. 1 == Embed, 0 == AAD. Default is 0.
  */
 interface Props {
   type: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
