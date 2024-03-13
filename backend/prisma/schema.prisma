@@ -96,8 +96,8 @@ enum PowerBI {
 model App_PowerBI {
     ID              Int                 @id @default(autoincrement())
     Type            String
-    PowerBI_ID      Int
-    Group_ID        Int
+    PowerBI_ID      String
+    Group_ID        String
     Custom_Embed    String?
     Page_Name       String?
 }
