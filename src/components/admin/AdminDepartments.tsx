@@ -1,39 +1,37 @@
-import { AddIcon, ArrowLeftIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, RepeatIcon } from "@chakra-ui/icons";
-import {
-  Box, FormControl, Grid, GridItem, Heading, Icon, FormLabel, Input, useMediaQuery, FormHelperText, useDisclosure, Button,
-} from "@chakra-ui/react"
+import {FormControl, FormLabel, Input, FormHelperText} from "@chakra-ui/react"
 import { useState } from "react";
-import DisplayList from "../components/DisplayList";
-import SearchInput from "../components/SearchInput";
-import "../styles/Admin.css"
+import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import axios, { CanceledError } from "axios";
-import DeleteConfirmation from "../components/DeleteConfirmation";
-import { DisplayQuery, Displays } from "../webhooks/useDisplays";
+import { DisplayQuery } from "@src/webhooks/useDisplays";
+import { Departments } from "@src/webhooks/useDepartments";
 import AdminBody from "./AdminBody";
+import DepartmentList from "@src/components/DepartmentList";
 
-const AdminDisplays = () => {
+/**
+ * Admin view of the Departments table
+ *
+ * @returns {JSX.Element} - returns the AdminDepartments element
+ */
+const AdminDepartments = (): JSX.Element => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formID, setFormID] = useState(-1);
   const [formMain, setFormMain] = useState("");
-  const [formSub, setFormSub] = useState("");
   const [formDepartment, setFormDepartment] = useState("");
-  const [formDisplay, setFormDisplay] = useState("");
   const [formBackground, setFormBackground] = useState("");
+  const [formPPTXVersion, setFormPPTXVersion] = useState(0);
   const [error, setError] = useState('');
-  const [SizeSmall, SizeMed, SizeLarge, SizeXL] = useMediaQuery(['(max-width: 600px)', '(max-width: 900px)', '(max-width: 1280px)', '(min-width: 1280px)']);
-  const layout = SizeMed ? '1fr' : '30vw 1fr';
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
     department: null,
     searchText: ''
   });
 
-  const handleCreate = (Data: Displays) => {
+  const handleCreate = (Data: Departments) => {
     const { ID: _, ...newData } = Data;
     const controller = new AbortController();
-    axios.post(`/api/display`, newData)
+    axios.post(`/api/departments`, newData)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -41,10 +39,10 @@ const AdminDisplays = () => {
     return () => controller.abort();
   }
 
-  const handleUpdate = (Data: Displays) => {
+  const handleUpdate = (Data: Departments) => {
     if (Data.ID === -1) return;
     const controller = new AbortController();
-    axios.patch(`/api/display/${Data.ID}`, Data)
+    axios.patch(`/api/departments/${Data.ID}`, Data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -55,7 +53,7 @@ const AdminDisplays = () => {
   const handleDelete = (ID: string) => {
     if (+ID === -1) return;
     const controller = new AbortController();
-    axios.delete(`/api/display/${ID}`)
+    axios.delete(`/api/departments/${ID}`)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -64,22 +62,20 @@ const AdminDisplays = () => {
     return () => controller.abort();
   }
 
-  const data = {
+  const data: Departments = {
     ID: formID,
     Main: formMain,
-    Sub: formSub,
     Department: formDepartment,
-    Display: formDisplay,
     Background: formBackground,
+    PPTXVersion: formPPTXVersion
   }
 
   const resetForm = () => {
     setFormID(-1);
     setFormMain("");
-    setFormSub("");
     setFormDepartment("");
-    setFormDisplay("");
     setFormBackground("");
+    setFormPPTXVersion(0);
   }
 
   const remount = () => updateKey(key + 1);
@@ -92,18 +88,17 @@ const AdminDisplays = () => {
       }}
       handleCreate={handleCreate}
       handleRead={
-        <DisplayList
+        <DepartmentList
           key={key}
           searchText={displayQuery.searchText}
-          selectedDisplay={displayQuery.department}
-          onSelectDisplay={
-            (display) => {
-              setFormID(display.ID);
-              setFormMain(display.Main);
-              setFormSub(display.Sub);
-              setFormDepartment(display.Department);
-              setFormDisplay(display.Display);
-              setFormBackground(display.Background);
+          selectedDepartment={displayQuery.department}
+          onSelectDepartment={
+            (department) => {
+              setFormID(department.ID);
+              setFormMain(department.Main);
+              setFormDepartment(department.Department);
+              setFormBackground(department.Background);
+              setFormPPTXVersion(department.PPTXVersion);
               toggleSelected(true);
             }
           }
@@ -111,7 +106,7 @@ const AdminDisplays = () => {
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={formDisplay || "Select a display"}
+      header={formDepartment || "Select a display"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -136,15 +131,6 @@ const AdminDisplays = () => {
             <FormHelperText>The main branch this display is under.</FormHelperText>
           </FormControl>
           <FormControl isDisabled={!editMode}>
-            <FormLabel>Sub</FormLabel>
-            <Input value={formSub}
-              onChange={(value) => {
-                setFormSub(value.target.value);
-              }}
-            />
-            <FormHelperText>The sub-department this display is under.</FormHelperText>
-          </FormControl>
-          <FormControl isDisabled={!editMode}>
             <FormLabel>Department</FormLabel>
             <Input value={formDepartment}
               onChange={(value) => {
@@ -152,15 +138,6 @@ const AdminDisplays = () => {
               }}
             />
             <FormHelperText>The name of the area where this display will be used.</FormHelperText>
-          </FormControl>
-          <FormControl isDisabled={!editMode}>
-            <FormLabel>Display</FormLabel>
-            <Input value={formDisplay}
-              onChange={(value) => {
-                setFormDisplay(value.target.value);
-              }}
-            />
-            <FormHelperText>The name of the display.</FormHelperText>
           </FormControl>
           <FormControl isDisabled={!editMode}>
             <FormLabel>Background</FormLabel>
@@ -179,4 +156,4 @@ const AdminDisplays = () => {
 
 }
 
-export default AdminDisplays
+export default AdminDepartments

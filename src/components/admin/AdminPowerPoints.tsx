@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import "../styles/Admin.css"
+import { useState } from "react";
+import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery } from "../webhooks/useDisplays";
+import { DisplayQuery } from "@src/webhooks/useDisplays";
 import AdminBody from "./AdminBody";
-import DepartmentList from "./DepartmentList";
-import PowerPointList from "./PowerPointList";
+import DepartmentList from "@src/components/DepartmentList";
+import PowerPointList from "@src/components/PowerPointList";
 
 /**
  * Admin view of the Departments table
@@ -48,6 +48,7 @@ const AdminPowerPoints = (): JSX.Element => {
         remount();
       })
       .catch(error => {
+        setError(error);
         alert(`Error uploading file ${error}`);
       });
   };
