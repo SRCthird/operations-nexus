@@ -1,11 +1,12 @@
-import { FormControl,FormLabel, Input, FormHelperText } from "@chakra-ui/react"
-import { useState } from "react";
+import { FormControl, FormLabel, Input, FormHelperText, Select } from "@chakra-ui/react"
+import { useEffect, useState } from "react";
 import DisplayList from "@src/components/DisplayList";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import axios, { CanceledError } from "axios";
 import { DisplayQuery, Displays } from "@src/webhooks/useDisplays";
 import AdminBody from "./AdminBody";
+import useDepartment from "@src/webhooks/useDepartments";
 
 const AdminDisplays = () => {
   const [key, updateKey] = useState(0);
@@ -17,11 +18,13 @@ const AdminDisplays = () => {
   const [formDepartment, setFormDepartment] = useState("");
   const [formDisplay, setFormDisplay] = useState("");
   const [formBackground, setFormBackground] = useState("");
+  const { departments, isLoading } = useDepartment("");
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
     department: null,
     searchText: ''
   });
+
 
   const handleCreate = (Data: Displays) => {
     const { ID: _, ...newData } = Data;
@@ -139,11 +142,12 @@ const AdminDisplays = () => {
           </FormControl>
           <FormControl isDisabled={!editMode}>
             <FormLabel>Department</FormLabel>
-            <Input value={formDepartment}
-              onChange={(value) => {
-                setFormDepartment(value.target.value);
-              }}
-            />
+            <Select value={formDepartment} onChange={(e) => setFormDepartment(e.target.value)}>
+              {isLoading && <option value={formDepartment}>{formDepartment}</option>}
+              {departments.map(department => (
+                <option key={department.ID} value={department.Department}>{department.Department}</option>
+              ))}
+            </Select>
             <FormHelperText>The name of the area where this display will be used.</FormHelperText>
           </FormControl>
           <FormControl isDisabled={!editMode}>
