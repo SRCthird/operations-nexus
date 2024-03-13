@@ -11,7 +11,7 @@ export class AppService {
   }
 
   async getDelay(): Promise<number> {
-    let result = await this.databaseService.settings.findFirst({
+    let result = await this.databaseService.nexus_Settings.findFirst({
       select: {
         Delay: true,
       }
@@ -20,7 +20,7 @@ export class AppService {
   }
 
   async setDelay(delay: number): Promise<string> {
-    await this.databaseService.settings.update({
+    await this.databaseService.nexus_Settings.update({
       where: {ID: 1},
       data: {Delay: delay}
     })
