@@ -1,6 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Grid, Input, Spinner } from "@chakra-ui/react";
-import usePowerPoints from "../webhooks/usePowerPoints";
+import useSlideshow from "../webhooks/useSlideshow";
 import PowerPointListItem from "./PowerPointListItem";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 
 const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handleDelete, department }: Props) => {
-  const { powerPoints, pptxError, isLoading } = usePowerPoints(department);
+  const { powerPoints, pptxError, isLoading } = useSlideshow(department);
   
   return (
     <Box className="Admin-Form">
