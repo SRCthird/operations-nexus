@@ -1,7 +1,7 @@
 import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
-const usePowerPoints = (department: string) => {
+const useSlideshow = (department: string) => {
   const [powerPoints, setPowerPoints] = useState<string[]>([]);
   const [pptxError, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -27,4 +27,4 @@ const usePowerPoints = (department: string) => {
   return { powerPoints, pptxError, isLoading };
 }
 
-export default usePowerPoints;
+export default useSlideshow;
