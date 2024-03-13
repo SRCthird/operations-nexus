@@ -7,7 +7,7 @@ export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
-  create(@Body() createDepartmentDto: Prisma.departmentsCreateInput) {
+  create(@Body() createDepartmentDto: Prisma.Nexus_DepartmentCreateInput) {
     return this.departmentsService.create(createDepartmentDto);
   }
 
@@ -26,7 +26,7 @@ export class DepartmentsController {
   }
 
   @Patch(':param')
-  update(@Param('param') param: string, @Body() updateDepartmentDto: Prisma.departmentsUpdateInput) {
+  update(@Param('param') param: string, @Body() updateDepartmentDto: Prisma.Nexus_DepartmentUpdateInput) {
     const parsedParam = parseInt(param, 10);
     if(!isNaN(parsedParam)) {
       return this.departmentsService.update({

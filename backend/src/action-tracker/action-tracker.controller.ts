@@ -7,7 +7,7 @@ export class ActionTrackerController {
   constructor(private readonly actionTrackerService: ActionTrackerService) {}
 
   @Post()
-  create(@Body() createActionTrackerDto: Prisma.action_trackerCreateInput) {
+  create(@Body() createActionTrackerDto: Prisma.Nexus_ActionTrackerCreateInput) {
     return this.actionTrackerService.create(createActionTrackerDto);
   }
 
@@ -22,7 +22,7 @@ export class ActionTrackerController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActionTrackerDto: Prisma.action_trackerUpdateInput) {
+  update(@Param('id') id: string, @Body() updateActionTrackerDto: Prisma.Nexus_ActionTrackerUpdateInput) {
     return this.actionTrackerService.update(+id, updateActionTrackerDto);
   }
 

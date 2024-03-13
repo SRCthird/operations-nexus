@@ -7,7 +7,7 @@ export class DisplaysController {
   constructor(private readonly displaysService: DisplaysService) {}
 
   @Post()
-  create(@Body() createDisplayDto: Prisma.displayCreateInput) {
+  create(@Body() createDisplayDto: Prisma.Nexus_DisplayCreateInput) {
     return this.displaysService.create(createDisplayDto);
   }
 
@@ -22,7 +22,7 @@ export class DisplaysController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDisplayDto: Prisma.displayUpdateInput) {
+  update(@Param('id') id: string, @Body() updateDisplayDto: Prisma.Nexus_DisplayUpdateInput) {
     return this.displaysService.update(+id, updateDisplayDto);
   }
 

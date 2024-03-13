@@ -9,7 +9,7 @@ interface findOneParam {
 interface updateParam {
   id?: number;
   name?: string;
-  updateDepartmentDto: Prisma.departmentsUpdateInput;
+  updateDepartmentDto: Prisma.Nexus_DepartmentUpdateInput;
 }
 
 @Injectable()
@@ -17,8 +17,8 @@ export class DepartmentsService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createDepartmentDto: Prisma.departmentsCreateInput) {
-    return this.databaseService.departments.create({
+  async create(createDepartmentDto: Prisma.Nexus_DepartmentCreateInput) {
+    return this.databaseService.nexus_Department.create({
       data: createDepartmentDto
     });
   }
@@ -34,7 +34,7 @@ export class DepartmentsService {
       ]
     }
 
-    return this.databaseService.departments.findMany({
+    return this.databaseService.nexus_Department.findMany({
       where: query
     }); 
   }
@@ -48,7 +48,7 @@ export class DepartmentsService {
       conditions = { Department: name };
     }
 
-    return this.databaseService.departments.findFirst({
+    return this.databaseService.nexus_Department.findFirst({
       where: conditions 
     });
   }
@@ -61,14 +61,14 @@ export class DepartmentsService {
     if (name !== undefined) {
       conditions = { Department: name };
     }
-    return this.databaseService.departments.update({
+    return this.databaseService.nexus_Department.update({
       where: conditions,
       data: updateDepartmentDto
     });
   }
 
   async remove(id: number) {
-    return this.databaseService.departments.delete({
+    return this.databaseService.nexus_Department.delete({
       where: {ID: id}
     });
   }

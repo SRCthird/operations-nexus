@@ -7,31 +7,31 @@ export class ActionTrackerService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
-  create(createActionTrackerDto: Prisma.action_trackerCreateInput) {
-    return this.databaseService.action_tracker.create({
+  create(createActionTrackerDto: Prisma.Nexus_ActionTrackerCreateInput) {
+    return this.databaseService.nexus_ActionTracker.create({
       data: createActionTrackerDto
     });
   }
 
   findAll() {
-    return this.databaseService.action_tracker.findMany();
+    return this.databaseService.nexus_ActionTracker.findMany();
   }
 
   findOne(id: number) {
-    return this.databaseService.action_tracker.findUnique({
+    return this.databaseService.nexus_ActionTracker.findUnique({
       where: {ID: id},
     });
   }
 
-  update(id: number, updateActionTrackerDto: Prisma.action_trackerUpdateInput) {
-    return this.databaseService.action_tracker.update({
+  update(id: number, updateActionTrackerDto: Prisma.Nexus_ActionTrackerUpdateInput) {
+    return this.databaseService.nexus_ActionTracker.update({
       where: {ID: id},
       data: updateActionTrackerDto
     })
   }
 
   remove(id: number) {
-    return this.databaseService.action_tracker.delete({
+    return this.databaseService.nexus_ActionTracker.delete({
       where: {ID: id},
     })
   }

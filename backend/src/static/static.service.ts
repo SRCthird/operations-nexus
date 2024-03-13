@@ -105,7 +105,7 @@ export class StaticService {
    */
 
   async validateLocation(location: string): Promise<boolean> {
-    const result = await this.databaseService.departments.findUnique({
+    const result = await this.databaseService.nexus_Department.findUnique({
       where: { Department: location },
     });
     return !!result;

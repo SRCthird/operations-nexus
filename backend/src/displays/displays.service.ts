@@ -7,8 +7,8 @@ export class DisplaysService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createDisplayDto: Prisma.displayCreateInput) {
-    return this.databaseService.display.create({
+  async create(createDisplayDto: Prisma.Nexus_DisplayCreateInput) {
+    return this.databaseService.nexus_Display.create({
       data: createDisplayDto
     });
   }
@@ -29,24 +29,24 @@ export class DisplaysService {
       ];
     }
 
-    return this.databaseService.display.findMany({ where: query });
+    return this.databaseService.nexus_Display.findMany({ where: query });
   }
 
   async findOne(id: number) {
-    return this.databaseService.display.findUnique({ 
+    return this.databaseService.nexus_Display.findUnique({ 
       where: {ID: id} 
     });
   }
 
-  async update(id: number, updateDisplayDto: Prisma.displayUpdateInput) {
-    return this.databaseService.display.update({
+  async update(id: number, updateDisplayDto: Prisma.Nexus_DisplayUpdateInput) {
+    return this.databaseService.nexus_Display.update({
       where: {ID: id},
       data: updateDisplayDto
     })
   }
 
   async remove(id: number) {
-    return this.databaseService.display.delete({ 
+    return this.databaseService.nexus_Display.delete({ 
       where: {ID: id} 
     });
   }
