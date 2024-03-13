@@ -14,7 +14,7 @@ export class AppPowerBiService {
   }
 
   async findMany(ids?: number[]) {
-    if (!ids) {
+    if (ids.length === 0) {
       return this.databaseService.app_PowerBI.findMany();
     }
     return this.databaseService.app_PowerBI.findMany({

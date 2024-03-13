@@ -14,7 +14,7 @@ export class AppPowerPointService {
   }
 
   async findMany(ids: number[]) {
-    if (!ids) {
+    if (ids.length === 0) {
       return this.databaseService.app_PowerPoint.findMany();
     }
     return this.databaseService.app_PowerPoint.findMany({
