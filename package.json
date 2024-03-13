@@ -40,10 +40,10 @@
     "backend:build": "cd backend && npm run build",
     "backend:prod": "cd backend && npm run start:prod",
     "backend:slides": "cd backend/src && python slides.py",
-    "frontend:dev": "react-scripts start",
-    "frontend:build": "react-scripts build",
+    "frontend:dev": "craco start",
+    "frontend:build": "craco build",
     "frontend:prod": "node serve-script.js",
-    "frontend:test": "react-scripts test",
+    "frontend:test": "craco test",
     "frontend:eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -65,6 +65,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0"
   }
 }

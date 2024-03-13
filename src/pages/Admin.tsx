@@ -1,9 +1,9 @@
 import { Box, Grid, Heading, Button, MenuButton, Menu, MenuList, MenuItem, } from "@chakra-ui/react"
 import { useState } from "react";
-import "../styles/Admin.css"
-import AdminDisplays from "../components/AdminDisplays";
-import AdminDepartments from "../components/AdminDepartments";
-import AdminPowerPoints from "../components/AdminPowerPoints";
+import "@src/styles/Admin.css"
+import AdminDisplays from "@src/components/admin/AdminDisplays";
+import AdminDepartments from "@src/components/admin/AdminDepartments";
+import AdminPowerPoints from "@src/components/admin/AdminPowerPoints";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 /**
