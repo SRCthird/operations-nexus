@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { PageThreeOnTwoService } from './page_three-on-two.service';
 import { Prisma } from '@prisma/client';
 
-@Controller('page/three-on-two')
+@Controller('page/ThreeOnTwo')
 export class PageThreeOnTwoController {
   constructor(private readonly pageThreeOnTwoService: PageThreeOnTwoService) {}
 
