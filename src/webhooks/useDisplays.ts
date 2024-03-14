@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
 import { Departments } from "./useDepartments";
+import { Pages } from "./usePages";
 
 /**
  * The query object used to specify displays from the backend.
@@ -29,6 +30,8 @@ export interface Displays {
   Department: string;
   Display: string;
   Background: string;
+  Page?: Pages;
+  Page_ID?: number;
 }
 
 /**
