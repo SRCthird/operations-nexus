@@ -49,16 +49,25 @@ const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartm
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
+
   useEffect(() => {
+    let url: string;
+    if (department){
+        url = `/api/departments/${department}`;
+    } else {
+      searchText ?
+        url = `/api/departments/?search=${searchText}` :
+        url = '/api/departments';
+    }
     const controller = new AbortController();
     setLoading(true);
-    let url: string;
-    searchText ?
-      url = `/api/departments/?search=${searchText}` :
-      url = '/api/departments';
     axios.get(url, { signal: controller.signal })
       .then(response => {
-        setDepartment(response.data);
+        if (department) {
+          setDepartment([response.data]);
+        } else {
+          setDepartment(response.data);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -67,8 +76,7 @@ const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartm
         setLoading(false);
       });
     return () => controller.abort();
-  }, [searchText]);
-
+  }, [searchText, department]);
   return { departments, error, isLoading }
 }
 
