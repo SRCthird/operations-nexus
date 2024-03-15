@@ -5,11 +5,11 @@ import useDepartments, { Departments } from "../webhooks/useDepartments";
  * Interface for the Departments List component.
  * 
  * @param onSelectDepartment - The process selected department in parent component
- * @param {Departments | null} onSelectDepartment - The selected department in parent component
+ * @param {String} onSelectDepartment - The selected department in parent component
  */
 interface Props {
   onSelectDepartment: (department: Departments) => void;
-  selectedDepartment: Departments | null;
+  selectedDepartment?: string;
   searchText?: string;
 }
 
@@ -20,7 +20,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
-  const { departments, isLoading } = useDepartments(searchText);
+  const { departments, isLoading } = useDepartments({department: undefined, searchText: searchText});
   return (
     <>
       <Heading fontSize={'2xl'} paddingLeft={8} marginBottom={3}>Departments</Heading>
@@ -33,7 +33,7 @@ const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: 
               <Button 
                 whiteSpace={'normal'} 
                 textAlign={'left'} 
-                fontWeight={department.Department === selectedDepartment?.Department ? 'bold' : 'noraml'} 
+                fontWeight={department.Department === selectedDepartment ? 'bold' : 'noraml'} 
                 onClick={() => (onSelectDepartment(department))} 
                 fontSize='lg' 
                 variant='link' 

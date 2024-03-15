@@ -2,6 +2,17 @@ import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 /**
+ * The query object used to specify departments from the backend.
+ * 
+ * @param {String?} department - The selected department.
+ * @param {string?} searchText - The search text entered by the user in SearchInput.tsx.
+ */
+export interface DepartmentQuery {
+  department?: string;
+  searchText?: string;
+}
+
+/**
  * Represents the Department object that will be returned to Home.tsx.
  * 
  * @param {number} ID - The ID of the department.
@@ -33,7 +44,7 @@ type typeDepartments = {
  * 
  * @returns {typeDepartments} Returns the array of Departments objects, errors and a boolean: isLoading.
  */
-const useDepartment = (searchText?: string): typeDepartments => {
+const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartments => {
   const [departments, setDepartment] = useState<Departments[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);

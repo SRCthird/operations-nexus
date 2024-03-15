@@ -5,12 +5,13 @@ import useDisplay, { Displays } from "../webhooks/useDisplays";
 /**
  * Interface for the Departments List component.
  * 
- * @param onSelectDepartment - The process selected department in parent component
- * @param {Departments | null} onSelectDepartment - The selected department in parent component
+ * @param {(Display) => void} onSelectDepartment - The process selected department in parent component
+ * @param {string} selectDepartment - The selected department in parent component
+ * @param {string} searchText - The text used to search for departments
  */
 interface Props {
   onSelectDisplay: (department: Displays) => void;
-  selectedDisplay: Departments | null;
+  selectedDisplay?: string;
   searchText?: string;
 }
 
@@ -21,7 +22,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDisplay, selectedDisplay, searchText }: Props): JSX.Element => {
-  const { displays, isLoading } = useDisplay({department: null, searchText: searchText});
+  const { displays, isLoading } = useDisplay({department: undefined, searchText: searchText});
 
   return (
     <>
@@ -32,7 +33,7 @@ const DepartmentList = ({ onSelectDisplay, selectedDisplay, searchText }: Props)
             <Button 
               whiteSpace={'normal'} 
               textAlign={'left'} 
-              fontWeight={display.Department === selectedDisplay?.Department ? 'bold' : 'noraml'} 
+              fontWeight={display.Department === selectedDisplay ? 'bold' : 'noraml'} 
               onClick={() => (onSelectDisplay(display))} 
               fontSize='lg' 
               variant='link' 

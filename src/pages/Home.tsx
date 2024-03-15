@@ -5,6 +5,7 @@ import DisplayGrid from '../components/DisplayGrid';
 import DepartmentList from '../components/DepartmentList';
 import DisplayHeading from '../components/DisplayHeading';
 import { DisplayQuery } from '../webhooks/useDisplays';
+import { Departments } from '@src/webhooks/useDepartments';
 
 /**
  * The home page of the application. Used to select the display.
@@ -13,8 +14,8 @@ import { DisplayQuery } from '../webhooks/useDisplays';
  */
 const Home = (): JSX.Element => {
     const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-        department: null,
-        searchText: ''
+        department: undefined,
+        searchText: undefined
     });
 
     return (
@@ -30,7 +31,7 @@ const Home = (): JSX.Element => {
             <GridItem area='nav'>
                 <NavBar onSearch={
                   (searchText) => {
-                    setDisplayQuery({...displayQuery, department: null, searchText});
+                    setDisplayQuery({searchText});
                   }
                 }/>
             </GridItem>
@@ -39,8 +40,8 @@ const Home = (): JSX.Element => {
                     <DepartmentList 
                         selectedDepartment={displayQuery.department} 
                         onSelectDepartment={
-                          (department) => {
-                            setDisplayQuery({ ...displayQuery, department, searchText: ''});
+                          (department: Departments) => {
+                            setDisplayQuery({department: department.Department});
                           }
                         }
                       />

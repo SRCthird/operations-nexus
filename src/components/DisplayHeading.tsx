@@ -18,7 +18,7 @@ interface Props {
  */
 const DisplayHeading = ({ displayQuery }:Props) => {
 
-    const heading = `${displayQuery.department?.Department || 'All'} Displays`;
+    const heading = `${displayQuery.department || 'All'} Displays`;
 
   return (
     <Heading as='h1' paddingLeft={9}>{heading}</Heading>

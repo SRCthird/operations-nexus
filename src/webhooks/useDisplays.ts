@@ -1,16 +1,16 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Departments } from "./useDepartments";
 import { Pages } from "./usePages";
 
 /**
  * The query object used to specify displays from the backend.
  * 
- * @param {Departments | null} department - The selected department.
- * @param {string} searchText - The search text entered by the user in SearchInput.tsx.
+ * @param {String?} department - The selected department.
+ * @param {string?} searchText - The search text entered by the user in SearchInput.tsx.
  */
 export interface DisplayQuery {
-  department: Departments | null;
+  //department: Departments | null;
+  department?: string;
   searchText?: string;
 }
 
@@ -53,16 +53,16 @@ type typeDisplays = {
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
  * @returns {typeDisplays}
  */
-const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
+const useDisplay = ({ department, searchText }: DisplayQuery): typeDisplays => {
   const [displays, setDisplay] = useState<Displays[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const requestConfig: AxiosRequestConfig = displayQuery.department?.Department === "All" ? {} : {
+    const requestConfig: AxiosRequestConfig = department === "All" ? {} : {
       params: {
-        departments: displayQuery.department?.Department,
-        search: displayQuery.searchText
+        departments: department,
+        search: searchText
       },
     };
 
@@ -81,7 +81,7 @@ const useDisplay = (displayQuery: DisplayQuery): typeDisplays => {
       });
 
     return () => controller.abort();
-  }, [displayQuery]);
+  }, [department, searchText]);
 
   return { displays, error, isLoading };
 }
