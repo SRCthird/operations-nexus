@@ -20,12 +20,12 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
-  const { departments, isLoading } = useDepartments({department: undefined, searchText: searchText});
+  const { departments, departmentLoading } = useDepartments({department: undefined, searchText: searchText});
   return (
     <>
       <Heading fontSize={'2xl'} paddingLeft={8} marginBottom={3}>Departments</Heading>
       <List>
-        {isLoading && <Spinner />}
+        {departmentLoading && <Spinner />}
         {departments.map(department => (
           <ListItem key={department.ID}>
             <HStack>

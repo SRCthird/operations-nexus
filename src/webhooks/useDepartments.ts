@@ -36,7 +36,7 @@ export interface Departments {
 type typeDepartments = {
   departments: Departments[];
   error: string;
-  isLoading: boolean;
+  departmentLoading: boolean;
 }
 
 /**
@@ -47,7 +47,7 @@ type typeDepartments = {
 const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartments => {
   const [departments, setDepartment] = useState<Departments[]>([]);
   const [error, setError] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  const [departmentLoading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartm
       });
     return () => controller.abort();
   }, [searchText, department]);
-  return { departments, error, isLoading }
+  return { departments, error, departmentLoading }
 }
 
 export default useDepartment;

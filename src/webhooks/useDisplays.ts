@@ -9,7 +9,7 @@ import { Pages } from "./usePages";
  * @param {string?} searchText - The search text entered by the user in SearchInput.tsx.
  */
 export interface DisplayQuery {
-  //department: Departments | null;
+  id?: number;
   department?: string;
   searchText?: string;
 }
@@ -44,7 +44,7 @@ export interface Displays {
 type typeDisplays = {
   displays: Displays[];
   error: string;
-  isLoading: boolean;
+  displayLoading: boolean;
 }
 
 /**
@@ -53,10 +53,10 @@ type typeDisplays = {
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
  * @returns {typeDisplays}
  */
-const useDisplay = ({ department, searchText }: DisplayQuery): typeDisplays => {
+const useDisplay = ({ id, department, searchText }: DisplayQuery): typeDisplays => {
   const [displays, setDisplay] = useState<Displays[]>([]);
   const [error, setError] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  const [displayLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const requestConfig: AxiosRequestConfig = department === "All" ? {} : {
@@ -69,7 +69,21 @@ const useDisplay = ({ department, searchText }: DisplayQuery): typeDisplays => {
     const controller = new AbortController();
     setLoading(true);
 
-    axios.get('/api/display', { signal: controller.signal, ...requestConfig })
+    if (id) {
+      axios.get(`/api/display/${id}`, { signal: controller.signal })
+        .then(response => {
+          setDisplay([response.data]);
+          setLoading(false);
+        })
+        .catch(err => {
+          if (err instanceof CanceledError) return;
+          setError(err.message);
+          setLoading(false);
+        });
+
+      return () => controller.abort();
+    } else {
+      axios.get('/api/display', { signal: controller.signal, ...requestConfig })
       .then(response => {
         setDisplay(response.data);
         setLoading(false);
@@ -80,10 +94,11 @@ const useDisplay = ({ department, searchText }: DisplayQuery): typeDisplays => {
         setLoading(false);
       });
 
-    return () => controller.abort();
-  }, [department, searchText]);
+      return () => controller.abort();
+    }
+  }, [department, searchText, id]);
 
-  return { displays, error, isLoading };
+  return { displays, error, displayLoading };
 }
 
 export default useDisplay;

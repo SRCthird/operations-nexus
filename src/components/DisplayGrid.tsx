@@ -19,7 +19,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the DisplayCard component.
  */
 const DisplayGrid = ({ displayQuery }: Props): JSX.Element => {
-  const {displays, error, isLoading} = useDisplays(displayQuery);
+  const {displays, error, displayLoading } = useDisplays(displayQuery);
   const skeletons= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
@@ -28,7 +28,7 @@ const DisplayGrid = ({ displayQuery }: Props): JSX.Element => {
         {displays.map(display => (
           <DisplayCard key={display.ID} display={display} />
         ))}
-        {isLoading && skeletons.map(skeleton => (<SkeletonCard key={skeleton}/>))}
+        {displayLoading && skeletons.map(skeleton => (<SkeletonCard key={skeleton}/>))}
     </SimpleGrid>
   );
 }

@@ -22,7 +22,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDisplay, selectedDisplay, searchText }: Props): JSX.Element => {
-  const { displays, isLoading } = useDisplay({department: undefined, searchText: searchText});
+  const { displays, displayLoading } = useDisplay({department: undefined, searchText: searchText});
 
   return (
     <>

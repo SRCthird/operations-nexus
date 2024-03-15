@@ -31,7 +31,7 @@ const emptyDepartment:Departments = {
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
 const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
-  const { departments, isLoading } = useDepartment({department: `${id}`});
+  const { departments, departmentLoading } = useDepartment({department: `${id}`});
   const department: Departments = departments[0] ?? emptyDepartment; 
 
   const [formID, setFormID] = useState(0);
