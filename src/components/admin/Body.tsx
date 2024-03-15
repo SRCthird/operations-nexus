@@ -47,7 +47,7 @@ interface Props {
  * @param {Props} The properties of the Admin Body
  * @returns {JSX.Element} Returns the Admin Body element
  */
-const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
+const Body = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const [createMode, setCreateMode] = useState(false);
   const [SizeSmall, SizeMed, SizeLarge, SizeXL] = useMediaQuery(['(max-width: 600px)', '(max-width: 900px)', '(max-width: 1280px)', '(min-width: 1280px)']);
@@ -166,4 +166,4 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
 
 }
 
-export default AdminBody
+export default Body

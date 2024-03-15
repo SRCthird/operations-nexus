@@ -1,19 +1,20 @@
-import {FormControl, FormLabel, Input, FormHelperText} from "@chakra-ui/react"
+import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
 import { useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import axios, { CanceledError } from "axios";
 import { DisplayQuery } from "@src/webhooks/useDisplays";
 import { Departments } from "@src/webhooks/useDepartments";
-import AdminBody from "./AdminBody";
+import Body from "./Body";
 import DepartmentList from "@src/components/DepartmentList";
+import DepartmentsForm from "./DepartmentsForm";
 
 /**
  * Admin view of the Departments table
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
-const AdminDepartments = (): JSX.Element => {
+const DepartmentsBody = (): JSX.Element => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -22,10 +23,11 @@ const AdminDepartments = (): JSX.Element => {
   const [formDepartment, setFormDepartment] = useState("");
   const [formBackground, setFormBackground] = useState("");
   const [formPPTXVersion, setFormPPTXVersion] = useState(0);
+  const [submit, setSubmit] = useState(false);
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-    department: null,
-    searchText: ''
+    department: undefined,
+    searchText: undefined
   });
 
   const handleCreate = (Data: Departments) => {
@@ -81,10 +83,10 @@ const AdminDepartments = (): JSX.Element => {
   const remount = () => updateKey(key + 1);
 
   return (
-    <AdminBody
+    <Body
       resetForm={resetForm}
       onSearch={(searchText: string) => {
-        setDisplayQuery({ ...displayQuery, department: null, searchText });
+        setDisplayQuery({department: undefined, searchText });
       }}
       handleCreate={handleCreate}
       handleRead={
@@ -106,7 +108,7 @@ const AdminDepartments = (): JSX.Element => {
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={formDepartment || "Select a display"}
+      header={formDepartment || "Select a department"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -116,39 +118,22 @@ const AdminDepartments = (): JSX.Element => {
       error={error}
       data={data}
       form={
-        <Form className="Admin-Form">
-          <FormControl isDisabled={true}>
-            <FormLabel>Id</FormLabel>
-            <Input value={formID === -1 ? "" : formID} />
-          </FormControl>
-          <FormControl isDisabled={!editMode}>
-            <FormLabel>Main</FormLabel>
-            <Input value={formMain}
-              onChange={(value) => {
-                setFormMain(value.target.value);
-              }}
-            />
-            <FormHelperText>The main branch this display is under.</FormHelperText>
-          </FormControl>
-          <FormControl isDisabled={!editMode}>
-            <FormLabel>Department</FormLabel>
-            <Input value={formDepartment}
-              onChange={(value) => {
-                setFormDepartment(value.target.value);
-              }}
-            />
-            <FormHelperText>The name of the area where this display will be used.</FormHelperText>
-          </FormControl>
-          <FormControl isDisabled={!editMode}>
-            <FormLabel>Background</FormLabel>
-            <Input value={formBackground}
-              onChange={(value) => {
-                setFormBackground(value.target.value);
-              }}
-            />
-            <FormHelperText>The icon to be displayed next to the department.</FormHelperText>
-          </FormControl>
-        </Form>
+        <DepartmentsForm
+          key={key}
+          id={formID}
+          submit={submit}
+          setSubmit={setSubmit}
+          editMode={editMode}
+          onChange={
+            (department) => {
+              setFormID(department.ID);
+              setFormMain(department.Main);
+              setFormDepartment(department.Department);
+              setFormBackground(department.Background);
+              setFormPPTXVersion(department.PPTXVersion);
+            }
+          }
+        />
       }
       remount={remount}
     />
@@ -156,4 +141,4 @@ const AdminDepartments = (): JSX.Element => {
 
 }
 
-export default AdminDepartments
+export default DepartmentsBody
