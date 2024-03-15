@@ -4,10 +4,15 @@ import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import useDepartment, { Departments } from "@src/webhooks/useDepartments";
 
+/**
+ * Properties of the Departments Admin Form
+ *
+ * @param {number} id - The ID of the currently selected item
+ * @param {boolean} editMode - The boolean of if the form can be edited or not
+ * @param {Departments => void} onChange - The lambda function that returns the changed values of the form
+ */
 interface Props {
   id: number;
-  submit: boolean;
-  setSubmit: (value: boolean) => void;
   editMode: boolean;
   onChange: (value: Departments) => void;
 }
@@ -21,11 +26,11 @@ const emptyDepartment:Departments = {
 }
 
 /**
- * Admin view of the Departments table
+ * Admin Form of the Departments table
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
-const DepartmentsForm = ({ id, submit, setSubmit, editMode, onChange }: Props): JSX.Element => {
+const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
   const { departments, isLoading } = useDepartment({department: `${id}`});
   const department: Departments = departments[0] ?? emptyDepartment; 
 

@@ -121,8 +121,6 @@ const DepartmentsBody = (): JSX.Element => {
         <DepartmentsForm
           key={key}
           id={formID}
-          submit={submit}
-          setSubmit={setSubmit}
           editMode={editMode}
           onChange={
             (department) => {
