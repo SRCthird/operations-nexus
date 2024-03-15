@@ -1,7 +1,5 @@
-import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
 import { useState } from "react";
 import "@styles/Admin.css"
-import { Form } from "react-bootstrap";
 import axios, { CanceledError } from "axios";
 import { DisplayQuery } from "@src/webhooks/useDisplays";
 import { Departments } from "@src/webhooks/useDepartments";
@@ -23,7 +21,6 @@ const DepartmentsBody = (): JSX.Element => {
   const [formDepartment, setFormDepartment] = useState("");
   const [formBackground, setFormBackground] = useState("");
   const [formPPTXVersion, setFormPPTXVersion] = useState(0);
-  const [submit, setSubmit] = useState(false);
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
     department: undefined,
