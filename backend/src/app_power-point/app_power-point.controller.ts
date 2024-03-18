@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { AppPowerPointService } from './app_power-point.service';
 import { Prisma } from '@prisma/client';
 
-@Controller('app/power-point')
+@Controller('app/PowerPoint')
 export class AppPowerPointController {
   constructor(private readonly appPowerPointService: AppPowerPointService) {}
 

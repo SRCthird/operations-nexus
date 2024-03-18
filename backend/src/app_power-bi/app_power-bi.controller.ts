@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { AppPowerBiService } from './app_power-bi.service';
 import { Prisma } from '@prisma/client';
 
-@Controller('app/power-bi')
+@Controller('app/PowerBI')
 export class AppPowerBiController {
   constructor(private readonly appPowerBiService: AppPowerBiService) {}
 
