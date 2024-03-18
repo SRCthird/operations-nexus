@@ -6,7 +6,8 @@ import RedirectLogin from "./RedirectLogin";
 /**
  * Properties of the Authenticate Element.
  *
- * @param {ReactElement} child - the Routes to be passed in if authentication passes
+ * @param {ReactElement} children - the Routes to be passed in if authentication passes
+ * @param {(token: string) => void} setToken - returns the token from MSAL.js 
  */
 interface Props {
   children: ReactElement;
