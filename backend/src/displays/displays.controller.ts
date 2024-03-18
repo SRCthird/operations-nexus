@@ -16,9 +16,13 @@ export class DisplaysController {
     return this.displaysService.findAll(department, search);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.displaysService.findOne(+id);
+  @Get(':param')
+  findOne(@Param('param') param: string) {
+    const parsedParam = parseInt(param, 10);
+    if (!isNaN(parsedParam)) {
+      return this.displaysService.findOne({ id: parsedParam });
+    }
+    return this.displaysService.findOne({ name: param });
   }
 
   @Patch(':id')

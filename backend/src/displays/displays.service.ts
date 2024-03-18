@@ -2,6 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
+interface findOneParam {
+  id?: number;
+  name?: string;
+}
+
 @Injectable()
 export class DisplaysService {
 
@@ -32,9 +37,17 @@ export class DisplaysService {
     return this.databaseService.nexus_Display.findMany({ where: query });
   }
 
-  async findOne(id: number) {
-    return this.databaseService.nexus_Display.findUnique({ 
-      where: {ID: id} 
+  async findOne({id, name}: findOneParam) {
+    let conditions: any;
+    if (id !== undefined) {
+      conditions = { ID: id };
+    }
+    if (name !== undefined) {
+      conditions = { Department: name };
+    }
+
+    return this.databaseService.nexus_Display.findFirst({
+      where: conditions 
     });
   }
 
