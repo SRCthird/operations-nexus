@@ -9,7 +9,11 @@ export enum Pages {
   FullDisplay = 'FullDisplay'
 }
 
-const usePages = (page?: Pages, ids?: number[]) => {
+interface Props {
+  page?: Pages;
+  ids?: number[];
+}
+const usePages = ({ page, ids }: Props) => {
   const [pages, setPages] = useState<any[]>([]);
   const [pageError, setError] = useState('');
   const [isPageLoading, setLoading] = useState(false);
