@@ -31,8 +31,8 @@ const Authenticate = ({ children, setToken }: Props): JSX.Element => {
           <Route path="/login" element={
             <Login
               isLoggedOn={isLoggedOn}
-              onLogin={(status) => setIsLoggedOn(status)}
-              onTokenReceive={(token) => setToken(token)}
+              onLogin={setIsLoggedOn}
+              onTokenReceive={setToken}
             />
           } />
           <Route path="/*" element={<RedirectLogin />} />
