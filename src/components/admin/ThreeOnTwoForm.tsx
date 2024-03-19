@@ -1,10 +1,8 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
-import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import usePages, { Pages } from "@src/webhooks/usePages";
 import axios, { CanceledError } from "axios";
 import useApps, { Apps } from '@src/webhooks/useApps'
-import AppForm from "./AppForm";
 import AppFormControl from "./AppFormControl";
 
 export interface ThreeOnTwoPage {
@@ -24,7 +22,7 @@ export interface ThreeOnTwoPage {
   App5_ID?: number;
 }
 
-const emptyPage: ThreeOnTwoPage = {
+export const emptyThreeOnTwoPage: ThreeOnTwoPage = {
   ID: 0,
   Title: '',
   Background: '',
@@ -55,12 +53,11 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = usePages({ page: Pages.ThreeOnTwo, ids: [pageID] });
-  const page = pages[0] ?? emptyPage;
+  const page = pages[0] ?? emptyThreeOnTwoPage;
 
-  const [key, setKey] = useState(0);
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<ThreeOnTwoPage>({ ...emptyPage });
+  const [data, setData] = useState<ThreeOnTwoPage>({ ...emptyThreeOnTwoPage });
 
   useEffect(() => {
     if (pageID !== 0) {

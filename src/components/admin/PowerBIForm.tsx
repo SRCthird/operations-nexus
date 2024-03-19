@@ -13,7 +13,7 @@ export const emptyPowerBI: PowerBIApp = {
   Page_Name: undefined
 }
 
-enum PowerBITypes {
+export enum PowerBITypes {
   Report = 'report',
   Dashboard = 'dashboard',
   Title = 'tile',
