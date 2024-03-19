@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef} from "react";
 
 /**
  * The pages available for selection in the admin menu.
@@ -17,6 +17,7 @@ const usePages = ({ page, ids }: Props) => {
   const [pages, setPages] = useState<any[]>([]);
   const [pageError, setError] = useState('');
   const [isPageLoading, setLoading] = useState(false);
+  const prevPagesRef = useRef<any[]>();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -24,8 +25,9 @@ const usePages = ({ page, ids }: Props) => {
     const idArray = ids ? ids : [];
     axios.get(`/api/page/${page}/?id=${idArray.join(",")}`, { signal: controller.signal })
       .then(response => {
-        if (JSON.stringify(pages) !== JSON.stringify(response.data)) {
+        if (JSON.stringify(prevPagesRef.current) !== JSON.stringify(response.data)) {
           setPages(response.data);
+          prevPagesRef.current = response.data;
         }
         setLoading(false);
       })
@@ -38,7 +40,7 @@ const usePages = ({ page, ids }: Props) => {
         setLoading(false);
       });
     return () => controller.abort();
-  }, [ids, page, pages]);
+  }, [ids, page]);
 
   return { pages, pageError, isPageLoading };
 }
