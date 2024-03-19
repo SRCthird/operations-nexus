@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import useDisplays, { Displays } from "@src/webhooks/useDisplays";
 import usePages, { Pages } from "@src/webhooks/usePages";
 import useDepartment from "@src/webhooks/useDepartments";
-import ThreeOnTwo from "./ThreeOnTwo";
+import ThreeOnTwoForm from "./ThreeOnTwoForm";
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 interface Props {
@@ -17,80 +17,55 @@ interface Props {
   onChange: (value: Displays) => void;
 }
 
-const emptyDisplay: Displays = {
+const emptyDisplay:Displays ={
   ID: 0,
   Main: "",
   Sub: "",
   Department: "",
-  Display: "",
   Background: "",
+  Display: "",
   Page: undefined,
-  Page_ID: undefined
+  Page_ID: 0
 }
 
 const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }: Props) => {
   const [key, setKey] = useState(0);
-  const { departments, departmentLoading } = useDepartment({});
-  const { displays, displayLoading } = useDisplays({ id });
-  const display = displays[0] ?? emptyDisplay;
-
-  const [formID, setFormID] = useState(0);
-  const [formMain, setFormMain] = useState("");
-  const [formSub, setFormSub] = useState("");
-  const [formDepartment, setFormDepartment] = useState("");
-  const [formDisplay, setFormDisplay] = useState("");
-  const [formBackground, setFormBackground] = useState("");
-  const [formPage, setFormPage] = useState<Pages | undefined>(undefined);
-  const [formPageID, setFormPageID] = useState(0);
-  const [viewPage, setViewPage] = useState(false);
+  const [data, setData] = useState<Displays>({...emptyDisplay});
   const [submitPage, setSubmitPage] = useState(false);
+  const [viewPage, setViewPage] = useState(false);
 
-  const { pages } = usePages({ page: formPage });
+  const { departments, departmentLoading } = useDepartment({});
+  const { displays } = useDisplays({ id });
+  const display:Displays = displays[0] ?? emptyDisplay;
+  const { pages } = usePages({ page: data.Page });
 
   useEffect(() => {
-    if (id === 0) {
-      setFormID(0);
-      setFormMain("");
-      setFormSub("");
-      setFormDepartment("");
-      setFormDisplay("");
-      setFormBackground("");
-      setFormPage(undefined);
-      setFormPageID(0);
-    } else {
-      setFormID(display.ID);
-      setFormMain(display.Main);
-      setFormSub(display.Sub);
-      setFormDepartment(display.Department);
-      setFormDisplay(display.Display);
-      setFormBackground(display.Background);
-      setFormPage(display.Page);
-      setFormPageID(display.Page_ID || 0);
+    if (display.ID !== 0) {
+      setData({
+        ID: display.ID,
+        Main: display.Main,
+        Sub: display.Sub,
+        Department: display.Department,
+        Background: display.Background,
+        Display: display.Display,
+        Page: display.Page,
+        Page_ID: display.Page_ID
+      });
     }
-  }, [display, id]);
+  }, [display]);
 
-  const data: Displays = {
-    ID: formID,
-    Main: formMain,
-    Sub: formSub,
-    Department: formDepartment,
-    Display: formDisplay,
-    Background: formBackground,
-    Page: formPage,
-    Page_ID: formPageID
-  }
   return (
     <Box className="Admin-Form">
       <Form>
         <FormControl isDisabled={true}>
           <FormLabel>Id</FormLabel>
-          <Input value={formID === 0 ? "" : formID} />
+          <Input value={data.ID} />
         </FormControl>
         <FormControl isDisabled={!editMode}>
           <FormLabel>Main</FormLabel>
-          <Input value={formMain}
+          <Input value={data.Main}
             onChange={(value) => {
-              setFormMain(value.target.value);
+              setData({ ...data, Main: value.target.value });
               onChange({ ...data, Main: value.target.value });
             }}
           />
@@ -98,9 +73,9 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         </FormControl>
         <FormControl isDisabled={!editMode}>
           <FormLabel>Sub</FormLabel>
-          <Input value={formSub}
+          <Input value={data.Sub}
             onChange={(value) => {
-              setFormSub(value.target.value);
+              setData({ ...data, Sub: value.target.value });
               onChange({ ...data, Sub: value.target.value });
             }}
           />
@@ -108,13 +83,13 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         </FormControl>
         <FormControl isDisabled={!editMode}>
           <FormLabel>Department</FormLabel>
-          <Select value={formDepartment}
+          <Select value={data.Department}
             onChange={(value) => {
-              setFormDepartment(value.target.value);
+              setData({ ...data, Department: value.target.value });
               onChange({ ...data, Department: value.target.value });
             }}
           >
-            {departmentLoading && <option value={formDepartment}>{formDepartment}</option>}
+            {departmentLoading && <option value={data.Department}>{data.Department}</option>}
             {departments.map(department => (
               <option key={department.ID} value={department.Department}>{department.Department}</option>
             ))}
@@ -123,9 +98,9 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         </FormControl>
         <FormControl isDisabled={!editMode}>
           <FormLabel>Display</FormLabel>
-          <Input value={formDisplay}
+          <Input value={data.Display}
             onChange={(value) => {
-              setFormDisplay(value.target.value);
+              setData({ ...data, Display: value.target.value });
               onChange({ ...data, Display: value.target.value });
             }}
           />
@@ -133,9 +108,9 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         </FormControl>
         <FormControl isDisabled={!editMode}>
           <FormLabel>Background</FormLabel>
-          <Input value={formBackground}
+          <Input value={data.Background}
             onChange={(value) => {
-              setFormBackground(value.target.value);
+              setData({ ...data, Background: value.target.value });
               onChange({ ...data, Background: value.target.value });
             }}
           />
@@ -144,13 +119,13 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         <FormControl isDisabled={!editMode}>
           <FormLabel>Page Layout</FormLabel>
           <Select
-            value={formPage ?? ""}
+            value={data.Page || ""}
             onChange={(value) => {
-              setFormPage(value.target.value as Pages)
+              setData({ ...data, Page: value.target.value as Pages });
               onChange({ ...data, Page: value.target.value as Pages });
             }}
           >
-            {formPage ?? <option value={""}></option>}
+            {!data.Page && <option value={""}></option>}
             {Object.values(Pages).map((pageName) => (
               <option key={pageName} value={pageName}>
                 {pageName}
@@ -161,14 +136,14 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         <FormControl isDisabled={!editMode}>
           <FormLabel>Page ID</FormLabel>
           <Select
-            value={formPageID ?? 0}
+            value={data.Page_ID}
             onChange={(value) => {
-              setFormPageID(+value.target.value)
+              setData({ ...data, Page_ID: +value.target.value });
               onChange({ ...data, Page_ID: +value.target.value });
             }}
           >
             {pages.map((page) => (
-              <option selected={page.ID === formPageID} key={page.ID} value={page.ID}>
+              <option key={page.ID} value={page.ID}>
                 {page.ID}
               </option>
             ))}
@@ -199,7 +174,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
             } />}
             <CheckIcon
               onClick={
-                () => { 
+                () => {
                   setSubmitPage(true);
                   setEditMode(false);
                 }
@@ -207,7 +182,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
             />
             <CloseIcon
               onClick={
-                () => { 
+                () => {
                   setKey(key + 1);
                   setViewPage(false);
                   setEditMode(false);
@@ -217,18 +192,19 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
           </SimpleGrid>
         }
         <Box hidden={!viewPage}>
-          {formPage === Pages.ThreeOnTwo &&
-            <ThreeOnTwo
-              key={key} 
-              pageID={formPageID}
+          {data.Page === Pages.ThreeOnTwo &&
+            <ThreeOnTwoForm
+              key={key}
+              pageID={data.Page_ID || 0}
               editMode={editMode}
+              setEditMode={setEditMode}
               submit={submitPage}
               setSubmit={setSubmitPage}
               getPageID={(newID) => {
-                setFormPageID(newID);
+                setData({ ...data, Page_ID: newID });
                 onChange({ ...data, Page_ID: newID });
               }}
-              parentID={formID}
+              parentID={data.ID}
             />
           }
         </Box>

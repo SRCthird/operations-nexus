@@ -3,7 +3,6 @@ import DisplayList from "@src/components/DisplayList";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
 import { DisplayQuery, Displays } from "@src/webhooks/useDisplays";
-import { Pages } from "@src/webhooks/usePages";
 import Body from "./Body";
 import DisplaysForm from "./DisplaysForm";
 
@@ -11,26 +10,24 @@ const DisplaysBody = () => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [formID, setFormID] = useState(-1);
-  const [formMain, setFormMain] = useState("");
-  const [formSub, setFormSub] = useState("");
-  const [formDepartment, setFormDepartment] = useState("");
-  const [formDisplay, setFormDisplay] = useState("");
-  const [formBackground, setFormBackground] = useState("");
-  const [formPage, setFormPage] = useState<Pages | undefined>(undefined);
-  const [formPageID, setFormPageID] = useState<number | undefined>(undefined);
+  const [data, setData] = useState<Displays>({
+    ID: 0,
+    Main: "",
+    Sub: "",
+    Department: "",
+    Background: "",
+    Display: "",
+    Page: undefined,
+    Page_ID: 0
+  })
   const [submit, setSubmit] = useState(false);
 
   const [error, setError] = useState('');
-  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-    department: undefined,
-    searchText: undefined
-  });
+  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
-  const handleCreate = (Data: Displays) => {
+  const handleCreate = (data: Displays) => {
     setSubmit(true);
-    const { ID: _, ...newData } = Data;
-    newData.Page_ID = formPageID;
+    const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/display`, newData)
       .catch(err => {
@@ -40,12 +37,11 @@ const DisplaysBody = () => {
     return () => controller.abort();
   }
 
-  const handleUpdate = (Data: Displays) => {
+  const handleUpdate = (data: Displays) => {
     setSubmit(true);
-    if (Data.ID === -1) return;
-    Data.Page_ID = formPageID;
+    if (data.ID === 0) return;
     const controller = new AbortController();
-    axios.patch(`/api/display/${Data.ID}`, Data)
+    axios.patch(`/api/display/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -54,7 +50,7 @@ const DisplaysBody = () => {
   }
 
   const handleDelete = (ID: string) => {
-    if (+ID === -1) return;
+    if (+ID === 0) return;
     const controller = new AbortController();
     axios.delete(`/api/display/${ID}`)
       .catch(err => {
@@ -65,26 +61,17 @@ const DisplaysBody = () => {
     return () => controller.abort();
   }
 
-  const data: Displays = {
-    ID: formID,
-    Main: formMain,
-    Sub: formSub,
-    Department: formDepartment,
-    Display: formDisplay,
-    Background: formBackground,
-    Page: formPage,
-    Page_ID: formPageID
-  }
-
   const resetForm = () => {
-    setFormID(-1);
-    setFormMain("");
-    setFormSub("");
-    setFormDepartment("");
-    setFormDisplay("");
-    setFormBackground("");
-    setFormPage(undefined);
-    setFormPageID(0);
+    setData({
+      ID: 0,
+      Main: "",
+      Sub: "",
+      Department: "",
+      Background: "",
+      Display: "",
+      Page: undefined,
+      Page_ID: 0
+    })
   }
 
   const remount = () => updateKey(key + 1);
@@ -93,7 +80,7 @@ const DisplaysBody = () => {
     <Body
       resetForm={resetForm}
       onSearch={(searchText: string) => {
-        setDisplayQuery({department: undefined, searchText });
+        setDisplayQuery({ searchText });
       }}
       handleCreate={handleCreate}
       handleRead={
@@ -103,22 +90,25 @@ const DisplaysBody = () => {
           selectedDisplay={displayQuery.department}
           onSelectDisplay={
             (display) => {
-              setFormID(display.ID);
-              setFormMain(display.Main);
-              setFormSub(display.Sub);
-              setFormDepartment(display.Department);
-              setFormDisplay(display.Display);
-              setFormBackground(display.Background);
-              setFormPage(display.Page);
-              setFormPageID(display.Page_ID || 0);
+              setData({
+                ID: display.ID,
+                Main: display.Main,
+                Sub: display.Sub,
+                Department: display.Department,
+                Background: display.Background,
+                Display: display.Display,
+                Page: display.Page,
+                Page_ID: display.Page_ID || 0
+              });
               toggleSelected(true);
+              remount();
             }
           }
         />
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={formDisplay || "Select a display"}
+      header={data.Display || "Select a display"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -130,21 +120,23 @@ const DisplaysBody = () => {
       form={
         <DisplaysForm
           key={key}
-          id={formID}
+          id={data.ID}
           editMode={editMode}
           setEditMode={setEditMode}
           submit={submit}
           setSubmit={setSubmit}
           onChange={
             (display) => {
-              setFormID(display.ID);
-              setFormMain(display.Main);
-              setFormSub(display.Sub);
-              setFormDepartment(display.Department);
-              setFormDisplay(display.Display);
-              setFormBackground(display.Background);
-              setFormPage(display.Page);
-              setFormPageID(display.Page_ID);
+              setData({
+                ID: display.ID,
+                Main: display.Main,
+                Sub: display.Sub,
+                Department: display.Department,
+                Background: display.Background,
+                Display: display.Display,
+                Page: display.Page,
+                Page_ID: display.Page_ID || 0
+              });
             }
           }
         />
