@@ -2,18 +2,16 @@ import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
 import { DisplayQuery } from "@src/webhooks/useDisplays";
-import AdminBody from "./AdminBody";
+import Body from "./Body";
 import DepartmentList from "@src/components/DepartmentList";
 import PowerPointList from "@src/components/PowerPointList";
 
 /**
- * Admin view of the Departments table
- *
- * @param {Props} - the properties of the PowerPoint Admin View
+ * Admin view of the Slide Shows
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
-const AdminPowerPoints = (): JSX.Element => {
+const SlideShowsForm = (): JSX.Element => {
   const [key, updateKey] = useState(1);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -21,8 +19,8 @@ const AdminPowerPoints = (): JSX.Element => {
   const [department, setDepartment] = useState("");
   const [data, setData] = useState(null);
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-    department: null,
-    searchText: ''
+    department: undefined,
+    searchText: undefined
   });
 
   const handleFileChange = (event: any) => {
@@ -104,10 +102,10 @@ const AdminPowerPoints = (): JSX.Element => {
   };
 
   return (
-    <AdminBody
+    <Body
       resetForm={resetForm}
       onSearch={(searchText: string) => {
-        setDisplayQuery({ ...displayQuery, department: null, searchText });
+        setDisplayQuery({ department: undefined, searchText });
       }}
       handleCreate={handleCreate}
       handleRead={
@@ -151,4 +149,4 @@ const AdminPowerPoints = (): JSX.Element => {
 
 }
 
-export default AdminPowerPoints
+export default SlideShowsForm
