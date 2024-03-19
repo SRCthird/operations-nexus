@@ -8,7 +8,6 @@
 
 # testing
 /backup.backend/
-/src/Pages.tsx
 /coverage
 departments.json
 display.json
