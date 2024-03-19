@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Apps } from '@src/webhooks/useApps'
 import PowerBIForm from "./PowerBIForm";
 import { Pages } from "@src/webhooks/usePages";
+import PowerPointForm from "./PowerPointForm";
 
 interface Props {
   appNumber: number
@@ -66,6 +67,21 @@ const AppForm = ({ appNumber, appType, appID, editMode, setEditMode, getAppID, p
       <Box hidden={!viewApp}>
         {appType === Apps.PowerBI &&
           <PowerBIForm
+            appNumber={appNumber}
+            appID={appID || 0}
+            editMode={editMode}
+            setEditMode={setEditMode}
+            submit={submitApp}
+            setSubmit={setSubmitApp}
+            getAppID={
+              (id)=>{getAppID(id)}
+            }
+            parentID={parentID}
+            parentType={parentType}
+          />
+        }
+        {appType === Apps.PowerPoint &&
+          <PowerPointForm
             appNumber={appNumber}
             appID={appID || 0}
             editMode={editMode}
