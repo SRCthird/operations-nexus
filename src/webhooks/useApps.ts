@@ -12,11 +12,8 @@ export interface PowerBIApp {
 
 export interface PowerPointApp {
   ID: number;
-  Type: string;
-  PowerBI_ID: string;
-  Group_ID: string;
-  Custom_Embed?: string;
-  Page_Name?: string;
+  Main: boolean;
+  Department: string;
 }
 
 export enum Apps {
