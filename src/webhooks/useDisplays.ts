@@ -35,25 +35,11 @@ export interface Displays {
 }
 
 /**
- * The object returned by displays from the webhook.
- * 
- * @param {Displays} displays - The array of the Display objects
- * @param {string} error - The error message recieved from the backend.
- * @param {boolean} isLoading - Whether or not the data is currently being fetched.
- */
-type typeDisplays = {
-  displays: Displays[];
-  error: string;
-  displayLoading: boolean;
-}
-
-/**
  * The webhook that fetches the displays from the backend.
  * 
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
- * @returns {typeDisplays}
  */
-const useDisplay = ({ id, department, searchText }: DisplayQuery): typeDisplays => {
+const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
   const [displays, setDisplay] = useState<Displays[]>([]);
   const [error, setError] = useState('');
   const [displayLoading, setLoading] = useState(false);
@@ -101,4 +87,4 @@ const useDisplay = ({ id, department, searchText }: DisplayQuery): typeDisplays 
   return { displays, error, displayLoading };
 }
 
-export default useDisplay;
+export default useDisplays
