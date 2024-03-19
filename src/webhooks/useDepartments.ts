@@ -77,6 +77,7 @@ const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartm
       });
     return () => controller.abort();
   }, [searchText, department]);
+
   return { departments, error, departmentLoading }
 }
 
