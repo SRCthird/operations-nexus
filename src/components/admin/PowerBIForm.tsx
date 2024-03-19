@@ -58,7 +58,6 @@ const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmi
   const handleParentUpdate = ( selfID: number) => {
     const data = { [`App${appNumber}_ID`] : selfID };
     const controller = new AbortController();
-    console.log(`${parentType} ${parentID}`);
     axios.patch(`/api/page/${parentType}/${parentID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
@@ -93,15 +92,12 @@ const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmi
   };
 
   useEffect(()=>{
-    console.log("Submit")
     if (submit && data.ID !== 0) {
-      console.log("Update")
       handleUpdate(data);
       setSubmit(false);
     }
 
     if (submit && data.ID === 0) {
-      console.log("Create")
       handleCreate(data);
       setSubmit(false);
     }
