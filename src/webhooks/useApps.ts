@@ -50,7 +50,7 @@ const useApps = ({ app, ids }: Props) => {
       });
 
     return () => controller.abort();
-  }, [app, ids]);
+  }, [app]);
 
   return { apps, appError, isAppLoading };
 }
