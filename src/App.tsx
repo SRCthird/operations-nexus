@@ -13,7 +13,7 @@ const App = (): JSX.Element => {
 
   return (
     <Authenticate setToken={setToken}>
-      <Pages token={token}/>
+      <Pages token={token} />
     </Authenticate>
   );
 }
