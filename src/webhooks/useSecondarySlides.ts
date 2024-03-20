@@ -34,7 +34,7 @@ const useSecondarySlides = ({location}:Props): typeSecondarySlides => {
 
     useEffect(() => {
       const controller = new AbortController();
-      axios.get(`/static/${location}`, { signal: controller.signal })
+      axios.get(`/api/static/${location}`, { signal: controller.signal })
         .then(response => {
             setSecondarySlides(response.data);
         })
