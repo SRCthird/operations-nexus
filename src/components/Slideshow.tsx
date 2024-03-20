@@ -57,7 +57,7 @@ const Slideshow = ({main, location}:Props): JSX.Element => {
         <img
           key={index}
           className="slide"
-          src={`/static/${imageUrl}`}
+          src={`/api/static/${imageUrl}`}
           style={{ display: index === slideIndex ? 'block' : 'none' }}
           alt={`Slide ${index}`}
         />
