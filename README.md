@@ -65,11 +65,20 @@ npm run init
 
 **Dev Mode**
 This command will allow you to run the frontend in dev mode. 
-At this moment I don't believe MSAL.js (Microsofts OAuth) can be built and served so this will be the primary command for running the backend.
-Navigate to the frontend directory and run the following command:
-
 ```bash
 npm run frontend:dev
+```
+
+**Building**
+This command will delete the `/build/` directory and rebuild a static server:
+```bash
+npm run frontend:build
+```
+
+**Production**
+This command serves the built server, without watching for file modification:
+```bash
+npm run frontend:prod
 ```
 
 ### Running the Backend
@@ -82,7 +91,7 @@ npm run backend:dev
 ```
 
 **Building**
-This command will delete the `backend/dist/` file location and rebuild a static server for the backend:
+This command will delete the `backend/dist/` directory and rebuild a static server for the backend:
 ```bash
 npm run backend:build
 ```
