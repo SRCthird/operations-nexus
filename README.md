@@ -22,9 +22,8 @@ The application is built with a variety of modern technologies to ensure efficie
 - **TypeScript**: Superset of JavaScript that adds static types, enhancing developer productivity and code predictability.
 
 **Backend:**
-- **Node.js**: JavaScript runtime built on Chrome's V8 JavaScript engine, facilitating non-blocking, event-driven architecture.
-- **TypeScript**: For leveraging static typing and object-oriented components.
-- **Python**: Employed for src file monitoring.
+- **Nest.js**: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications using TypeScript.
+- **Python**: Used for src file monitoring and PowerPoint to PNG conversion.
 
 ## Getting Started
 
@@ -58,35 +57,49 @@ npm run init
     - There you will be able to update any information required.
 
 2. `.env`
-    - `.env` will be created on initialization of Prisma in `/backend`. You will need to add an endpoint to your database.
+    - There are two `.env` files that you can use.
+    - `/backend/.env` will be created on initialization of Prisma in `/backend`. You will need to add an endpoint to your database.
+    - `/.env` is optional but hold the react runtime variables like HTTPS and HOST.
 
-### Running the Application
+### Running the Frontend
 
-**Running the Frontend**
-
+**Dev Mode**
+This command will allow you to run the frontend in dev mode. 
+At this moment I don't believe MSAL.js (Microsofts OAuth) can be built and served so this will be the primary command for running the backend.
 Navigate to the frontend directory and run the following command:
 
 ```bash
 npm run frontend:dev
 ```
 
-**Running the Backend**
+### Running the Backend
 
-From the frontend directory use the command:
-
+**Dev Mode**
+This command will delete all physical files uploaded to the server, but will monitor file updates.
 ```bash
+# Useing this command will delete all physical files uploaded to the server.
 npm run backend:dev
 ```
 
-**Running the Slideshow change checker**
-
-From the frontend directory use the command:
-
+**Building**
+This command will delete the `backend/dist/` file location and rebuild a static server for the backend:
 ```bash
-npm run slides
+npm run backend:build
 ```
 
-test-slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/src/slides.py).
+**Production**
+This command serves the built backend server, without watching for file modification:
+```bash
+npm run backend:prod
+```
+
+**Running the Slideshow change checker**
+This will monitor changes to the `pptx/`directory in the backend and convert all PowerPoints to PNGs while updateing the version number in the database.
+```bash
+npm run backend:slides
+```
+
+backend:slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/src/slides.py).
 
 ### API Endpoints
 
