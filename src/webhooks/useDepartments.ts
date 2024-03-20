@@ -78,6 +78,10 @@ const useDepartment = ({ department, searchText }: DepartmentQuery): typeDepartm
     return () => controller.abort();
   }, [searchText, department]);
 
+  if (typeof departments === "object") {
+    setDepartment([]);
+  };
+
   return { departments, error, departmentLoading }
 }
 

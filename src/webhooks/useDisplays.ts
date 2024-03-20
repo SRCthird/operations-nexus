@@ -84,6 +84,10 @@ const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
     }
   }, [department, searchText, id]);
 
+  if (typeof displays === "object") {
+    setDisplay([]);
+  };
+
   return { displays, error, displayLoading };
 }
 
