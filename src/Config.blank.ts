@@ -25,27 +25,6 @@ export const clientId: string = "";
 export const clientSecret: string = "";
 
 /**
- * Id of the workspace where the report is hosted
- */
-export const groupId: string[] = [
-    ""
-];
-
-/**
- * Id of the report to be embedded
- */
-export const reportId: string[] = [
-    ""
-];
-
-/**
- * If a report has mulitple pages, this is the index of the page to be embedded.
- */
-export const pageName: string[] = [
-    ""
-];
-
-/**
  * Redirect URI of the AAD app. Must be http://localhost:port or https://{domain}
  */
 export const redirectUri: string = "";
