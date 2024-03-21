@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  * @param {string} Slide - The location of the slide in the backend.
  */
 export interface Slides {
-    Slide: string;
+  Slide: string;
 }
 
 /**
@@ -27,23 +27,23 @@ type typeMainSlides = {
  * @returns {typeMainSlides} - This webhook returns the array of slides from static/main 
  */
 const useMainSlides = (): typeMainSlides => {
-    const [mainSlides, setMainSlides] = useState<Slides[]>([]);
-    const [slideError, setError] = useState('');
+  const [mainSlides, setMainSlides] = useState<Slides[]>([]);
+  const [slideError, setError] = useState('');
 
-    useEffect(() => {
-      const controller = new AbortController();
-      axios.get('/api/static/All', { signal: controller.signal })
-        .then(response => {
-            setMainSlides(response.data);
-        })
-        .catch(err => {
-          if (err instanceof CanceledError) return;
-          setError(err.message);
+  useEffect(() => {
+    const controller = new AbortController();
+    axios.get('/api/static/All', { signal: controller.signal })
+      .then(response => {
+        setMainSlides(response.data);
+      })
+      .catch(err => {
+        if (err instanceof CanceledError) return;
+        setError(err.message);
       });
-      return () => controller.abort();
-    }, []);
+    return () => controller.abort();
+  }, []);
 
-    return { mainSlides, slideError }
+  return { mainSlides, slideError }
 }
 
 export default useMainSlides;

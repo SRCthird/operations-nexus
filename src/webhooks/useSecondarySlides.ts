@@ -8,7 +8,7 @@ import { Slides } from '@hooks/useMainSlides';
  * @param {string} location - The name of the directory of slide in the backend.
  */
 interface Props {
-    location?: string
+  location?: string
 }
 
 /**
@@ -18,8 +18,8 @@ interface Props {
  * @param {string} slideError - The error message if the secondary folder cannot be retrieved.
  */
 type typeSecondarySlides = {
-    secondarySlides: Slides[];
-    secondarySlideError: string;
+  secondarySlides: Slides[];
+  secondarySlideError: string;
 }
 
 /**
@@ -28,24 +28,24 @@ type typeSecondarySlides = {
  * @param {interface} Props - The properties of the Secondary Slides webhook.
  * @returns {typeSecondarySlides} - The object returned from the webhook.
  */
-const useSecondarySlides = ({location}:Props): typeSecondarySlides => {
-    const [secondarySlides, setSecondarySlides] = useState<Slides[]>([]);
-    const [secondarySlideError, setError] = useState('');
+const useSecondarySlides = ({ location }: Props): typeSecondarySlides => {
+  const [secondarySlides, setSecondarySlides] = useState<Slides[]>([]);
+  const [secondarySlideError, setError] = useState('');
 
-    useEffect(() => {
-      const controller = new AbortController();
-      axios.get(`/api/static/${location}`, { signal: controller.signal })
-        .then(response => {
-            setSecondarySlides(response.data);
-        })
-        .catch(err => {
-          if (err instanceof CanceledError) return;
-          setError(err.message);
+  useEffect(() => {
+    const controller = new AbortController();
+    axios.get(`/api/static/${location}`, { signal: controller.signal })
+      .then(response => {
+        setSecondarySlides(response.data);
+      })
+      .catch(err => {
+        if (err instanceof CanceledError) return;
+        setError(err.message);
       });
-      return () => controller.abort();
-    }, [location]);
+    return () => controller.abort();
+  }, [location]);
 
-    return { secondarySlides, secondarySlideError }
+  return { secondarySlides, secondarySlideError }
 }
 
 export default useSecondarySlides;
