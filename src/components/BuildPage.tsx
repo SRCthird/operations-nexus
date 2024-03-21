@@ -1,9 +1,11 @@
 import NotFound from "@pages/NotFound";
 import ThreeOnTwo from "@templates/ThreeOnTwo";
 import { Displays } from "@hooks/useDisplays";
-import usePages from "@hooks/usePages";
+import usePages, { Pages } from "@hooks/usePages";
 import { emptyThreeOnTwoPage, ThreeOnTwoPage } from "@components/admin/templates/ThreeOnTwoForm";
+import { emptyFullDisplayPage, FullDisplayPage } from "./admin/templates/FullDisplayForm";
 import BuildApp from "@components/BuildApp";
+import FullDisplay from "@src/templates/FullDisplay";
 
 interface Props {
   token: string;
@@ -17,7 +19,7 @@ const BuildPage = ({ token, slideShowKey, display }: Props) => {
     ids: [display.Page_ID || 0]
   })
 
-  if (display.Page === "ThreeOnTwo") {
+  if (display.Page === Pages.ThreeOnTwo) {
     const page: ThreeOnTwoPage = pages[0] || emptyThreeOnTwoPage;
     return (
       <ThreeOnTwo
@@ -56,6 +58,22 @@ const BuildPage = ({ token, slideShowKey, display }: Props) => {
           <BuildApp
             type={page.App5} 
             id={page.App5_ID || 0}
+            slideShowKey={slideShowKey}
+          />
+        }
+      />
+    )
+  } else if (display.Page === Pages.FullDisplay) {
+    const page: FullDisplayPage = pages[0] || emptyFullDisplayPage;
+    return (
+      <FullDisplay
+        title={page.Title}
+        backgroundColor={page.Background}
+        backgroundGradient={page.Gradient}
+        app={
+          <BuildApp
+            type={page.App1} 
+            id={page.App1_ID || 0}
             slideShowKey={slideShowKey}
           />
         }
