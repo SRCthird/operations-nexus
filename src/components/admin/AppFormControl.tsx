@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import { Apps } from '@src/webhooks/useApps';
-import { ThreeOnTwoPage } from './ThreeOnTwoForm';
+import { ThreeOnTwoPage } from '@components/admin/templates/ThreeOnTwoForm';
 import AppForm from '@components/admin/AppForm';
 import { Pages } from '@src/webhooks/usePages';
 

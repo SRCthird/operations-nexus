@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import useDisplays, { Displays } from "@hooks/useDisplays";
 import usePages, { Pages } from "@hooks/usePages";
 import useDepartment from "@hooks/useDepartments";
-import ThreeOnTwoForm from "@components/admin/ThreeOnTwoForm";
+import ThreeOnTwoForm from "@components/admin/templates/ThreeOnTwoForm";
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 interface Props {
