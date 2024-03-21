@@ -17,8 +17,8 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    leftSection?: ReactNode;
-    rightSection?: ReactNode;
+    app1?: ReactNode;
+    app2?: ReactNode;
 }
 
 /**
@@ -27,7 +27,7 @@ interface Props {
  * @param {interface} Props - The properties of the SplitScreen component.  
  * @returns {JSX.Element} - Returns the SplitScreen component.  
  */
-const SplitScreen = ({ title, backgroundColor, backgroundGradient, leftSection, rightSection }: Props): JSX.Element => {
+const SplitScreen = ({ title, backgroundColor, backgroundGradient, app1, app2 }: Props): JSX.Element => {
     // Use webhook to set background colors
     useBackgroundEffect(backgroundColor, backgroundGradient);
 
@@ -36,10 +36,10 @@ const SplitScreen = ({ title, backgroundColor, backgroundGradient, leftSection, 
             <Title title={title}/>
             <Grid templateColumns="repeat(2, 1fr)" gap={2}>
                 <GridItem className="Containers" w="100%" h="84vh">
-                    {leftSection}
+                    {app1}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="84vh">
-                    {rightSection}
+                    {app2}
                 </GridItem>
             </Grid>
         </div>

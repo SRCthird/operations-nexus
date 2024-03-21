@@ -16,7 +16,7 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    child: ReactNode;
+    app: ReactNode;
 }
 
 /**
@@ -25,7 +25,7 @@ interface Props {
  * @param {object} Props - The properties of the FullDisplay component. 
  * @returns {JSX.Element} - Returns the FullDisplay component.  
  */
-const FullDisplay = ({ title, child, backgroundColor, backgroundGradient }: Props): JSX.Element => {
+const FullDisplay = ({ title, app, backgroundColor, backgroundGradient }: Props): JSX.Element => {
     // Use webhook to set background colors
     useBackgroundEffect(backgroundColor, backgroundGradient);
 
@@ -33,7 +33,7 @@ const FullDisplay = ({ title, child, backgroundColor, backgroundGradient }: Prop
         <div className="full-display">
             <Title title={title} />
             <Box gap={6} margin={6} className="Containers">
-                {child}
+                {app}
             </Box>
         </div>
     );

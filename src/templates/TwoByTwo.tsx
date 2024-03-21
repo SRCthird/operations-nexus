@@ -19,10 +19,10 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    topLeft?: ReactNode;
-    topRight?: ReactNode;
-    bottomLeft?: ReactNode;
-    bottomRight?: ReactNode;
+    app1?: ReactNode;
+    app2?: ReactNode;
+    app3?: ReactNode;
+    app4?: ReactNode;
 }
 
 /**
@@ -31,7 +31,7 @@ interface Props {
  * @param {interface} Props - The properties of the TwoByTwo component.  
  * @returns {JSX.Element} - Returns the TwoByTwo component.  
  */
-const TwoByTwo = ({ title, backgroundColor, backgroundGradient, topLeft, topRight, bottomLeft, bottomRight }: Props): JSX.Element => {
+const TwoByTwo = ({ title, backgroundColor, backgroundGradient, app1, app2, app3, app4 }: Props): JSX.Element => {
     // Use webhook to set background
     useBackgroundEffect(backgroundColor, backgroundGradient);
 
@@ -40,18 +40,18 @@ const TwoByTwo = ({ title, backgroundColor, backgroundGradient, topLeft, topRigh
             <Title title={title}/>
             <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                 <GridItem className="Containers" w="100%" h="41vh">
-                    {topLeft}
+                    {app1}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="41vh">
-                    {topRight}
+                    {app2}
                 </GridItem>
             </Grid>
             <Grid templateColumns="repeat(2, 1fr)" gap={6} paddingTop={6}>
                 <GridItem className="Containers" w="100%" h="41vh">
-                    {bottomLeft}
+                    {app3}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="41vh">
-                    {bottomRight}
+                    {app4}
                 </GridItem>
             </Grid>
         </div>

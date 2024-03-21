@@ -19,10 +19,10 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    leftPanel?: ReactNode;
-    data1?: ReactNode;
-    data2?: ReactNode;
-    data3?: ReactNode;
+    app1?: ReactNode;
+    app2?: ReactNode;
+    app3?: ReactNode;
+    app4?: ReactNode;
 }
 
 /**
@@ -31,7 +31,7 @@ interface Props {
  * @param {interface} Props - The properties of the ThreeOnTwo component.  
  * @returns {JSX.Element} - Returns the ThreeOnTwo component.  
  */
-const OneByThree = ({ title, backgroundColor, backgroundGradient, leftPanel, data1, data2, data3 }: Props): JSX.Element => {
+const OneByThree = ({ title, backgroundColor, backgroundGradient, app1, app2, app3, app4 }: Props): JSX.Element => {
     // Use webhook to set background
     useBackgroundEffect(backgroundColor, backgroundGradient);
 
@@ -44,16 +44,16 @@ const OneByThree = ({ title, backgroundColor, backgroundGradient, leftPanel, dat
                 gap={6}
             >   
                 <GridItem rowSpan={3} colSpan={1} className="Containers" w="70vw" h="83vh">
-                    {leftPanel}
+                    {app1}
                 </GridItem>
                 <GridItem colSpan={1} className="Containers" w="100%" h="26vh">
-                    {data1}
+                    {app2}
                 </GridItem>
                 <GridItem colSpan={1} className="Containers" w="100%" h="26vh">
-                    {data2}
+                    {app3}
                 </GridItem>
                 <GridItem colSpan={1} className="Containers" w="100%" h="26vh">
-                    {data3}
+                    {app4}
                 </GridItem>
             </Grid>
         </div>

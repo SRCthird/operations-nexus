@@ -20,11 +20,11 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    data1?: ReactNode;
-    data2?: ReactNode;
-    data3?: ReactNode;
-    data4?: ReactNode;
-    information?: ReactNode;
+    app1?: ReactNode;
+    app2?: ReactNode;
+    app3?: ReactNode;
+    app4?: ReactNode;
+    app5?: ReactNode;
 }
 
 /**
@@ -33,7 +33,7 @@ interface Props {
  * @param {interface} Props - The properties of the ThreeOnTwo component.  
  * @returns {JSX.Element} - Returns the ThreeOnTwo component.  
  */
-const ThreeOnTwo = ({ title, backgroundColor, backgroundGradient, data1, data2, data3, data4, information }: Props): JSX.Element => {
+const ThreeOnTwo = ({ title, backgroundColor, backgroundGradient, app1, app2, app3, app4, app5 }: Props): JSX.Element => {
     // Use webhook to set background colors
     useBackgroundEffect(backgroundColor, backgroundGradient);
 
@@ -42,21 +42,21 @@ const ThreeOnTwo = ({ title, backgroundColor, backgroundGradient, data1, data2, 
             <Title title={title}/>
             <Grid templateColumns="repeat(3, 1fr)" gap={6}>
                 <GridItem className="Containers" w="100%" h="30vh">
-                    {data1}
+                    {app1}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="30vh">
-                    {data2}
+                    {app2}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="30vh">
-                    {data3}
+                    {app3}
                 </GridItem>
             </Grid>
             <Grid templateColumns="repeat(2, 1fr)" gap={6} paddingTop={6}>
                 <GridItem className="Containers" w="100%" h="52vh">
-                    {information}
+                    {app4}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="52vh">
-                    {data4}
+                    {app5}
                 </GridItem>
             </Grid>
         </div>

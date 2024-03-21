@@ -8,11 +8,11 @@ interface Props {
     title: string;
     backgroundColor: string;
     backgroundGradient?: string;
-    mainChild: ReactNode;
-    circleChild: ReactNode;
+    app1: ReactNode;
+    app2: ReactNode;
 }
 
-const FullWithCircle = ({ title, mainChild, circleChild, backgroundColor, backgroundGradient }: Props): JSX.Element => {
+const FullWithCircle = ({ title, app1, app2, backgroundColor, backgroundGradient }: Props): JSX.Element => {
     // Use webhook to set background
     useBackgroundEffect(backgroundColor, backgroundGradient);
     
@@ -20,9 +20,9 @@ const FullWithCircle = ({ title, mainChild, circleChild, backgroundColor, backgr
         <div className="full-with-circle">
             <Title title={title} />
             <Box gap={6} margin={6} className="Containers" w="100%" h="80vh" >
-                {mainChild}
+                {app1}
                 <Box borderRadius="50%" width="45vh" height="45vh" className="Circle">
-                    {circleChild}
+                    {app2}
                 </Box>
             </Box>
         </div>
