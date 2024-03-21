@@ -64,6 +64,52 @@ enum Pages {
   TwoByTwo
 }
 
+model Page_FullDisplay {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  App1       Apps?
+  App1_ID    Int?
+}
+
+model Page_FullWithCircle {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  App1       Apps?
+  App1_ID    Int?
+  App2       Apps?
+  App2_ID    Int?
+}
+
+model Page_OneByThree {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  App1       Apps?
+  App1_ID    Int?
+  App2       Apps?
+  App2_ID    Int?
+  App3       Apps?
+  App3_ID    Int?
+  App4       Apps?
+  App4_ID    Int?
+}
+
+model Page_SplitScreen {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  App1       Apps?
+  App1_ID    Int?
+  App2       Apps?
+  App2_ID    Int?
+}
+
 model Page_ThreeOnTwo {
   ID         Int     @id @default(autoincrement())
   Title      String
@@ -79,6 +125,21 @@ model Page_ThreeOnTwo {
   App4_ID    Int?
   App5       Apps?
   App5_ID    Int?
+}
+
+model Page_TwoByTwo {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  App1       Apps?
+  App1_ID    Int?
+  App2       Apps?
+  App2_ID    Int?
+  App3       Apps?
+  App3_ID    Int?
+  App4       Apps?
+  App4_ID    Int?
 }
 
 enum Apps {
