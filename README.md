@@ -110,6 +110,16 @@ npm run backend:slides
 
 backend:slides will continue to run until the backend is closed. Although you can set a custom stop condition within `stop()` in [slides.py](./backend/src/slides.py).
 
+### Appding new Templates
+
+**Template Location**
+All templates are located in `src/templates/`. You can use MasterTemplate.tsx as a starting point.
+
+**Template Enum***
+After creating the template you need to add it to the Templates Enum in `src/webhooks/usePages`
+
+**Template Admin Form**
+Next you need to add a new Template Form in `src/components/admin/templates/`
 ### API Endpoints
 
 **Azure API Endpoint**
