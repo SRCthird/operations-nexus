@@ -10,9 +10,10 @@ import { ActionTrackerModule } from './action-tracker/action-tracker.module';
 import { PageThreeOnTwoModule } from './page_three-on-two/page_three-on-two.module';
 import { AppPowerBiModule } from './app_power-bi/app_power-bi.module';
 import { AppPowerPointModule } from './app_power-point/app_power-point.module';
+import { PageFullDisplayModule } from './page_full-display/page_full-display.module';
 
 @Module({
-  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, ActionTrackerModule, PageThreeOnTwoModule, AppPowerBiModule, AppPowerPointModule,],
+  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, ActionTrackerModule, PageThreeOnTwoModule, AppPowerBiModule, AppPowerPointModule, PageFullDisplayModule,],
   controllers: [AppController],
   providers: [AppService],
 })
