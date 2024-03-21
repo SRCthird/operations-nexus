@@ -32,7 +32,7 @@ const useMainSlides = (): typeMainSlides => {
 
     useEffect(() => {
       const controller = new AbortController();
-      axios.get('/static/All', { signal: controller.signal })
+      axios.get('/api/static/All', { signal: controller.signal })
         .then(response => {
             setMainSlides(response.data);
         })
