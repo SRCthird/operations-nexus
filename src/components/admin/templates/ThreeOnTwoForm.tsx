@@ -159,22 +159,6 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         />
         <FormHelperText>The name of the area where this display will be used.</FormHelperText>
       </FormControl>
-      <FormControl isDisabled={!editMode}>
-        <FormLabel>App 1</FormLabel>
-        <Select
-          value={data.App1 ?? ""}
-          onChange={(value) => {
-            setData({ ...data, App1: value.target.value as Apps });
-          }}
-        >
-          {data.App1 ?? <option value={""}></option>}
-          {Object.values(Apps).map((pageName) => (
-            <option key={pageName} value={pageName}>
-              {pageName}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
       <AppFormControl
         appNumber={1}
         appType={data.App1}
