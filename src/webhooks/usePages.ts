@@ -7,6 +7,7 @@ import { useEffect, useState, useRef} from "react";
 export enum Pages {
   ThreeOnTwo = 'ThreeOnTwo',
   FullDisplay = 'FullDisplay'
+  // Add new pages here!
 }
 
 interface Props {
