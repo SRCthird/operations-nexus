@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import { Apps } from '@src/webhooks/useApps';
-import { ThreeOnTwoPage } from '@components/admin/templates/ThreeOnTwoForm';
 import AppForm from '@components/admin/AppForm';
 import { Pages } from '@src/webhooks/usePages';
 
@@ -18,8 +17,6 @@ interface Props {
   parentType: Pages;
   getAppID: (value: number) => void;
 }
-
-type PageTypes = ThreeOnTwoPage;
 
 const AppFormControl = ({
   appNumber,
@@ -41,7 +38,7 @@ const AppFormControl = ({
         <Select
           value={appType ?? ''}
           onChange={(value) => {
-            setData((prevData: PageTypes) => ({
+            setData((prevData: any) => ({
               ...prevData,
               [`App${appNumber}`]: value.target.value as Apps,
             }));
@@ -60,7 +57,7 @@ const AppFormControl = ({
         <Select
           value={appID ?? ''}
           onChange={(value) => {
-            setData((prevData: PageTypes) => ({
+            setData((prevData: any) => ({
               ...prevData,
               [`App${appNumber}_ID`]: +value.target.value,
             }));
