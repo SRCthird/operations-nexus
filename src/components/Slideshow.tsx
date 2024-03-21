@@ -1,8 +1,8 @@
 import { useEffect, useState} from 'react';
-import useMainSlides from '../webhooks/useMainSlides';
-import useDelay from '../webhooks/useDelay';
-import useSecondarySlides from '../webhooks/useSecondarySlides';
-import '../styles/Slideshow.css';
+import useMainSlides from '@hooks/useMainSlides';
+import useDelay from '@hooks/useDelay';
+import useSecondarySlides from '@hooks/useSecondarySlides';
+import '@styles/Slideshow.css';
 
 /**
  * Properties for the Slideshow component.

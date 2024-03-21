@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Pages } from "./usePages";
+import { Pages } from "@hooks/usePages";
 
 /**
  * The query object used to specify displays from the backend.

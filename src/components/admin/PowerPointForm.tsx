@@ -1,9 +1,9 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Pages } from "@src/webhooks/usePages";
+import { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import { Apps, PowerPointApp } from '@src/webhooks/useApps'
-import useDepartment from "@src/webhooks/useDepartments";
+import { Apps, PowerPointApp } from '@hooks/useApps'
+import useDepartment from "@hooks/useDepartments";
 
 export const emptyPowerPoint: PowerPointApp = {
   ID: 0,

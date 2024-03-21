@@ -1,9 +1,9 @@
 import { AddIcon, ArrowLeftIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Box, Grid, GridItem, Heading, useMediaQuery, useDisclosure } from "@chakra-ui/react"
 import { useState, ReactNode } from "react";
-import SearchInput from "@src/components/SearchInput";
-import "@src/styles/Admin.css"
-import DeleteConfirmation from "@src/components/DeleteConfirmation";
+import SearchInput from "@components/SearchInput";
+import "@styles/Admin.css"
+import DeleteConfirmation from "@components/DeleteConfirmation";
 
 /**
  * Properties for the Admin Body

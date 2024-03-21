@@ -1,6 +1,6 @@
-import { msalInstance } from "../index";
+import { msalInstance } from "@src/index";
 import {InteractionRequiredAuthError} from '@azure/msal-browser';
-import { loginRequest } from "../authConfig";
+import { loginRequest } from "@src/authConfig";
 
 /**
  * Refreshes the permissions of the user.

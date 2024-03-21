@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models, Report } from 'powerbi-client';
-import { tryRefreshUserPermissions } from './AzureUtils';
-import { getPowerBIToken, refreshAADToken } from "./AzureUtils"; 
-import '../styles/PowerBI.css';
-import { msalInstance } from '..';
+import { tryRefreshUserPermissions, getPowerBIToken, refreshAADToken } from '@components/AzureUtils';
+import '@styles/PowerBI.css';
+import { msalInstance } from '@src/index';
 
 /**
  * Properties of the PowerBI component.

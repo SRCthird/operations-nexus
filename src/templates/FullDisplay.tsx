@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import '../styles/FullDisplay.css';
-import useBackgroundEffect from "../webhooks/useBackgroundEffect";
-import Title from "./Title";
+import '@styles/FullDisplay.css';
+import useBackgroundEffect from "@hooks/useBackgroundEffect";
+import Title from "@components/Title";
 
 /**
  * Properties for the FullDisplay component.

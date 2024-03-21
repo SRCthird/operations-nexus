@@ -1,9 +1,9 @@
-import { Text } from "@chakra-ui/react";
-import useApps, { Apps, PowerBIApp, PowerPointApp } from "@src/webhooks/useApps";
+import { Box, Spinner } from "@chakra-ui/react";
+import useApps, { Apps, PowerBIApp, PowerPointApp } from "@hooks/useApps";
 import { emptyPowerBI, PowerBITypes } from "./admin/PowerBIForm";
-import { emptyPowerPoint } from "./admin/PowerPointForm";
-import PowerBI from "./PowerBI";
-import Slideshow from "./Slideshow";
+import { emptyPowerPoint } from "@components/admin/PowerPointForm";
+import PowerBI from "@components/PowerBI";
+import Slideshow from "@components/Slideshow";
 
 interface Props {
   type?: Apps;
@@ -12,12 +12,12 @@ interface Props {
 }
 
 const BuildApp = ({ type, id, slideShowKey }: Props) => {
-  const { apps, isAppLoading } = useApps({ app: type, ids: [id]});
-  
+  const { apps, isAppLoading } = useApps({ app: type, ids: [id] });
+
   if (type === Apps.PowerBI && !isAppLoading) {
-    const app: PowerBIApp = apps[0] || emptyPowerBI;  
+    const app: PowerBIApp = apps[0] || emptyPowerBI;
     let appType: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
-    switch(app.Type) {
+    switch (app.Type) {
       case PowerBITypes.Dashboard: {
         appType = 'dashboard';
         break;
@@ -40,7 +40,7 @@ const BuildApp = ({ type, id, slideShowKey }: Props) => {
       }
     }
     return (
-      <PowerBI 
+      <PowerBI
         type={appType}
         reportId={app.PowerBI_ID}
         groupId={app.Group_ID}
@@ -48,7 +48,7 @@ const BuildApp = ({ type, id, slideShowKey }: Props) => {
         pageName={app.Page_Name}
       />
     )
-  } 
+  }
   if (type === Apps.PowerPoint) {
     const app: PowerPointApp = apps[0] || emptyPowerPoint;
     return (
@@ -60,7 +60,9 @@ const BuildApp = ({ type, id, slideShowKey }: Props) => {
     )
   }
   return (
-    <Text>Error loading application</Text>
+    <Box paddingLeft={'40%'} paddingTop={'10vh'}>
+      <Spinner padding={'20%'} boxSize={'50px'} />
+    </Box>
   )
 }
 

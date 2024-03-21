@@ -3,7 +3,12 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@styles/*": ["src/styles/*"],
+      "@pages/*": ["src/pages/*"],
+      "@templates/*": ["src/templates/*"],
+      "@hooks/*": ["src/webhooks/*"],
+      "@components/*": ["src/components/*"]
     },
     "target": "es5",
     "lib": [
@@ -26,6 +31,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "src/pages",
+    "src/templates",
+    "src/components",
+    "src/webhooks"
   ]
 }

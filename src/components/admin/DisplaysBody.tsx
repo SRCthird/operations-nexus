@@ -2,9 +2,9 @@ import { useState } from "react";
 import DisplayList from "@src/components/DisplayList";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery, Displays } from "@src/webhooks/useDisplays";
-import Body from "./Body";
-import DisplaysForm from "./DisplaysForm";
+import { DisplayQuery, Displays } from "@hooks/useDisplays";
+import Body from "@components/admin/Body";
+import DisplaysForm from "@components/admin/DisplaysForm";
 
 const DisplaysBody = () => {
   const [key, updateKey] = useState(0);

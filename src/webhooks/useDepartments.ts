@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, CanceledError } from "axios";
+import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 /**

@@ -1,7 +1,7 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Grid, Input, Spinner } from "@chakra-ui/react";
-import useSlideshow from "../webhooks/useSlideshow";
-import PowerPointListItem from "./PowerPointListItem";
+import useSlideshow from "@hooks/useSlideshow";
+import PowerPointListItem from "@components/PowerPointListItem";
 
 interface Props {
   handleFileChange: (event: any) => void;

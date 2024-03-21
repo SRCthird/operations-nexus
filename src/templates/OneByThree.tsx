@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
-import '../styles/OneByThree.css';
-import Title from './Title';
-import useBackgroundEffect from '../webhooks/useBackgroundEffect';
+import '@styles/OneByThree.css';
+import Title from '@components/Title';
+import useBackgroundEffect from '@hooks/useBackgroundEffect';
 
 /**
  * Properties for the OneByThree component.

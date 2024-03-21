@@ -1,5 +1,5 @@
 import { Heading } from '@chakra-ui/react';
-import { DisplayQuery } from '../webhooks/useDisplays';
+import { DisplayQuery } from '@hooks/useDisplays';
 
 /**
  * Props for the DisplayHeading component.

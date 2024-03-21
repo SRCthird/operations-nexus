@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
-import useDepartment, { Departments } from "@src/webhooks/useDepartments";
+import useDepartment, { Departments } from "@hooks/useDepartments";
 
 /**
  * Properties of the Departments Admin Form

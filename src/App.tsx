@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import { useState } from 'react';
-import Authenticate from './components/Authenticate';
-import Pages from "./Pages"
+import Authenticate from '@components/Authenticate';
+import Pages from "@src/Pages"
 
 /**
  * Renders the application.

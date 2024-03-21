@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
-import NotFound from './pages/NotFound';
-import Admin from './pages/Admin';
-import Home from './pages/Home';
-import useDisplays from './webhooks/useDisplays';
-import BuildPage from './components/BuildPage';
+import NotFound from '@pages/NotFound';
+import Admin from '@pages/Admin';
+import Home from '@pages/Home';
+import useDisplays from '@hooks/useDisplays';
+import BuildPage from '@components/BuildPage';
 import axios, { CanceledError } from 'axios';
-import useDepartments from './webhooks/useDepartments';
+import useDepartments from '@hooks/useDepartments';
 
 interface Props {
   token: string;

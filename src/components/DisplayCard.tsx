@@ -1,5 +1,5 @@
 import { Card, CardBody, Heading, Image } from '@chakra-ui/react'
-import { Displays } from "../webhooks/useDisplays"
+import { Displays } from "@hooks/useDisplays"
 import { useNavigate  } from "react-router-dom";
 
 interface Props {

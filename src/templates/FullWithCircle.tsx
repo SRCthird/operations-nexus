@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import '../styles/FullWithCircle.css';
-import useBackgroundEffect from "../webhooks/useBackgroundEffect";
-import Title from "./Title";
+import '@styles/FullWithCircle.css';
+import useBackgroundEffect from "@hooks/useBackgroundEffect";
+import Title from "@components/Title";
 
 interface Props {
     title: string;

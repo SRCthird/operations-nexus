@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Box, Grid, GridItem, Show } from '@chakra-ui/react'
-import NavBar from '../components/NavBar';
-import DisplayGrid from '../components/DisplayGrid';
-import DepartmentList from '../components/DepartmentList';
-import DisplayHeading from '../components/DisplayHeading';
-import { DisplayQuery } from '../webhooks/useDisplays';
+import NavBar from '@components/NavBar';
+import DisplayGrid from '@components/DisplayGrid';
+import DepartmentList from '@components/DepartmentList';
+import DisplayHeading from '@components/DisplayHeading';
+import { DisplayQuery } from '@hooks/useDisplays';
 import { Departments } from '@src/webhooks/useDepartments';
 
 /**

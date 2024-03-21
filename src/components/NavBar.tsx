@@ -1,7 +1,7 @@
 import { HStack, Image } from '@chakra-ui/react'
-import Logo from '../assets/logo.png' // TODO: Change logo to one thats not depricated
-import ColorModeSwitch from './ColorModeSwitch'
-import SearchInput from './SearchInput'
+import Logo from '@src/assets/logo.png' // TODO: Change logo to one thats not depricated
+import ColorModeSwitch from '@components/ColorModeSwitch'
+import SearchInput from '@components/SearchInput'
 
 interface Props {
   /**

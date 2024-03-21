@@ -1,8 +1,8 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Pages } from "@src/webhooks/usePages";
+import { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import { Apps, PowerBIApp } from '@src/webhooks/useApps'
+import { Apps, PowerBIApp } from '@hooks/useApps'
 
 export const emptyPowerBI: PowerBIApp = {
   ID: 0,

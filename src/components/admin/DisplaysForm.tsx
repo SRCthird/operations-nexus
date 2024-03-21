@@ -2,10 +2,10 @@ import { FormControl, FormLabel, Input, FormHelperText, Select, Box, Text, Simpl
 import { useEffect, useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
-import useDisplays, { Displays } from "@src/webhooks/useDisplays";
-import usePages, { Pages } from "@src/webhooks/usePages";
-import useDepartment from "@src/webhooks/useDepartments";
-import ThreeOnTwoForm from "./ThreeOnTwoForm";
+import useDisplays, { Displays } from "@hooks/useDisplays";
+import usePages, { Pages } from "@hooks/usePages";
+import useDepartment from "@hooks/useDepartments";
+import ThreeOnTwoForm from "@components/admin/ThreeOnTwoForm";
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 interface Props {

@@ -1,6 +1,5 @@
-import { List, ListItem, HStack, Image, Spinner, Button, Heading } from '@chakra-ui/react';
-import { Departments } from '../webhooks/useDepartments';
-import useDisplay, { Displays } from "../webhooks/useDisplays";
+import { List, ListItem, Button, Heading } from '@chakra-ui/react';
+import useDisplay, { Displays } from "@hooks/useDisplays";
 
 /**
  * Interface for the Departments List component.
@@ -22,7 +21,7 @@ interface Props {
  * @returns {JSX.Element} - Returns the Departments List component 
  */
 const DepartmentList = ({ onSelectDisplay, selectedDisplay, searchText }: Props): JSX.Element => {
-  const { displays, displayLoading } = useDisplay({department: undefined, searchText: searchText});
+  const { displays } = useDisplay({department: undefined, searchText: searchText});
 
   return (
     <>

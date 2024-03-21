@@ -1,6 +1,6 @@
 import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Slides } from './useMainSlides';
+import { Slides } from '@hooks/useMainSlides';
 
 /**
  * Properties of the Secondary Slides webhook.

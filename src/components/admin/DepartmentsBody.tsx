@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery } from "@src/webhooks/useDisplays";
-import { Departments } from "@src/webhooks/useDepartments";
-import Body from "./Body";
-import DepartmentList from "@src/components/DepartmentList";
+import { DisplayQuery } from "@hooks/useDisplays";
+import { Departments } from "@hooks/useDepartments";
+import Body from "@components/admin/Body";
+import DepartmentList from "@components/DepartmentList";
 import DepartmentsForm from "./DepartmentsForm";
 
 /**

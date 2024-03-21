@@ -1,7 +1,7 @@
-import Login from "@src/pages/Login";
+import Login from "@pages/Login";
 import { useState, ReactElement } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import RedirectLogin from "./RedirectLogin";
+import RedirectLogin from "@components/RedirectLogin";
 
 /**
  * Properties of the Authenticate Element.

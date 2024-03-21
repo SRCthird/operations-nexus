@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FormControl, FormLabel, Input, Button, Flex, Box, Heading, Image, Checkbox } from '@chakra-ui/react'
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../authConfig";
+import { loginRequest } from "@src/authConfig";
 
 /**
  * The login interface properties.

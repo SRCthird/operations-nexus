@@ -1,8 +1,9 @@
-import ThreeOnTwo from "@src/pages/ThreeOnTwo";
-import { Displays } from "@src/webhooks/useDisplays";
-import usePages from "@src/webhooks/usePages";
-import { emptyThreeOnTwoPage, ThreeOnTwoPage } from "./admin/ThreeOnTwoForm";
-import BuildApp from "./BuildApp";
+import NotFound from "@pages/NotFound";
+import ThreeOnTwo from "@templates/ThreeOnTwo";
+import { Displays } from "@hooks/useDisplays";
+import usePages from "@hooks/usePages";
+import { emptyThreeOnTwoPage, ThreeOnTwoPage } from "@components/admin/ThreeOnTwoForm";
+import BuildApp from "@components/BuildApp";
 
 interface Props {
   token: string;
@@ -62,7 +63,7 @@ const BuildPage = ({ token, slideShowKey, display }: Props) => {
     )
   }
   return (
-    <h1>Error building page</h1>
+    <NotFound />
   )
 }
 

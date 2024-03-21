@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery } from "@src/webhooks/useDisplays";
-import Body from "./Body";
-import DepartmentList from "@src/components/DepartmentList";
-import PowerPointList from "@src/components/PowerPointList";
+import { DisplayQuery } from "@hooks/useDisplays";
+import Body from "@components/admin/Body";
+import DepartmentList from "@components/DepartmentList";
+import PowerPointList from "@components/PowerPointList";
 
 /**
  * Admin view of the Slide Shows
@@ -18,10 +18,7 @@ const SlideShowsForm = (): JSX.Element => {
   const [error, setError] = useState('');
   const [department, setDepartment] = useState("");
   const [data, setData] = useState(null);
-  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-    department: undefined,
-    searchText: undefined
-  });
+  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];

@@ -1,9 +1,9 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@src/webhooks/usePages";
+import usePages, { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@src/webhooks/useApps'
-import AppFormControl from "./AppFormControl";
+import useApps, { Apps } from '@hooks/useApps';
+import AppFormControl from "@components/admin/AppFormControl";
 
 export interface ThreeOnTwoPage {
   ID: number;

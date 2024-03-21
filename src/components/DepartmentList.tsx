@@ -1,5 +1,5 @@
 import { List, ListItem, HStack, Image, Spinner, Button, Heading } from '@chakra-ui/react';
-import useDepartments, { Departments } from "../webhooks/useDepartments";
+import useDepartments, { Departments } from "@hooks/useDepartments";
 
 /**
  * Interface for the Departments List component.
