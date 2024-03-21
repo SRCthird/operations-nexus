@@ -7,6 +7,7 @@ import usePages, { Pages } from "@hooks/usePages";
 import useDepartment from "@hooks/useDepartments";
 import ThreeOnTwoForm from "@components/admin/templates/ThreeOnTwoForm";
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import FullDisplayForm from "@components/admin/templates/FullDisplayForm";
 
 interface Props {
   id: number;
@@ -17,7 +18,7 @@ interface Props {
   onChange: (value: Displays) => void;
 }
 
-const emptyDisplay:Displays ={
+const emptyDisplay: Displays = {
   ID: 0,
   Main: "",
   Sub: "",
@@ -30,14 +31,24 @@ const emptyDisplay:Displays ={
 
 const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }: Props) => {
   const [key, setKey] = useState(0);
-  const [data, setData] = useState<Displays>({...emptyDisplay});
+  const [data, setData] = useState<Displays>({ ...emptyDisplay });
   const [submitPage, setSubmitPage] = useState(false);
   const [viewPage, setViewPage] = useState(false);
 
   const { departments, departmentLoading } = useDepartment({});
   const { displays } = useDisplays({ id });
-  const display:Displays = displays[0] ?? emptyDisplay;
-  const { pages } = usePages({ page: data.Page });
+  const display: Displays = displays[0] ?? emptyDisplay;
+  const { pages, isPageLoading } = usePages({ page: data.Page });
+
+  useEffect(() => {
+    if (!isPageLoading) {
+      const pageExists = pages.some(page => page.ID === data.Page_ID);
+      if (!pageExists) {
+        setData({ ...data, Page_ID: 0 });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPageLoading]);
 
   useEffect(() => {
     if (display.ID !== 0) {
@@ -49,7 +60,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         Background: display.Background,
         Display: display.Display,
         Page: display.Page,
-        Page_ID: display.Page_ID
+        Page_ID: display.Page_ID || 0
       });
     }
   }, [display]);
@@ -147,6 +158,11 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
                 {page.ID}
               </option>
             ))}
+            {(!pages.some(page => page.ID === data.Page_ID) && data.Page_ID !== 0) &&
+              <option value={data.Page_ID}>
+                {data.Page_ID}
+              </option>
+            }
             <option value={0}>Create New</option>
           </Select>
         </FormControl>
@@ -194,6 +210,21 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         <Box hidden={!viewPage}>
           {data.Page === Pages.ThreeOnTwo &&
             <ThreeOnTwoForm
+              key={key}
+              pageID={data.Page_ID || 0}
+              editMode={editMode}
+              setEditMode={setEditMode}
+              submit={submitPage}
+              setSubmit={setSubmitPage}
+              getPageID={(newID) => {
+                setData({ ...data, Page_ID: newID });
+                onChange({ ...data, Page_ID: newID });
+              }}
+              parentID={data.ID}
+            />
+          }
+          {data.Page === Pages.FullDisplay &&
+            <FullDisplayForm
               key={key}
               pageID={data.Page_ID || 0}
               editMode={editMode}
