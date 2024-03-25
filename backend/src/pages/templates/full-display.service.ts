@@ -7,9 +7,9 @@ export class PageFullDisplayService {
 
   constructor(private readonly databaseService: DatabaseService) { }
 
-  create(createPageFullDisplayDto: Prisma.Page_FullDisplayCreateInput) {
+  create(createPageDto: Prisma.Page_FullDisplayCreateInput) {
     return this.databaseService.page_FullDisplay.create({
-      data: createPageFullDisplayDto
+      data: createPageDto
     })
   }
 
@@ -31,10 +31,10 @@ export class PageFullDisplayService {
   }
 
 
-  update(id: number, updatePageFullDisplayDto: Prisma.Page_FullDisplayUpdateInput) {
+  update(id: number, updatePageDto: Prisma.Page_FullDisplayUpdateInput) {
     return this.databaseService.page_FullDisplay.update({
       where: {ID: id},
-      data: updatePageFullDisplayDto
+      data: updatePageDto
     })
   }
 

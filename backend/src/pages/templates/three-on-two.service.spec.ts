@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PageThreeOnTwoService } from './page_three-on-two.service';
+import { PageThreeOnTwoService } from './three-on-two.service';
 
 describe('PageThreeOnTwoService', () => {
   let service: PageThreeOnTwoService;

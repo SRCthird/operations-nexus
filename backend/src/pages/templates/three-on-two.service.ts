@@ -7,9 +7,9 @@ export class PageThreeOnTwoService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createPageThreeOnTwoDto: Prisma.Page_ThreeOnTwoCreateInput) {
+  async create(createPageDto: Prisma.Page_ThreeOnTwoCreateInput) {
     return this.databaseService.page_ThreeOnTwo.create({
-      data: createPageThreeOnTwoDto
+      data: createPageDto
     })
   }
 
@@ -30,10 +30,10 @@ export class PageThreeOnTwoService {
     })
   }
 
-  async update(id: number, updatePageThreeOnTwoDto: Prisma.Page_ThreeOnTwoUpdateInput) {
+  async update(id: number, updatePageDto: Prisma.Page_ThreeOnTwoUpdateInput) {
     return this.databaseService.page_ThreeOnTwo.update({
       where: {ID: id},
-      data: updatePageThreeOnTwoDto
+      data: updatePageDto
     })
   }
 
