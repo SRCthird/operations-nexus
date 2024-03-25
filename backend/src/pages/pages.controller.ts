@@ -1,7 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PageThreeOnTwoService } from './templates/three-on-two.service';
 import { PageFullDisplayService } from './templates/full-display.service';
+import { PageFullWithCircleService } from './templates/full-with-circle.service';
+import { PageOneByThreeService } from './templates/one-by-three.service';
+import { PageSplitScreenService } from './templates/split-screen.service';
+import { PageThreeOnTwoService } from './templates/three-on-two.service';
+import { PageTwoByTwoService } from './templates/two-by-two.service';
 
 @Controller('page')
 export class PagesController {
@@ -10,11 +13,19 @@ export class PagesController {
 
   constructor(
     private readonly pageFullDisplayService: PageFullDisplayService,
-    private readonly pageThreeOnTwoService: PageThreeOnTwoService
+    private readonly pageFullWithCircle: PageFullWithCircleService,
+    private readonly pageOneByThree: PageOneByThreeService,
+    private readonly pageSplitScreen: PageSplitScreenService,
+    private readonly pageThreeOnTwoService: PageThreeOnTwoService,
+    private readonly pageTwoByTwo: PageTwoByTwoService
   ) {
     this.pagesMap = {
-      'ThreeOnTwo': this.pageThreeOnTwoService,
       'FullDisplay': this.pageFullDisplayService,
+      'FullWithCircle': this.pageFullWithCircle,
+      'OneByThree': this.pageOneByThree,
+      'SplitScreen': this.pageSplitScreen,
+      'ThreeOnTwo': this.pageThreeOnTwoService,
+      'TwoByTwo': this.pageTwoByTwo
     };
   }
 
@@ -50,10 +61,10 @@ export class PagesController {
   }
 
   @Patch(':template/:id')
-  update(@Param('template') template: string, @Param('id') id: string, @Body() updatePageThreeOnTwoDto: any) {
+  update(@Param('template') template: string, @Param('id') id: string, @Body() updatePageDto: any) {
     const findFunction = this.pagesMap[template];
     if (findFunction) {
-      return findFunction.update(+id, updatePageThreeOnTwoDto);
+      return findFunction.update(+id, updatePageDto);
     } else {
       throw new NotFoundException(`Template ${template} not found`);
     }
