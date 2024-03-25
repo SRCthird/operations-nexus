@@ -1,5 +1,4 @@
-import { HStack, Image } from '@chakra-ui/react'
-import Logo from '@src/assets/logo.png' // TODO: Change logo to one thats not depricated
+import { Image, SimpleGrid } from '@chakra-ui/react'
 import ColorModeSwitch from '@components/ColorModeSwitch'
 import SearchInput from '@components/SearchInput'
 
@@ -21,11 +20,11 @@ interface Props {
  */
 const NavBar = ({ onSearch }:Props): JSX.Element => {
   return (
-    <HStack>
-        <Image src={Logo} boxSize='80px' margin='10px' marginLeft='30px'/>
+    <SimpleGrid templateColumns={'192px 1fr 192px'} alignItems='center'>
+        <Image src='/logo192.png' boxSize='80px' margin='10px' marginLeft='30px'/>
         <SearchInput onSearch={onSearch} />
         <ColorModeSwitch />
-    </HStack>
+    </SimpleGrid>
   )
 }
 
