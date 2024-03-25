@@ -5,8 +5,12 @@ import { useEffect, useState, useRef} from "react";
  * The pages available for selection in the admin menu.
  */
 export enum Pages {
+  FullDisplay = 'FullDisplay',
+  FullWithCircle = 'FullWithCircle',
   ThreeOnTwo = 'ThreeOnTwo',
-  FullDisplay = 'FullDisplay'
+  OneByThree = 'OneByThree',
+  SplitScreen = 'SplitScreen',
+  TwoByTwo = 'TwoByTwo'
   // Add new pages here!
 }
 
