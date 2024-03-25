@@ -47,6 +47,10 @@ const usePages = ({ page, ids }: Props) => {
     return () => controller.abort();
   }, [ids, page]);
 
+  if (typeof pages !== 'object') {
+    setPages([]);
+  }
+
   return { pages, pageError, isPageLoading };
 }
 

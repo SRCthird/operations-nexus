@@ -85,7 +85,7 @@ const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
   }, [department, searchText, id]);
 
   if (typeof displays !== "object") {
-    setDisplay([]);
+    setDisplay([] as Displays[]);
   };
 
   return { displays, error, displayLoading };
