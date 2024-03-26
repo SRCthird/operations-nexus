@@ -8,10 +8,14 @@ import useDisplays from '@hooks/useDisplays';
 import BuildPage from '@components/BuildPage';
 import axios, { CanceledError } from 'axios';
 import useDepartments from '@hooks/useDepartments';
+import useAccount from '@hooks/useAccount';
+import useAdmin from '@hooks/useAdmin';
 
 interface Props {
   token: string;
 }
+
+
 /**
  * Pages routes the application into multiple pages and handles logging and tokens.
  * 
@@ -21,6 +25,8 @@ const Pages = ({ token }: Props): JSX.Element => {
   const { displays } = useDisplays({});
   const { departments } = useDepartments({});
   const [versions, setVersions] = useState<Map<string, number>>(new Map());
+  const user = useAccount();
+  const admin = useAdmin({ email: user.username });
 
   // Use effect to remount slideshows if there is an update
   useEffect(() => {
@@ -72,11 +78,15 @@ const Pages = ({ token }: Props): JSX.Element => {
             }
           />
         ))}
-        <Route
-          path="/admin"
-          element={<Admin title="Test" />}
-        />
-        <Route path="/*" element={<NotFound />} />
+        {(!admin.isLoading && admin.result) &&
+          <Route
+            path="/admin"
+            element={<Admin title="Test" />}
+          />
+        }
+        {!admin.isLoading &&
+          < Route path="/*" element={<NotFound />} />
+        }
       </Routes>
     </Router>
   );
