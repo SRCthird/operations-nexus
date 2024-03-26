@@ -55,7 +55,7 @@ const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
     const controller = new AbortController();
     setLoading(true);
 
-    if (id) {
+    if (id !== undefined) {
       axios.get(`/api/display/${id}`, { signal: controller.signal })
         .then(response => {
           setDisplay([response.data]);

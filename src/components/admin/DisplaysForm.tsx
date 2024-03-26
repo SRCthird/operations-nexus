@@ -36,7 +36,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
   const [viewPage, setViewPage] = useState(false);
 
   const { departments, departmentLoading } = useDepartment({});
-  const { displays } = useDisplays({ id });
+  const { displays } = useDisplays({ id: id ?? 0 });
   const display: Displays = displays[0] ?? emptyDisplay;
   const { pages, isPageLoading } = usePages({ page: data.Page });
 

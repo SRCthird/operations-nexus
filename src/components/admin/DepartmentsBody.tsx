@@ -22,10 +22,7 @@ const DepartmentsBody = (): JSX.Element => {
   const [formBackground, setFormBackground] = useState("");
   const [formPPTXVersion, setFormPPTXVersion] = useState(0);
   const [error, setError] = useState('');
-  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-    department: undefined,
-    searchText: undefined
-  });
+  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
   const handleCreate = (Data: Departments) => {
     const { ID: _, ...newData } = Data;

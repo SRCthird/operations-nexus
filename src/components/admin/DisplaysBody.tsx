@@ -74,6 +74,8 @@ const DisplaysBody = () => {
     })
   }
 
+  console.log(data);
+
   const remount = () => updateKey(key + 1);
 
   return (
@@ -101,7 +103,6 @@ const DisplaysBody = () => {
                 Page_ID: display.Page_ID || 0
               });
               toggleSelected(true);
-              remount();
             }
           }
         />
