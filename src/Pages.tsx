@@ -15,7 +15,6 @@ interface Props {
   token: string;
 }
 
-
 /**
  * Pages routes the application into multiple pages and handles logging and tokens.
  * 
