@@ -32,7 +32,6 @@ const Login = ({ getUser, onLogin, onTokenReceive }: LoginProps) => {
   const location = useLocation();
   const from = location.state?.from || '/';
 
-
   /**
    * Handles the logging in of the user through Azure OAuth.
    */
