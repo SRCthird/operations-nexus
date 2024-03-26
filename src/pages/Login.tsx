@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FormControl, FormLabel, Input, Button, Flex, Box, Heading, Image, Checkbox } from '@chakra-ui/react'
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "@src/authConfig";
+import { AccountInfo } from "@azure/msal-browser";
 
 /**
  * The login interface properties.
@@ -12,8 +13,8 @@ import { loginRequest } from "@src/authConfig";
  * @property {void} onTokenReceive - Callback function that is called when the user receives a token.
  */
 interface LoginProps {
-  isLoggedOn: boolean;
-  onLogin: (status: boolean) => void;
+  onLogin: (isLoggedOn: boolean) => void;
+  getUser: (user: AccountInfo) => void;
   onTokenReceive: (token: string) => void;
 }
 
@@ -22,7 +23,7 @@ interface LoginProps {
  * 
  * @param {Interface} LoginProps - The login interface properties.
  */
-const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
+const Login = ({ getUser, onLogin, onTokenReceive }: LoginProps) => {
   const { instance } = useMsal();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -38,6 +39,7 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
   const handleOAuth = useCallback(() => {
     instance.loginPopup(loginRequest)
       .then((response) => {
+        getUser(response.account);
         if (response) {
           onLogin(true);
           if (response.accessToken) {
@@ -51,7 +53,7 @@ const Login = ({ isLoggedOn, onLogin, onTokenReceive }: LoginProps) => {
         console.error("Login failed:\n", e);
         alert("Login failed. Please try again.");
       })
-  }, [instance, from, navigate, onLogin, onTokenReceive]);
+  }, [getUser, instance, from, navigate, onLogin, onTokenReceive]);
 
   useEffect(() => {
     const autoLog = localStorage.getItem('autoLog') === "true";
