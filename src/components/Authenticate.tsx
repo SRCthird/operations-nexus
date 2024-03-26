@@ -1,7 +1,11 @@
 import Login from "@pages/Login";
-import { useState, ReactElement } from "react";
+import { useState, ReactElement, useEffect } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import RedirectLogin from "@components/RedirectLogin";
+import { msalInstance } from "..";
+import { AccountInfo } from "@azure/msal-browser";
+import UserAccount from '@context/UserAccount';
+import useAccount from "@src/webhooks/useAccount";
 
 /**
  * Properties of the Authenticate Element.
@@ -20,10 +24,20 @@ interface Props {
  * @param {Props} child - The child element of the Authenticate element.
  */
 const Authenticate = ({ children, setToken }: Props): JSX.Element => {
+  const [user, setUser] = useState<AccountInfo | null>(null);
   const [isLoggedOn, setIsLoggedOn] = useState(false);
 
+  useEffect(() => {
+    const account = msalInstance.getAllAccounts()[0];
+    setUser(account ? account : null);
+  }, []);
+  
   if (isLoggedOn) {
-    return children
+    return (
+      <UserAccount.Provider value={user}>
+        {children}
+      </UserAccount.Provider>
+    )
   } else {
     return (
       <BrowserRouter>
