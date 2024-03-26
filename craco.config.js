@@ -8,7 +8,8 @@ module.exports = {
       '@pages': path.resolve(__dirname, 'src/pages/'),
       '@templates': path.resolve(__dirname, 'src/templates/'),
       '@hooks': path.resolve(__dirname, 'src/webhooks/'),
-      '@components': path.resolve(__dirname, 'src/components/')
+      '@components': path.resolve(__dirname, 'src/components/'),
+      '@context': path.resolve(__dirname, 'src/context/'),
     }
   },
 };
