@@ -15,6 +15,11 @@ model Nexus_Settings {
   Delay Int @default(30000)
 }
 
+model Nexus_Admins {
+  ID       Int    @id @default(autoincrement())
+  Email    String @unique
+}
+
 model Nexus_ActionTracker {
   ID          Int              @id @default(autoincrement())
   Departments Nexus_Department @relation(fields: [Department], references: [Department])
