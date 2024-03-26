@@ -74,8 +74,6 @@ const DisplaysBody = () => {
     })
   }
 
-  console.log(data);
-
   const remount = () => updateKey(key + 1);
 
   return (
