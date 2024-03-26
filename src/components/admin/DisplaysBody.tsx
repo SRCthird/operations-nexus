@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DisplayList from "@src/components/DisplayList";
+import DisplayPanel from "@src/components/DisplayPanel";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
 import { DisplayQuery, Displays } from "@hooks/useDisplays";
@@ -84,7 +84,7 @@ const DisplaysBody = () => {
       }}
       handleCreate={handleCreate}
       handleRead={
-        <DisplayList
+        <DisplayPanel
           key={key}
           searchText={displayQuery.searchText}
           selectedDisplay={displayQuery.department}
