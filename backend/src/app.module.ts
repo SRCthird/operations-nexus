@@ -10,9 +10,10 @@ import { ActionTrackerModule } from './action-tracker/action-tracker.module';
 import { AppPowerBiModule } from './app_power-bi/app_power-bi.module';
 import { AppPowerPointModule } from './app_power-point/app_power-point.module';
 import { PagesModule } from './pages/pages.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
-  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, ActionTrackerModule, AppPowerBiModule, AppPowerPointModule, PagesModule,],
+  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, ActionTrackerModule, AppPowerBiModule, AppPowerPointModule, PagesModule, AdminModule,],
   controllers: [AppController],
   providers: [AppService],
 })
