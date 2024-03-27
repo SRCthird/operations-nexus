@@ -1,14 +1,6 @@
 import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-
-/**
- * The slides object for listing slide locations.
- * 
- * @param {string} Slide - The location of the slide in the backend.
- */
-export interface Slides {
-  Slide: string;
-}
+import { Slides } from './types';
 
 /**
  * The type returned from the webhook.

@@ -1,6 +1,6 @@
 import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Slides } from '@hooks/useMainSlides';
+import { Slides } from './types';
 
 /**
  * Properties of the Secondary Slides webhook.
@@ -11,24 +11,7 @@ interface Props {
   location?: string
 }
 
-/**
- * The type returned from the webhook.
- * 
- * @param {Slides[]} secondarySlides - The list of slides in the secondary folder.
- * @param {string} slideError - The error message if the secondary folder cannot be retrieved.
- */
-type typeSecondarySlides = {
-  secondarySlides: Slides[];
-  secondarySlideError: string;
-}
-
-/**
- * This webhook is used to retieve the list of secondary slides from the backend.
- * 
- * @param {interface} Props - The properties of the Secondary Slides webhook.
- * @returns {typeSecondarySlides} - The object returned from the webhook.
- */
-const useSecondarySlides = ({ location }: Props): typeSecondarySlides => {
+const useSecondarySlides = ({ location }: Props) => {
   const [secondarySlides, setSecondarySlides] = useState<Slides[]>([]);
   const [secondarySlideError, setError] = useState('');
 

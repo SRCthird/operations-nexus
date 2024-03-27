@@ -1,14 +1,14 @@
 import { useEffect, useState} from 'react';
-import useMainSlides from '@hooks/useMainSlides';
-import useDelay from '@hooks/useDelay';
-import useSecondarySlides from '@hooks/useSecondarySlides';
-import '@styles/Slideshow.css';
+import useMainSlides from './useMainSlides';
+import useDelay from './useDelay';
+import useSecondarySlides from './useSecondarySlides';
+import './styles.css';
 
 /**
  * Properties for the Slideshow component.
  * 
  * @param {boolean} includeMainSlides - Whether or not to include the main slides.
- * @param {'SSC' | 'Encapsulation'} locations - Location of the folder in the backend.
+ * @param {string} locations - Location of the folder in the backend.
  */
 interface Props {
   main: boolean;
@@ -21,7 +21,7 @@ interface Props {
  * @param {object} Props - Properties for the Slideshow component. 
  * @returns {JSX.Element} - Returns the Slideshow component.
  */
-const Slideshow = ({main, location}:Props): JSX.Element => {
+const PowerPoint = ({main, location}:Props): JSX.Element => {
   const { mainSlides, slideError } = useMainSlides();
   const { secondarySlides, secondarySlideError } = useSecondarySlides({ location: location });
   const { delay, delayError } = useDelay();
@@ -66,4 +66,4 @@ const Slideshow = ({main, location}:Props): JSX.Element => {
   );
 };
 
-export default Slideshow;
+export default PowerPoint;

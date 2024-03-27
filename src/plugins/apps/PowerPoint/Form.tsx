@@ -1,15 +1,13 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Pages } from "@hooks/usePages";
+import { Templates } from "@templates";
 import axios, { CanceledError } from "axios";
-import { Apps, PowerPointApp } from '@hooks/useApps'
+import { Apps } from "@apps";
 import useDepartment from "@hooks/useDepartments";
 
-export const emptyPowerPoint: PowerPointApp = {
-  ID: 0,
-  Main: false,
-  Department: ""
-}
+import { emptyPowerPoint } from './empty';
+import { PowerPointApp } from './types';
+
 
 interface Props {
   appNumber: number;
@@ -20,10 +18,10 @@ interface Props {
   setSubmit: (value: boolean) => void;
   getAppID: (value: number) => void;
   parentID: number;
-  parentType: Pages;
+  parentType: Templates;
 }
 
-const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
+export const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
   const [error, setError] = useState("");
   const [data, setData] = useState<PowerPointApp>({ ...emptyPowerPoint });
   const { departments, departmentLoading} = useDepartment({});
@@ -134,5 +132,3 @@ const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit, setSu
     </Box>
   );
 }
-
-export default PowerPointForm
