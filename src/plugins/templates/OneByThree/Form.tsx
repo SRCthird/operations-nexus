@@ -1,39 +1,11 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
+import { useApps, Apps, AppFormControl } from "@apps";
+import { useTemplates, Templates } from "@templates";
 
-export interface OneByThreePage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-  App2?: Apps;
-  App2_ID?: number;
-  App3?: Apps;
-  App3_ID?: number;
-  App4?: Apps;
-  App4_ID?: number;
-}
-
-export const emptyOneByThreePage: OneByThreePage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-  App2: undefined,
-  App2_ID: undefined,
-  App3: undefined,
-  App3_ID: undefined,
-  App4: undefined,
-  App4_ID: undefined,
-};
+import { OneByThreePage } from "./types";
+import { emptyOneByThreePage } from "./empty";
 
 interface Props {
   pageID: number;
@@ -45,10 +17,10 @@ interface Props {
   parentID: number;
 }
 
-const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.OneByThree, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.OneByThree, ids: [pageID] });
   const page = pages[0] ?? emptyOneByThreePage;
 
   const [error, setError] = useState("");
@@ -87,7 +59,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
 
   const handleUpdate = (data: OneByThreePage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.OneByThree}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.OneByThree}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -98,7 +70,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
   const handleCreate = (data: OneByThreePage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.OneByThree}/`, newData)
+    axios.post(`/api/page/${Templates.OneByThree}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -163,7 +135,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.OneByThree}
+        parentType={Templates.OneByThree}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -180,7 +152,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.OneByThree}
+        parentType={Templates.OneByThree}
         getAppID={
           (value) => {
             setData({ ...data, App2_ID: value });
@@ -197,7 +169,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.OneByThree}
+        parentType={Templates.OneByThree}
         getAppID={
           (value) => {
             setData({ ...data, App3_ID: value });
@@ -214,7 +186,7 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.OneByThree}
+        parentType={Templates.OneByThree}
         getAppID={
           (value) => {
             setData({ ...data, App4_ID: value });
@@ -224,5 +196,3 @@ const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
     </Box>
   );
 }
-
-export default OneByThreeForm
