@@ -1,31 +1,10 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
+import { useTemplates, Templates } from "@templates";
+import { AppFormControl, useApps, Apps } from '@apps';
 
-export interface SplitScreenPage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-  App2?: Apps;
-  App2_ID?: number;
-}
-
-export const emptySplitScreenPage: SplitScreenPage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-  App2: undefined,
-  App2_ID: undefined,
-};
+import { emptySplitScreenPage, SplitScreenPage } from "@templates/SplitScreen";
 
 interface Props {
   pageID: number;
@@ -37,10 +16,10 @@ interface Props {
   parentID: number;
 }
 
-const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.SplitScreen, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.SplitScreen, ids: [pageID] });
   const page = pages[0] ?? emptySplitScreenPage;
 
   const [error, setError] = useState("");
@@ -75,7 +54,7 @@ const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
 
   const handleUpdate = (data: SplitScreenPage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.SplitScreen}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.SplitScreen}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -86,7 +65,7 @@ const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
   const handleCreate = (data: SplitScreenPage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.SplitScreen}/`, newData)
+    axios.post(`/api/page/${Templates.SplitScreen}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -151,7 +130,7 @@ const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.SplitScreen}
+        parentType={Templates.SplitScreen}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -168,7 +147,7 @@ const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.SplitScreen}
+        parentType={Templates.SplitScreen}
         getAppID={
           (value) => {
             setData({ ...data, App2_ID: value });
@@ -178,5 +157,3 @@ const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
     </Box>
   );
 }
-
-export default SplitScreenForm
