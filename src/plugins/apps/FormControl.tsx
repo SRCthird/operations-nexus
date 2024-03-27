@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 import { FormControl, FormLabel, Select } from '@chakra-ui/react';
-import { Apps } from '@src/webhooks/useApps';
-import AppForm from '@components/admin/AppForm';
-import { Pages } from '@src/webhooks/usePages';
+import { Templates } from '@templates';
+
+import { AppForm } from './Form';
+import { Apps } from './types';
 
 interface Props {
   appNumber: number;
@@ -14,11 +15,11 @@ interface Props {
   pptApps: { ID: number }[];
   pbiApps: { ID: number }[];
   parentID: number;
-  parentType: Pages;
+  parentType: Templates;
   getAppID: (value: number) => void;
 }
 
-const AppFormControl = ({
+export const AppFormControl = ({
   appNumber,
   appType,
   appID,

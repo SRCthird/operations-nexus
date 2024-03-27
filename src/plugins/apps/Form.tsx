@@ -1,10 +1,11 @@
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import { useState } from 'react';
-import { Apps } from '@src/webhooks/useApps'
-import PowerBIForm from "@components/admin/PowerBIForm";
-import { Pages } from "@src/webhooks/usePages";
-import PowerPointForm from "@components/admin/PowerPointForm";
+import { Templates } from '@templates';
+
+import { PowerBIForm } from "./PowerBI";
+import { PowerPointForm } from "./PowerPoint";
+import { Apps } from './types';
 
 interface Props {
   appNumber: number
@@ -14,11 +15,11 @@ interface Props {
   setEditMode: (value: boolean) => void;
   getAppID: (value: number)=> void;
   parentID: number;
-  parentType: Pages;
+  parentType: Templates;
 }
 
 
-const AppForm = ({ appNumber, appType, appID, editMode, setEditMode, getAppID, parentID, parentType}: Props) => {
+export const AppForm = ({ appNumber, appType, appID, editMode, setEditMode, getAppID, parentID, parentType}: Props) => {
   const [viewApp, setViewApp] = useState(false);
   const [submitApp, setSubmitApp] = useState(false);
   const [key, setKey] = useState(0);
@@ -99,5 +100,3 @@ const AppForm = ({ appNumber, appType, appID, editMode, setEditMode, getAppID, p
     </Box>
   )
 }
-
-export default AppForm

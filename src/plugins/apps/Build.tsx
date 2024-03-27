@@ -1,9 +1,7 @@
 import { Box, Spinner } from "@chakra-ui/react";
 import useApps, { Apps, PowerBIApp, PowerPointApp } from "@hooks/useApps";
-import { emptyPowerBI, PowerBITypes } from "./admin/PowerBIForm";
-import { emptyPowerPoint } from "@components/admin/PowerPointForm";
-import PowerBI from "@components/PowerBI";
-import Slideshow from "@components/Slideshow";
+import PowerBI, { emptyPowerBI, PowerBITypes } from "./PowerBI";
+import Slideshow, { emptyPowerPoint } from "./PowerPoint";
 
 interface Props {
   type?: Apps;
