@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models, Report } from 'powerbi-client';
 import { tryRefreshUserPermissions, getPowerBIToken, refreshAADToken } from '@components/AzureUtils';
-import '@styles/PowerBI.css';
 import { msalInstance } from '@src/index';
+import './styles.css';
 
 /**
  * Properties of the PowerBI component.
  * 
  * @param {string} reportID - The ID of the Power BI report.
-* @param {string} groupId - The ID of the Power BI group.
+ * @param {string} groupId - The ID of the Power BI group.
  * @param {string} customEmbedUrl - The URL of the Power BI custom embed is necessary.
  * @param {string} pageName - The name of the page in the Power BI report.
  * @param {string} accessToken - The access token provided on login request.
@@ -103,21 +103,27 @@ const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): 
           },
           navContentPaneEnabled: false,
           background: models.BackgroundType.Transparent,
-        }
+          layoutType: models.LayoutType.Custom,
+          customLayout: {
+            displayOption: models.DisplayOption.FitToPage,
+          },
+        },
       }}
-
       eventHandlers={
         new Map([
-          ['loaded', function () { console.log('Report loaded'); }],
-          ['rendered', function () { console.log('Report rendered'); }],
+          ['loaded', function () { 
+          }],
+          ['rendered', function () { 
+          }],
           ['error', errorHandler],
-          ['visualClicked', () => console.log('visual clicked')],
-          ['pageChanged', (event) => console.log(event)],
+          ['visualClicked', () => {
+          }],
+          ['pageChanged', 
+            (event) => console.log(event)
+          ],
         ])
       }
-
       cssClassName={"reportClass"}
-
       getEmbeddedComponent={(embeddedReport) => {
         setReport(embeddedReport as Report);
       }}

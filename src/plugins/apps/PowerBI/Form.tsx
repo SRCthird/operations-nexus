@@ -1,25 +1,10 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import { Apps, PowerBIApp } from '@hooks/useApps'
-
-export const emptyPowerBI: PowerBIApp = {
-  ID: 0,
-  Type: "",
-  PowerBI_ID: "",
-  Group_ID: "",
-  Custom_Embed: undefined,
-  Page_Name: undefined
-}
-
-export enum PowerBITypes {
-  Report = 'report',
-  Dashboard = 'dashboard',
-  Title = 'tile',
-  Visual = 'visual',
-  QNA = 'qna'
-}
+import { Templates } from "@templates";
+import { Apps } from '@apps';
+import { PowerBIApp, PowerBITypes } from './types';
+import { emptyPowerBI } from './empty';
 
 interface Props {
   appNumber: number;
@@ -30,10 +15,10 @@ interface Props {
   setSubmit: (value: boolean) => void;
   getAppID: (value: number) => void;
   parentID: number;
-  parentType: Pages; 
+  parentType: Templates; 
 }
 
-const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
+export const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
   const [error, setError] = useState("");
   const [data, setData] = useState<PowerBIApp>({ ...emptyPowerBI });
 
@@ -165,5 +150,3 @@ const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmi
     </Box>
   );
 }
-
-export default PowerBIForm
