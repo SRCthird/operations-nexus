@@ -1,43 +1,9 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
+import { useTemplates,  Templates } from "@templates";
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
-
-export interface ThreeOnTwoPage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-  App2?: Apps;
-  App2_ID?: number;
-  App3?: Apps;
-  App3_ID?: number;
-  App4?: Apps;
-  App4_ID?: number;
-  App5?: Apps;
-  App5_ID?: number;
-}
-
-export const emptyThreeOnTwoPage: ThreeOnTwoPage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-  App2: undefined,
-  App2_ID: undefined,
-  App3: undefined,
-  App3_ID: undefined,
-  App4: undefined,
-  App4_ID: undefined,
-  App5: undefined,
-  App5_ID: undefined
-};
+import { AppFormControl, useApps, Apps } from '@apps';
+import { ThreeOnTwoPage, emptyThreeOnTwoPage } from '@templates/ThreeOnTwo';
 
 interface Props {
   pageID: number;
@@ -49,10 +15,10 @@ interface Props {
   parentID: number;
 }
 
-const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.ThreeOnTwo, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.ThreeOnTwo, ids: [pageID] });
   const page = pages[0] ?? emptyThreeOnTwoPage;
 
   const [error, setError] = useState("");
@@ -93,7 +59,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
 
   const handleUpdate = (data: ThreeOnTwoPage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.ThreeOnTwo}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.ThreeOnTwo}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -104,7 +70,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
   const handleCreate = (data: ThreeOnTwoPage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.ThreeOnTwo}/`, newData)
+    axios.post(`/api/page/${Templates.ThreeOnTwo}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -169,7 +135,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.ThreeOnTwo}
+        parentType={Templates.ThreeOnTwo}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -186,7 +152,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.ThreeOnTwo}
+        parentType={Templates.ThreeOnTwo}
         getAppID={
           (value) => {
             setData({ ...data, App2_ID: value });
@@ -203,7 +169,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.ThreeOnTwo}
+        parentType={Templates.ThreeOnTwo}
         getAppID={
           (value) => {
             setData({ ...data, App3_ID: value });
@@ -220,7 +186,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.ThreeOnTwo}
+        parentType={Templates.ThreeOnTwo}
         getAppID={
           (value) => {
             setData({ ...data, App4_ID: value });
@@ -237,7 +203,7 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.ThreeOnTwo}
+        parentType={Templates.ThreeOnTwo}
         getAppID={
           (value) => {
             setData({ ...data, App5_ID: value });
@@ -247,5 +213,3 @@ const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getP
     </Box>
   );
 }
-
-export default ThreeOnTwoForm

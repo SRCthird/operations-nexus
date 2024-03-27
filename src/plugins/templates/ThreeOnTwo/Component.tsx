@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
-import '@styles/ThreeOnTwo.css';
 import Title from '@components/Title';
 import useBackgroundEffect from '@hooks/useBackgroundEffect';
+
+import './styles.css';
 
 /**
  * Properties for the ThreeOnTwo component.
