@@ -1,13 +1,13 @@
 import { FormControl, FormLabel, Input, FormHelperText, Select, Box, Text, SimpleGrid } from "@chakra-ui/react"
+import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import useDisplays, { Displays } from "@hooks/useDisplays";
-import usePages, { Pages } from "@hooks/usePages";
 import useDepartment from "@hooks/useDepartments";
-import ThreeOnTwoForm from "@components/admin/templates/ThreeOnTwoForm";
-import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import FullDisplayForm from "@components/admin/templates/FullDisplayForm";
+import { useTemplates, Templates } from "@templates";
+import { ThreeOnTwoForm } from "@templates/ThreeOnTwo";
+import { FullDisplayForm } from "@templates/FullDisplay";
 
 interface Props {
   id: number;
@@ -38,7 +38,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
   const { departments, departmentLoading } = useDepartment({});
   const { displays } = useDisplays({ id: id ?? 0 });
   const display: Displays = displays[0] ?? emptyDisplay;
-  const { pages, isPageLoading } = usePages({ page: data.Page });
+  const { pages, isPageLoading } = useTemplates({ page: data.Page });
 
   useEffect(() => {
     if (!isPageLoading) {
@@ -132,14 +132,14 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
           <Select
             value={data.Page || ""}
             onChange={(value) => {
-              setData({ ...data, Page: value.target.value as Pages });
-              onChange({ ...data, Page: value.target.value as Pages });
+              setData({ ...data, Page: value.target.value as Templates });
+              onChange({ ...data, Page: value.target.value as Templates });
             }}
           >
             {!data.Page && <option value={""}></option>}
-            {Object.values(Pages).map((pageName) => (
-              <option key={pageName} value={pageName}>
-                {pageName}
+            {Object.values(Templates).map((name) => (
+              <option key={name} value={name}>
+                {name}
               </option>
             ))}
           </Select>
@@ -208,7 +208,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
           </SimpleGrid>
         }
         <Box hidden={!viewPage}>
-          {data.Page === Pages.ThreeOnTwo &&
+          {data.Page === Templates.ThreeOnTwo &&
             <ThreeOnTwoForm
               key={key}
               pageID={data.Page_ID || 0}
@@ -223,7 +223,7 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
               parentID={data.ID}
             />
           }
-          {data.Page === Pages.FullDisplay &&
+          {data.Page === Templates.FullDisplay &&
             <FullDisplayForm
               key={key}
               pageID={data.Page_ID || 0}
