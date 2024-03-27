@@ -113,13 +113,49 @@ backend:slides will continue to run until the backend is closed. Although you ca
 ### Appding new Templates
 
 **Template Location**
-All templates are located in `src/templates/`. You can use MasterTemplate.tsx as a starting point.
+All templates are located in `src/plugins/templates/`.
 
-**Template Enum***
-After creating the template you need to add it to the Templates Enum in `src/webhooks/usePages`
+**Template Structure**
+Each template is a folder with the following structure:
+```
+template-name/
+    - index.ts
+    - types.ts
+    - empty.ts
+    - Component.tsx
+    - Form.tsx
+    - styles.css
+```
+**index.ts**
+This file is the main file for the template. It will export all of the necessary components and types for the template. the exported default should always be the `Component.tsx`.
 
-**Template Admin Form**
-Next you need to add a new Template Form in `src/components/admin/templates/`
+**types.ts**
+This file will hold all of the types for the template. This will be the datatypes for interfacing with the backend.
+
+**empty.ts**
+This file will hold the default values for the template. This will be the values for an empty template.
+
+**Component.tsx**
+This file will hold the main component for the template. This will be the component that is displayed on the screen.
+
+**Form.tsx**
+This file will hold the form component for the template. This will be the component that is displayed when the user is editing the template from the admin portal.
+
+**styles.css**
+This file will hold the styles for the template. This will be the styles that are applied to the template and/or the form.
+
+**Backend**
+The template will then need to be added to the backend API. This will be done through a Prisma module and a Nest service.
+
+**Prisma**
+The template will need to be added to the Prisma schema. This will be done by adding a new model to the `/backend/prisma/schema.prisma` file.
+
+**Nest**
+The template will need to be added to the Nest service. This will be done by adding a new service to the `/backend/src/pages` directory.<br>
+First you will need to create a new service file in the `/backend/src/pages/templates` directory. This file will hold all of the logic for the template. You will then need to add the service to the `pages.module.ts` file in the `/backend/src/pages` directory. <br>
+You will also need to add the service as a private readonly dependency of the `/backend/src/pages/pages.controller.ts` file. This will allow the service to be accessed through the API.
+
+
 ### API Endpoints
 
 **Azure API Endpoint**
