@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Pages } from "@hooks/usePages";
+import { Templates } from "@templates";
 
 /**
  * The query object used to specify displays from the backend.
@@ -30,7 +30,7 @@ export interface Displays {
   Department: string;
   Display: string;
   Background: string;
-  Page?: Pages;
+  Page?: Templates;
   Page_ID?: number;
 }
 

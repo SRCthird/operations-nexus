@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios, { CanceledError } from 'axios';
 import 'bootstrap/dist/css/bootstrap.css'
 import NotFound from '@pages/NotFound';
 import Admin from '@pages/Admin';
 import Home from '@pages/Home';
 import useDisplays from '@hooks/useDisplays';
-import BuildPage from '@components/BuildPage';
-import axios, { CanceledError } from 'axios';
 import useDepartments from '@hooks/useDepartments';
 import useAccount from '@hooks/useAccount';
 import useAdmin from '@hooks/useAdmin';
+import BuildTemplate from '@templates';
 
 interface Props {
   token: string;
@@ -65,7 +65,7 @@ const Pages = ({ token }: Props): JSX.Element => {
             key={display.ID}
             path={`/${display.Display}`}
             element={
-              <BuildPage
+              <BuildTemplate
                 key={display.ID}
                 slideShowKey={
                   (versions.get(display.Department) || 0) +
