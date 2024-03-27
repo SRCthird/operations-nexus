@@ -6,10 +6,13 @@
       "@src/*": ["src/*"],
       "@styles/*": ["src/styles/*"],
       "@pages/*": ["src/pages/*"],
-      "@templates/*": ["src/templates/*"],
+      "@templates/*": ["src/plugins/templates/*"],
+      "@templates": ["src/plugins/templates"],
       "@hooks/*": ["src/webhooks/*"],
       "@components/*": ["src/components/*"],
-      "@context/*": ["src/context/*"]
+      "@context/*": ["src/context/*"],
+      "@apps/*": ["src/plugins/apps/*"],
+      "@apps": ["src/plugins/apps"]
     },
     "target": "es5",
     "lib": [
