@@ -1,24 +1,17 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState, useRef} from "react";
+import { Templates } from '@templates'
 
 /**
  * The pages available for selection in the admin menu.
  */
-export enum Pages {
-  FullDisplay = 'FullDisplay',
-  FullWithCircle = 'FullWithCircle',
-  ThreeOnTwo = 'ThreeOnTwo',
-  OneByThree = 'OneByThree',
-  SplitScreen = 'SplitScreen',
-  TwoByTwo = 'TwoByTwo'
-  // Add new pages here!
-}
+
 
 interface Props {
-  page?: Pages;
+  page?: Templates;
   ids?: number[];
 }
-const usePages = ({ page, ids }: Props) => {
+export const useTemplates = ({ page, ids }: Props) => {
   const [pages, setPages] = useState<any[]>([]);
   const [pageError, setError] = useState('');
   const [isPageLoading, setLoading] = useState(false);
@@ -53,5 +46,3 @@ const usePages = ({ page, ids }: Props) => {
 
   return { pages, pageError, isPageLoading };
 }
-
-export default usePages;
