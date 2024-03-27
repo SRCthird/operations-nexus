@@ -1,41 +1,9 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
+import { useTemplates, Templates } from '@templates';
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
-
-export interface TwoByTwoPage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-  App2?: Apps;
-  App2_ID?: number;
-  App3?: Apps;
-  App3_ID?: number;
-  App4?: Apps;
-  App4_ID?: number;
-  App5?: Apps;
-  App5_ID?: number;
-}
-
-export const emptyTwoByTwoPage: TwoByTwoPage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-  App2: undefined,
-  App2_ID: undefined,
-  App3: undefined,
-  App3_ID: undefined,
-  App4: undefined,
-  App4_ID: undefined,
-};
+import { AppFormControl, useApps, Apps } from '@apps';
+import { TwoByTwoPage, emptyTwoByTwoPage } from '@templates/TwoByTwo';
 
 interface Props {
   pageID: number;
@@ -47,10 +15,10 @@ interface Props {
   parentID: number;
 }
 
-const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.TwoByTwo, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.TwoByTwo, ids: [pageID] });
   const page = pages[0] ?? emptyTwoByTwoPage;
 
   const [error, setError] = useState("");
@@ -89,7 +57,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
 
   const handleUpdate = (data: TwoByTwoPage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.TwoByTwo}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.TwoByTwo}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -100,7 +68,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
   const handleCreate = (data: TwoByTwoPage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.TwoByTwo}/`, newData)
+    axios.post(`/api/page/${Templates.TwoByTwo}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -165,7 +133,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.TwoByTwo}
+        parentType={Templates.TwoByTwo}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -182,7 +150,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.TwoByTwo}
+        parentType={Templates.TwoByTwo}
         getAppID={
           (value) => {
             setData({ ...data, App2_ID: value });
@@ -199,7 +167,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.TwoByTwo}
+        parentType={Templates.TwoByTwo}
         getAppID={
           (value) => {
             setData({ ...data, App3_ID: value });
@@ -216,7 +184,7 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.TwoByTwo}
+        parentType={Templates.TwoByTwo}
         getAppID={
           (value) => {
             setData({ ...data, App4_ID: value });
@@ -226,5 +194,3 @@ const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPag
     </Box>
   );
 }
-
-export default TwoByTwoForm
