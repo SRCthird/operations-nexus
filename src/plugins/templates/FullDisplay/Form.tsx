@@ -1,27 +1,9 @@
-import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
+import { useTemplates, Templates } from "@templates";
+import {  AppFormControl, useApps, Apps } from '@apps';
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
-
-export interface FullDisplayPage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-}
-
-export const emptyFullDisplayPage: FullDisplayPage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-};
+import { FullDisplayPage, emptyFullDisplayPage } from "@templates/FullDisplay";
 
 interface Props {
   pageID: number;
@@ -33,10 +15,10 @@ interface Props {
   parentID: number;
 }
 
-const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.FullDisplay, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.FullDisplay, ids: [pageID] });
   const page = pages[0] ?? emptyFullDisplayPage;
 
   const [error, setError] = useState("");
@@ -69,7 +51,7 @@ const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
 
   const handleUpdate = (data: FullDisplayPage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.FullDisplay}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.FullDisplay}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -80,7 +62,7 @@ const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
   const handleCreate = (data: FullDisplayPage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.FullDisplay}/`, newData)
+    axios.post(`/api/page/${Templates.FullDisplay}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -145,7 +127,7 @@ const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.FullDisplay}
+        parentType={Templates.FullDisplay}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -155,5 +137,3 @@ const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubmit, get
     </Box>
   );
 }
-
-export default FullDisplayForm
