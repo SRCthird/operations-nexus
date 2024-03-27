@@ -1,31 +1,12 @@
 import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import usePages, { Pages } from "@hooks/usePages";
 import axios, { CanceledError } from "axios";
-import useApps, { Apps } from '@hooks/useApps';
-import AppFormControl from "@components/admin/AppFormControl";
+import { useTemplates, Templates } from "@templates";
+import { AppFormControl, useApps, Apps } from '@apps';
 
-export interface FullWithCirclePage {
-  ID: number;
-  Title: string;
-  Background: string;
-  Gradient?: string;
-  App1?: Apps;
-  App1_ID?: number;
-  App2?: Apps;
-  App2_ID?: number;
-}
+import { emptyFullWithCirclePage } from "./empty";
+import { FullWithCirclePage } from "./types";
 
-export const emptyFullWithCirclePage: FullWithCirclePage = {
-  ID: 0,
-  Title: '',
-  Background: '',
-  Gradient: undefined,
-  App1: undefined,
-  App1_ID: undefined,
-  App2: undefined,
-  App2_ID: undefined,
-};
 
 interface Props {
   pageID: number;
@@ -40,7 +21,7 @@ interface Props {
 const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = usePages({ page: Pages.FullWithCircle, ids: [pageID] });
+  const { pages } = useTemplates({ page: Templates.FullWithCircle, ids: [pageID] });
   const page = pages[0] ?? emptyFullWithCirclePage;
 
   const [error, setError] = useState("");
@@ -75,7 +56,7 @@ const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, 
 
   const handleUpdate = (data: FullWithCirclePage) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Pages.FullWithCircle}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.FullWithCircle}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -86,7 +67,7 @@ const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, 
   const handleCreate = (data: FullWithCirclePage) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Pages.FullWithCircle}/`, newData)
+    axios.post(`/api/page/${Templates.FullWithCircle}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -151,7 +132,7 @@ const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, 
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.FullWithCircle}
+        parentType={Templates.FullWithCircle}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -168,7 +149,7 @@ const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, 
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Pages.FullWithCircle}
+        parentType={Templates.FullWithCircle}
         getAppID={
           (value) => {
             setData({ ...data, App2_ID: value });
