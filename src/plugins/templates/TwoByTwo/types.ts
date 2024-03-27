@@ -1,6 +1,6 @@
 import { Apps } from '@apps';
 
-export interface TwoByTwoPage {
+export type TwoByTwoPage = {
   ID: number;
   Title: string;
   Background: string;

@@ -1,6 +1,6 @@
 import { Apps } from '@apps';
 
-export interface SplitScreenPage {
+export type SplitScreenPage = {
   ID: number;
   Title: string;
   Background: string;

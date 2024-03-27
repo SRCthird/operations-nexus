@@ -1,6 +1,6 @@
 import { Apps } from '@apps';
 
-export interface FullWithCirclePage {
+export type FullWithCirclePage = {
   ID: number;
   Title: string;
   Background: string;

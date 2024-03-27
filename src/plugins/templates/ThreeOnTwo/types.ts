@@ -1,6 +1,6 @@
 import { Apps } from '@apps';
 
-export interface ThreeOnTwoPage {
+export type ThreeOnTwoPage = {
   ID: number;
   Title: string;
   Background: string;

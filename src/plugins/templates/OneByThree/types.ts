@@ -1,6 +1,6 @@
 import { Apps } from '@apps';
 
-export interface OneByThreePage {
+export type OneByThreePage = {
   ID: number;
   Title: string;
   Background: string;

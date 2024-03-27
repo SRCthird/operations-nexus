@@ -1,6 +1,6 @@
 import { Apps } from '@apps'
 
-export interface FullDisplayPage {
+export type FullDisplayPage = {
   ID: number;
   Title: string;
   Background: string;
