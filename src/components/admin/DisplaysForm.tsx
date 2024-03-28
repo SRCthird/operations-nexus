@@ -1,13 +1,14 @@
 import { FormControl, FormLabel, Input, FormHelperText, Select, Box, Text, SimpleGrid } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
+import { ComponentType, ElementType, useEffect, useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import useDisplays, { Displays } from "@hooks/useDisplays";
 import useDepartment from "@hooks/useDepartments";
-import { useTemplates, Templates } from "@templates";
+import { useTemplates, Templates, TemplateForm } from "@templates";
 import { ThreeOnTwoForm } from "@templates/ThreeOnTwo";
 import { FullDisplayForm } from "@templates/FullDisplay";
+import { FullDisplay2Form } from "@src/plugins/templates/FullDisplay2";
 
 interface Props {
   id: number;
@@ -208,36 +209,16 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
           </SimpleGrid>
         }
         <Box hidden={!viewPage}>
-          {data.Page === Templates.ThreeOnTwo &&
-            <ThreeOnTwoForm
-              key={key}
-              pageID={data.Page_ID || 0}
-              editMode={editMode}
-              setEditMode={setEditMode}
-              submit={submitPage}
-              setSubmit={setSubmitPage}
-              getPageID={(newID) => {
-                setData({ ...data, Page_ID: newID });
-                onChange({ ...data, Page_ID: newID });
-              }}
-              parentID={data.ID}
-            />
-          }
-          {data.Page === Templates.FullDisplay &&
-            <FullDisplayForm
-              key={key}
-              pageID={data.Page_ID || 0}
-              editMode={editMode}
-              setEditMode={setEditMode}
-              submit={submitPage}
-              setSubmit={setSubmitPage}
-              getPageID={(newID) => {
-                setData({ ...data, Page_ID: newID });
-                onChange({ ...data, Page_ID: newID });
-              }}
-              parentID={data.ID}
-            />
-          }
+          <TemplateForm
+            key={key}
+            data={data}
+            editMode={editMode}
+            setEditMode={setEditMode}
+            submitPage={submitPage}
+            setSubmitPage={setSubmitPage}
+            setData={setData}
+            onChange={onChange}
+          />
         </Box>
       </Box>
     </Box>

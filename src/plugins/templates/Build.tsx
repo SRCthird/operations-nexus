@@ -45,7 +45,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         title={page.Title}
         backgroundColor={page.Background}
         backgroundGradient={page.Gradient}
-        transition={page.Tranition}
+        transition={page.Transition}
         app1={
           <BuildApp
             type={page.App1}
