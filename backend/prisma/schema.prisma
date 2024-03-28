@@ -62,6 +62,7 @@ model Nexus_Display {
 
 enum Pages {
   FullDisplay
+  FullDisplay2
   FullWithCircle
   OneByThree
   SplitScreen
@@ -76,6 +77,18 @@ model Page_FullDisplay {
   Gradient   String?
   App1       Apps?
   App1_ID    Int?
+}
+
+model Page_FullDisplay2 {
+  ID         Int     @id @default(autoincrement())
+  Title      String
+  Background String
+  Gradient   String?
+  Transition Int     @default(30)
+  App1       Apps?
+  App1_ID    Int?
+  App2       Apps?
+  App2_ID    Int?
 }
 
 model Page_FullWithCircle {

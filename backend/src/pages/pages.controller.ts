@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, NotFoundException } from '@nestjs/common';
 import { PageFullDisplayService } from './templates/full-display.service';
+import { PageFullDisplay2Service } from './templates/full-display2.service';
 import { PageFullWithCircleService } from './templates/full-with-circle.service';
 import { PageOneByThreeService } from './templates/one-by-three.service';
 import { PageSplitScreenService } from './templates/split-screen.service';
@@ -13,6 +14,7 @@ export class PagesController {
 
   constructor(
     private readonly pageFullDisplayService: PageFullDisplayService,
+    private readonly pageFullDisplay2Service: PageFullDisplay2Service,
     private readonly pageFullWithCircle: PageFullWithCircleService,
     private readonly pageOneByThree: PageOneByThreeService,
     private readonly pageSplitScreen: PageSplitScreenService,
@@ -21,6 +23,7 @@ export class PagesController {
   ) {
     this.pagesMap = {
       'FullDisplay': this.pageFullDisplayService,
+      'FullDisplay2': this.pageFullDisplay2Service,
       'FullWithCircle': this.pageFullWithCircle,
       'OneByThree': this.pageOneByThree,
       'SplitScreen': this.pageSplitScreen,
