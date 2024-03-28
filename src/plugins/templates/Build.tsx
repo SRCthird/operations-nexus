@@ -8,6 +8,7 @@ import OneByThree, { OneByThreePage, emptyOneByThreePage } from "@templates/OneB
 import SplitScreen, { SplitScreenPage, emptySplitScreenPage } from "@templates/SplitScreen";
 import ThreeOnTwo, { ThreeOnTwoPage, emptyThreeOnTwoPage } from "@templates/ThreeOnTwo";
 import TwoByTwo, { TwoByTwoPage, emptyTwoByTwoPage } from "@templates/TwoByTwo";
+import FullDisplay2, { emptyFullDisplay2Page, FullDisplay2Page } from "@templates/FullDisplay2";
 
 interface Props {
   token: string;
@@ -32,6 +33,30 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
           <BuildApp
             type={page.App1}
             id={page.App1_ID || 0}
+            slideShowKey={slideShowKey}
+          />
+        }
+      />
+    )
+  } else if (display.Page === Templates.FullDisplay2) {
+    const page: FullDisplay2Page = pages[0] || emptyFullDisplay2Page;
+    return (
+      <FullDisplay2
+        title={page.Title}
+        backgroundColor={page.Background}
+        backgroundGradient={page.Gradient}
+        transition={page.Tranition}
+        app1={
+          <BuildApp
+            type={page.App1}
+            id={page.App1_ID || 0}
+            slideShowKey={slideShowKey}
+          />
+        }
+        app2={
+          <BuildApp
+            type={page.App2}
+            id={page.App2_ID || 0}
             slideShowKey={slideShowKey}
           />
         }
