@@ -1,21 +1,16 @@
 import { FormControl, FormLabel, Input, FormHelperText, Select, Box, Text, SimpleGrid } from "@chakra-ui/react"
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { ComponentType, ElementType, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import useDisplays, { Displays } from "@hooks/useDisplays";
 import useDepartment from "@hooks/useDepartments";
 import { useTemplates, Templates, TemplateForm } from "@templates";
-import { ThreeOnTwoForm } from "@templates/ThreeOnTwo";
-import { FullDisplayForm } from "@templates/FullDisplay";
-import { FullDisplay2Form } from "@src/plugins/templates/FullDisplay2";
 
 interface Props {
   id: number;
   editMode: boolean;
   setEditMode: (value: boolean) => void;
-  submit: boolean;
-  setSubmit: (value: boolean) => void;
   onChange: (value: Displays) => void;
 }
 
@@ -30,7 +25,7 @@ const emptyDisplay: Displays = {
   Page_ID: 0
 }
 
-const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }: Props) => {
+const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
   const [key, setKey] = useState(0);
   const [data, setData] = useState<Displays>({ ...emptyDisplay });
   const [submitPage, setSubmitPage] = useState(false);
@@ -169,26 +164,17 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
         </FormControl>
       </Form>
       <Box padding={2} border={'1px'} borderRadius={5}>
-        {!editMode &&
-          <SimpleGrid templateColumns={'1fr 34px'} >
-            <Text>Page Information</Text>
-            {!viewPage && <ViewIcon onClick={
-              () => setViewPage(true)
-            } />}
-            {viewPage && <ViewOffIcon onClick={
-              () => setViewPage(false)
-            } />}
-          </SimpleGrid>
-        }
-        {editMode &&
+        {editMode ? (
           <SimpleGrid templateColumns={'1fr 34px 34px 34px'} >
             <Text>Page Information</Text>
-            {!viewPage && <ViewIcon onClick={
-              () => setViewPage(true)
-            } />}
-            {viewPage && <ViewOffIcon onClick={
-              () => setViewPage(false)
-            } />}
+            {viewPage ?
+              <ViewOffIcon
+                onClick={() => setViewPage(false)}
+              /> :
+              <ViewIcon
+                onClick={() => setViewPage(true)}
+              />
+            }
             <CheckIcon
               onClick={
                 () => {
@@ -207,7 +193,19 @@ const DisplaysForm = ({ id, editMode, setEditMode, submit, setSubmit, onChange }
               }
             />
           </SimpleGrid>
-        }
+        ) : (
+          <SimpleGrid templateColumns={'1fr 34px'} >
+            <Text>Page Information</Text>
+            {viewPage ?
+              <ViewOffIcon
+                onClick={() => setViewPage(false)}
+              /> :
+              <ViewIcon
+                onClick={() => setViewPage(true)}
+              />
+            }
+          </SimpleGrid>
+        )}
         <Box hidden={!viewPage}>
           <TemplateForm
             key={key}

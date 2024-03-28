@@ -20,13 +20,11 @@ const DisplaysBody = () => {
     Page: undefined,
     Page_ID: 0
   })
-  const [submit, setSubmit] = useState(false);
 
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
   const handleCreate = (data: Displays) => {
-    setSubmit(true);
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/display`, newData)
@@ -38,7 +36,6 @@ const DisplaysBody = () => {
   }
 
   const handleUpdate = (data: Displays) => {
-    setSubmit(true);
     if (data.ID === 0) return;
     const controller = new AbortController();
     axios.patch(`/api/display/${data.ID}`, data)
@@ -122,8 +119,6 @@ const DisplaysBody = () => {
           id={data.ID}
           editMode={editMode}
           setEditMode={setEditMode}
-          submit={submit}
-          setSubmit={setSubmit}
           onChange={
             (display) => {
               setData({
