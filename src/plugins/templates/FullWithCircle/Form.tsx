@@ -18,7 +18,7 @@ interface Props {
   parentID: number;
 }
 
-const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.FullWithCircle, ids: [pageID] });
@@ -159,5 +159,3 @@ const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setSubmit, 
     </Box>
   );
 }
-
-export default FullWithCircleForm
