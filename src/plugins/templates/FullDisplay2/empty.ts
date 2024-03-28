@@ -5,7 +5,7 @@ export const emptyFullDisplay2Page: FullDisplay2Page = {
   Title: '',
   Background: '',
   Gradient: undefined,
-  Tranition: 30,
+  Transition: 30,
   App1: undefined,
   App1_ID: undefined,
   App2: undefined,

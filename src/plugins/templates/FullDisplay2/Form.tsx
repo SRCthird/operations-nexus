@@ -32,7 +32,7 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
         Title: page.Title,
         Background: page.Background,
         Gradient: page.Gradient,
-        Tranition: page.Tranition,
+        Transition: page.Tranition,
         App1: page.App1,
         App1_ID: page.App1_ID,
         App2: page.App2,
@@ -123,11 +123,11 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
       <FormControl isDisabled={!editMode}>
         <FormLabel>Transition Time</FormLabel>
         <NumberInput
-          defaultValue={data.Tranition}
+          defaultValue={data.Transition}
           min={30}
           max={600}
           onChange={(_, value) => {
-            setData({ ...data, Tranition: +value });
+            setData({ ...data, Transition: +value });
           }}
         >
           <NumberInputField />

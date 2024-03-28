@@ -5,7 +5,7 @@ export type FullDisplay2Page = {
   Title: string;
   Background: string;
   Gradient?: string;
-  Tranition: number;
+  Transition: number;
   App1?: Apps;
   App1_ID?: number;
   App2?: Apps;
