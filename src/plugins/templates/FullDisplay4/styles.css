@@ -1,0 +1,17 @@
+.full-display2 {
+    margin: 20px;
+}
+
+.full-display2 .Containers,
+.full-display2 .Title {
+    background-color: rgba(128, 128, 128, 0.25); 
+    border: solid;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.full-display2 .Containers {
+  overflow: hidden;
+  position: relative;
+  height: 80vh;
+}

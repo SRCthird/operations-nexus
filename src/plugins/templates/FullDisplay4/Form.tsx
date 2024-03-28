@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTemplates, Templates } from "@templates";
 import { AppFormControl, useApps, Apps } from '@apps';
 import axios, { CanceledError } from "axios";
-import { FullDisplay2Page, emptyFullDisplay2Page } from "@templates/FullDisplay2";
+import { FullDisplay4Page, emptyFullDisplay4Page } from "@templates/FullDisplay4";
 
 interface Props {
   pageID: number;
@@ -15,15 +15,15 @@ interface Props {
   parentID: number;
 }
 
-export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
+export const FullDisplay4Form = ({ pageID, editMode, setEditMode, submit, setSubmit, getPageID, parentID }: Props) => {
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
-  const { pages } = useTemplates({ page: Templates.FullDisplay2, ids: [pageID] });
-  const page = pages[0] ?? emptyFullDisplay2Page;
+  const { pages } = useTemplates({ page: Templates.FullDisplay4, ids: [pageID] });
+  const page = pages[0] ?? emptyFullDisplay4Page;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<FullDisplay2Page>({ ...emptyFullDisplay2Page });
+  const [data, setData] = useState<FullDisplay4Page>({ ...emptyFullDisplay4Page });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -37,6 +37,10 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
         App1_ID: page.App1_ID,
         App2: page.App2,
         App2_ID: page.App2_ID,
+        App3: page.App3,
+        App3_ID: page.App3_ID,
+        App4: page.App4,
+        App4_ID: page.App4_ID,
       });
     }
   }, [pageID, page]);
@@ -52,9 +56,9 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: FullDisplay2Page) => {
+  const handleUpdate = (data: FullDisplay4Page) => {
     const controller = new AbortController();
-    axios.patch(`/api/page/${Templates.FullDisplay2}/${data.ID}`, data)
+    axios.patch(`/api/page/${Templates.FullDisplay4}/${data.ID}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -62,10 +66,10 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
     return () => controller.abort();
   };
 
-  const handleCreate = (data: FullDisplay2Page) => {
+  const handleCreate = (data: FullDisplay4Page) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/page/${Templates.FullDisplay2}/`, newData)
+    axios.post(`/api/page/${Templates.FullDisplay4}/`, newData)
       .then(response => {
         getPageID(response.data.ID);
         handleParentUpdate(parentID, response.data.ID);
@@ -148,7 +152,7 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Templates.FullDisplay2}
+        parentType={Templates.FullDisplay4}
         getAppID={
           (value) => {
             setData({ ...data, App1_ID: value });
@@ -165,10 +169,44 @@ export const FullDisplay2Form = ({ pageID, editMode, setEditMode, submit, setSub
         pptApps={pptApps}
         pbiApps={pbiApps}
         parentID={data.ID}
-        parentType={Templates.FullDisplay2}
+        parentType={Templates.FullDisplay4}
         getAppID={
           (value) => {
-            setData({ ...data, App1_ID: value });
+            setData({ ...data, App2_ID: value });
+          }
+        }
+      />
+      <AppFormControl
+        appNumber={3}
+        appType={data.App3}
+        appID={data.App3_ID ?? 0}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        setData={setData}
+        pptApps={pptApps}
+        pbiApps={pbiApps}
+        parentID={data.ID}
+        parentType={Templates.FullDisplay4}
+        getAppID={
+          (value) => {
+            setData({ ...data, App3_ID: value });
+          }
+        }
+      />
+      <AppFormControl
+        appNumber={4}
+        appType={data.App4}
+        appID={data.App4_ID ?? 0}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        setData={setData}
+        pptApps={pptApps}
+        pbiApps={pbiApps}
+        parentID={data.ID}
+        parentType={Templates.FullDisplay4}
+        getAppID={
+          (value) => {
+            setData({ ...data, App4_ID: value });
           }
         }
       />

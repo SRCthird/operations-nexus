@@ -1,6 +1,9 @@
 import NotFound from "@src/pages/NotFound";
 import { FullDisplayForm } from "./FullDisplay";
 import { FullDisplay2Form } from "./FullDisplay2";
+import { FullDisplay3Form } from "./FullDisplay3";
+import { FullDisplay4Form } from "./FullDisplay4";
+import { FullDisplay5Form } from "./FullDisplay5";
 import { FullWithCircleForm } from "./FullWithCircle";
 import { OneByThreeForm } from "./OneByThree";
 import { SplitScreenForm } from "./SplitScreen";
@@ -37,6 +40,51 @@ export const TemplateForm = ({ data, editMode, setEditMode, submitPage, setSubmi
   } else if (data.Page === Templates.FullDisplay2) {
     return (
       <FullDisplay2Form
+        pageID={data.Page_ID || 0}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        submit={submitPage}
+        setSubmit={setSubmitPage}
+        getPageID={(newID) => {
+          setData({ ...data, Page_ID: newID });
+          onChange({ ...data, Page_ID: newID });
+        }}
+        parentID={data.ID}
+      />
+    )
+  } else if (data.Page === Templates.FullDisplay3) {
+    return (
+      <FullDisplay3Form
+        pageID={data.Page_ID || 0}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        submit={submitPage}
+        setSubmit={setSubmitPage}
+        getPageID={(newID) => {
+          setData({ ...data, Page_ID: newID });
+          onChange({ ...data, Page_ID: newID });
+        }}
+        parentID={data.ID}
+      />
+    )
+  } else if (data.Page === Templates.FullDisplay4) {
+    return (
+      <FullDisplay4Form
+        pageID={data.Page_ID || 0}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        submit={submitPage}
+        setSubmit={setSubmitPage}
+        getPageID={(newID) => {
+          setData({ ...data, Page_ID: newID });
+          onChange({ ...data, Page_ID: newID });
+        }}
+        parentID={data.ID}
+      />
+    )
+  } else if (data.Page === Templates.FullDisplay5) {
+    return (
+      <FullDisplay5Form
         pageID={data.Page_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
