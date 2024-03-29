@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PageFullWithCircleService } from './full-with-circle.service';
+import { FullWithCircleService } from './full-with-circle.service';
 
-describe('PageFullWithCircleService', () => {
-  let service: PageFullWithCircleService;
+describe('FullWithCircleService', () => {
+  let service: FullWithCircleService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PageFullWithCircleService],
+      providers: [FullWithCircleService],
     }).compile();
 
-    service = module.get<PageFullWithCircleService>(PageFullWithCircleService);
+    service = module.get<FullWithCircleService>(FullWithCircleService);
   });
 
   it('should be defined', () => {

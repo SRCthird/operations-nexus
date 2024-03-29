@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PageSplitScreenService } from './split-screen.service';
+import { SplitScreenService } from './split-screen.service';
 
-describe('PageFullDisplayService', () => {
-  let service: PageSplitScreenService;
+describe('SplitScreenService', () => {
+  let service: SplitScreenService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PageSplitScreenService],
+      providers: [SplitScreenService],
     }).compile();
 
-    service = module.get<PageSplitScreenService>(PageSplitScreenService);
+    service = module.get<SplitScreenService>(SplitScreenService);
   });
 
   it('should be defined', () => {

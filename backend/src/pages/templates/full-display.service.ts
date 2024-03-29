@@ -3,21 +3,21 @@ import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class PageFullDisplayService {
+export class FullDisplayService {
 
   constructor(private readonly databaseService: DatabaseService) { }
 
-  create(createPageDto: Prisma.Page_FullDisplayCreateInput) {
-    return this.databaseService.page_FullDisplay.create({
+  create(createPageDto: Prisma.Template_FullDisplayCreateInput) {
+    return this.databaseService.template_FullDisplay.create({
       data: createPageDto
     })
   }
 
   async findMany(ids?: number[]) {
     if (ids.length === 0) {
-      return this.databaseService.page_FullDisplay.findMany();
+      return this.databaseService.template_FullDisplay.findMany();
     }
-    return this.databaseService.page_FullDisplay.findMany({
+    return this.databaseService.template_FullDisplay.findMany({
       where: {
         ID: { in: ids }
       }
@@ -25,21 +25,21 @@ export class PageFullDisplayService {
   }
 
   async findOne(id: number) {
-    return this.databaseService.page_FullDisplay.findUnique({
+    return this.databaseService.template_FullDisplay.findUnique({
       where: { ID: id }
     })
   }
 
 
-  update(id: number, updatePageDto: Prisma.Page_FullDisplayUpdateInput) {
-    return this.databaseService.page_FullDisplay.update({
+  update(id: number, updatePageDto: Prisma.Template_FullDisplayCreateInput) {
+    return this.databaseService.template_FullDisplay.update({
       where: {ID: id},
       data: updatePageDto
     })
   }
 
   async remove(id: number) {
-    return this.databaseService.page_FullDisplay.delete({
+    return this.databaseService.template_FullDisplay.delete({
       where: {ID: id}
     })
   }

@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PageTwoByTwoService } from './two-by-two.service';
+import { TwoByTwoService } from './two-by-two.service';
 
-describe('PageFullDisplayService', () => {
-  let service: PageTwoByTwoService;
+describe('TwoByTwoService', () => {
+  let service: TwoByTwoService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PageTwoByTwoService],
+      providers: [TwoByTwoService],
     }).compile();
 
-    service = module.get<PageTwoByTwoService>(PageTwoByTwoService);
+    service = module.get<TwoByTwoService>(TwoByTwoService);
   });
 
   it('should be defined', () => {

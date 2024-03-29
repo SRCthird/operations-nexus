@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PageFullDisplayService } from './full-display.service';
+import { FullDisplayService } from './full-display.service';
 
 describe('PageFullDisplayService', () => {
-  let service: PageFullDisplayService;
+  let service: FullDisplayService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PageFullDisplayService],
+      providers: [FullDisplayService],
     }).compile();
 
-    service = module.get<PageFullDisplayService>(PageFullDisplayService);
+    service = module.get<FullDisplayService>(FullDisplayService);
   });
 
   it('should be defined', () => {

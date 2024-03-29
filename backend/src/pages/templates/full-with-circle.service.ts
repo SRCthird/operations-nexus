@@ -3,21 +3,21 @@ import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class PageFullWithCircleService {
+export class FullWithCircleService {
 
   constructor(private readonly databaseService: DatabaseService) { }
 
-  create(createPageDto: Prisma.Page_FullWithCircleCreateInput) {
-    return this.databaseService.page_FullWithCircle.create({
+  create(createPageDto: Prisma.Template_FullWithCircleCreateInput) {
+    return this.databaseService.template_FullWithCircle.create({
       data: createPageDto
     })
   }
 
   async findMany(ids?: number[]) {
     if (ids.length === 0) {
-      return this.databaseService.page_FullWithCircle.findMany();
+      return this.databaseService.template_FullWithCircle.findMany();
     }
-    return this.databaseService.page_FullWithCircle.findMany({
+    return this.databaseService.template_FullWithCircle.findMany({
       where: {
         ID: { in: ids }
       }
@@ -25,21 +25,21 @@ export class PageFullWithCircleService {
   }
 
   async findOne(id: number) {
-    return this.databaseService.page_FullWithCircle.findUnique({
+    return this.databaseService.template_FullWithCircle.findUnique({
       where: { ID: id }
     })
   }
 
 
-  update(id: number, updatePageDisplayDto: Prisma.Page_FullWithCircleUpdateInput) {
-    return this.databaseService.page_FullWithCircle.update({
+  update(id: number, updatePageDisplayDto: Prisma.Template_FullWithCircleCreateInput) {
+    return this.databaseService.template_FullWithCircle.update({
       where: {ID: id},
       data: updatePageDisplayDto
     })
   }
 
   async remove(id: number) {
-    return this.databaseService.page_FullWithCircle.delete({
+    return this.databaseService.template_FullWithCircle.delete({
       where: {ID: id}
     })
   }
