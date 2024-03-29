@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Nexus_Settings {
+  ID    Int @id @default(autoincrement())
+  Delay Int @default(30000)
+}
+
+model Nexus_Admins {
+  ID       Int    @id @default(autoincrement())
+  Email    String @unique
+}
+
+model Nexus_ActionTracker {
+  ID          Int              @id @default(autoincrement())
+  Departments Nexus_Department @relation(fields: [Department], references: [Department])
+  Department  String
+  Line        String
+  Date_Opened DateTime         @db.Date
+  Category    String
+  Description String
+  Updates     String?
+  Owner       String?
+  Date_Due    DateTime?        @db.Date
+  Status      Int
+  Priority    Int
+  Logged_By   String
+  Date_Closed DateTime?        @db.Date
+}
+
+model Nexus_Department {
+  ID          Int                   @id @default(autoincrement())
+  Main        String
+  Department  String                @unique
+  Background  String?
+  PPTXVersion Int                   @default(1)
+  Actions     Nexus_ActionTracker[]
+  Displays    Nexus_Display[]
+  PowerPoint  App_PowerPoint[]
+}
+
+model Nexus_Display {
+  ID          Int              @id @default(autoincrement())
+  Main        String
+  Sub         String
+  Departments Nexus_Department @relation(fields: [Department], references: [Department])
+  Department  String
+  Display     String           @unique
+  Background  String?
+  Template    Templates?
+  Page_ID     Int?
+}
+
