@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import axios, { CanceledError } from "axios";
 import { useTemplates, Templates } from "@templates";
 import { AppFormControl, useApps, Apps } from '@apps';
-
-import { emptyFullWithCirclePage } from "./empty";
-import { FullWithCirclePage } from "./types";
-
+import { Template_FullWithCircle, emptyFullWithCircle } from "@templates/FullWithCircle";
 
 interface Props {
   pageID: number;
@@ -22,11 +19,11 @@ export const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setS
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.FullWithCircle, ids: [pageID] });
-  const page = pages[0] ?? emptyFullWithCirclePage;
+  const page = pages[0] ?? emptyFullWithCircle;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<FullWithCirclePage>({ ...emptyFullWithCirclePage });
+  const [data, setData] = useState<Template_FullWithCircle>({ ...emptyFullWithCircle });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -54,7 +51,7 @@ export const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setS
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: FullWithCirclePage) => {
+  const handleUpdate = (data: Template_FullWithCircle) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.FullWithCircle}/${data.ID}`, data)
       .catch(err => {
@@ -64,7 +61,7 @@ export const FullWithCircleForm = ({ pageID, editMode, setEditMode, submit, setS
     return () => controller.abort();
   };
 
-  const handleCreate = (data: FullWithCirclePage) => {
+  const handleCreate = (data: Template_FullWithCircle) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.FullWithCircle}/`, newData)

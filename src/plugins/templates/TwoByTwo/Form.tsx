@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTemplates, Templates } from '@templates';
 import axios, { CanceledError } from "axios";
 import { AppFormControl, useApps, Apps } from '@apps';
-import { TwoByTwoPage, emptyTwoByTwoPage } from '@templates/TwoByTwo';
+import { Template_TwoByTwo, emptyTwoByTwo } from '@templates/TwoByTwo';
 
 interface Props {
   pageID: number;
@@ -19,11 +19,11 @@ export const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit,
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.TwoByTwo, ids: [pageID] });
-  const page = pages[0] ?? emptyTwoByTwoPage;
+  const page = pages[0] ?? emptyTwoByTwo;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<TwoByTwoPage>({ ...emptyTwoByTwoPage });
+  const [data, setData] = useState<Template_TwoByTwo>({ ...emptyTwoByTwo });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -55,7 +55,7 @@ export const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit,
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: TwoByTwoPage) => {
+  const handleUpdate = (data: Template_TwoByTwo) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.TwoByTwo}/${data.ID}`, data)
       .catch(err => {
@@ -65,7 +65,7 @@ export const TwoByTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmit,
     return () => controller.abort();
   };
 
-  const handleCreate = (data: TwoByTwoPage) => {
+  const handleCreate = (data: Template_TwoByTwo) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.TwoByTwo}/`, newData)

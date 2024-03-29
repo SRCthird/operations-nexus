@@ -1,7 +1,7 @@
 import { Apps } from '@apps';
 
-export type SplitScreenPage = {
-  ID: number;
+export type Template_SplitScreen = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;

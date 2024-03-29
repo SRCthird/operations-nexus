@@ -14,7 +14,7 @@ export interface Slides {
  * @param {boolean} Main - Whether to show main slides or not.
  * @param {string} Department - The department of the PowerPointApp.
  */
-export interface PowerPointApp {
+export type App_PowerPoint = {
   ID: number;
   Main: boolean;
   Department: string;

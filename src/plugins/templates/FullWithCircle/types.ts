@@ -1,7 +1,7 @@
 import { Apps } from '@apps';
 
-export type FullWithCirclePage = {
-  ID: number;
+export type Template_FullWithCircle = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;

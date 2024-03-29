@@ -4,7 +4,7 @@ import axios, { CanceledError } from "axios";
 import { useTemplates, Templates } from "@templates";
 import { AppFormControl, useApps, Apps } from '@apps';
 
-import { emptySplitScreenPage, SplitScreenPage } from "@templates/SplitScreen";
+import { Template_SplitScreen, emptySplitScreen } from "@templates/SplitScreen";
 
 interface Props {
   pageID: number;
@@ -20,11 +20,11 @@ export const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubm
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.SplitScreen, ids: [pageID] });
-  const page = pages[0] ?? emptySplitScreenPage;
+  const page = pages[0] ?? emptySplitScreen;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<SplitScreenPage>({ ...emptySplitScreenPage });
+  const [data, setData] = useState<Template_SplitScreen>({ ...emptySplitScreen });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -52,7 +52,7 @@ export const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubm
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: SplitScreenPage) => {
+  const handleUpdate = (data: Template_SplitScreen) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.SplitScreen}/${data.ID}`, data)
       .catch(err => {
@@ -62,7 +62,7 @@ export const SplitScreenForm = ({ pageID, editMode, setEditMode, submit, setSubm
     return () => controller.abort();
   };
 
-  const handleCreate = (data: SplitScreenPage) => {
+  const handleCreate = (data: Template_SplitScreen) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.SplitScreen}/`, newData)

@@ -1,6 +1,6 @@
-import { PowerBIApp } from './types';
+import { App_PowerBI } from './types';
 
-export const emptyPowerBI: PowerBIApp = {
+export const emptyPowerBI: App_PowerBI = {
   ID: 0,
   Type: "",
   PowerBI_ID: "",

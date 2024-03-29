@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTemplates, Templates } from "@templates";
 import {  AppFormControl, useApps, Apps } from '@apps';
 import axios, { CanceledError } from "axios";
-import { FullDisplayPage, emptyFullDisplayPage } from "@templates/FullDisplay";
+import { Template_FullDisplay, emptyFullDisplay } from "@templates/FullDisplay";
 
 interface Props {
   pageID: number;
@@ -19,11 +19,11 @@ export const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubm
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.FullDisplay, ids: [pageID] });
-  const page = pages[0] ?? emptyFullDisplayPage;
+  const page = pages[0] ?? emptyFullDisplay;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<FullDisplayPage>({ ...emptyFullDisplayPage });
+  const [data, setData] = useState<Template_FullDisplay>({ ...emptyFullDisplay });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -49,7 +49,7 @@ export const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubm
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: FullDisplayPage) => {
+  const handleUpdate = (data: Template_FullDisplay) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.FullDisplay}/${data.ID}`, data)
       .catch(err => {
@@ -59,7 +59,7 @@ export const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubm
     return () => controller.abort();
   };
 
-  const handleCreate = (data: FullDisplayPage) => {
+  const handleCreate = (data: Template_FullDisplay) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.FullDisplay}/`, newData)

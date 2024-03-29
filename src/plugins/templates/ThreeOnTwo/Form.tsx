@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTemplates,  Templates } from "@templates";
 import axios, { CanceledError } from "axios";
 import { AppFormControl, useApps, Apps } from '@apps';
-import { ThreeOnTwoPage, emptyThreeOnTwoPage } from '@templates/ThreeOnTwo';
+import { Template_ThreeOnTwo, emptyThreeOnTwo } from '@templates/ThreeOnTwo';
 
 interface Props {
   pageID: number;
@@ -19,11 +19,11 @@ export const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmi
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.ThreeOnTwo, ids: [pageID] });
-  const page = pages[0] ?? emptyThreeOnTwoPage;
+  const page = pages[0] ?? emptyThreeOnTwo;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<ThreeOnTwoPage>({ ...emptyThreeOnTwoPage });
+  const [data, setData] = useState<Template_ThreeOnTwo>({ ...emptyThreeOnTwo });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -57,7 +57,7 @@ export const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmi
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: ThreeOnTwoPage) => {
+  const handleUpdate = (data: Template_ThreeOnTwo) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.ThreeOnTwo}/${data.ID}`, data)
       .catch(err => {
@@ -67,7 +67,7 @@ export const ThreeOnTwoForm = ({ pageID, editMode, setEditMode, submit, setSubmi
     return () => controller.abort();
   };
 
-  const handleCreate = (data: ThreeOnTwoPage) => {
+  const handleCreate = (data: Template_ThreeOnTwo) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.ThreeOnTwo}/`, newData)

@@ -1,6 +1,6 @@
-import { ThreeOnTwoPage } from './types';
+import { Template_ThreeOnTwo } from './types';
 
-export const emptyThreeOnTwoPage: ThreeOnTwoPage = {
+export const emptyThreeOnTwo: Template_ThreeOnTwo = {
   ID: 0,
   Title: '',
   Background: '',

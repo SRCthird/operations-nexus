@@ -1,6 +1,6 @@
-import { FullWithCirclePage } from './types';
+import { Template_FullWithCircle } from './types';
 
-export const emptyFullWithCirclePage: FullWithCirclePage = {
+export const emptyFullWithCircle: Template_FullWithCircle = {
   ID: 0,
   Title: '',
   Background: '',

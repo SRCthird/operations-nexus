@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import axios, { CanceledError } from "axios";
 import { useApps, Apps, AppFormControl } from "@apps";
 import { useTemplates, Templates } from "@templates";
-
-import { OneByThreePage } from "./types";
-import { emptyOneByThreePage } from "./empty";
+import { Template_OneByThree, emptyOneByThree } from "@templates/OneByThree";
 
 interface Props {
   pageID: number;
@@ -21,11 +19,11 @@ export const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmi
   const { apps: pbiApps } = useApps({ app: Apps.PowerBI });
   const { apps: pptApps } = useApps({ app: Apps.PowerPoint });
   const { pages } = useTemplates({ page: Templates.OneByThree, ids: [pageID] });
-  const page = pages[0] ?? emptyOneByThreePage;
+  const page = pages[0] ?? emptyOneByThree;
 
   const [error, setError] = useState("");
 
-  const [data, setData] = useState<OneByThreePage>({ ...emptyOneByThreePage });
+  const [data, setData] = useState<Template_OneByThree>({ ...emptyOneByThree });
 
   useEffect(() => {
     if (pageID !== 0) {
@@ -57,7 +55,7 @@ export const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmi
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: OneByThreePage) => {
+  const handleUpdate = (data: Template_OneByThree) => {
     const controller = new AbortController();
     axios.patch(`/api/page/${Templates.OneByThree}/${data.ID}`, data)
       .catch(err => {
@@ -67,7 +65,7 @@ export const OneByThreeForm = ({ pageID, editMode, setEditMode, submit, setSubmi
     return () => controller.abort();
   };
 
-  const handleCreate = (data: OneByThreePage) => {
+  const handleCreate = (data: Template_OneByThree) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/page/${Templates.OneByThree}/`, newData)

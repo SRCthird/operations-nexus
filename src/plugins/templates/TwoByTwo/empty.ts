@@ -1,6 +1,6 @@
-import { TwoByTwoPage } from './types';
+import { Template_TwoByTwo } from './types';
 
-export const emptyTwoByTwoPage: TwoByTwoPage = {
+export const emptyTwoByTwo: Template_TwoByTwo = {
   ID: 0,
   Title: '',
   Background: '',

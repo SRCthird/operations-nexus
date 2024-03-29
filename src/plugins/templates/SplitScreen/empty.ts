@@ -1,6 +1,6 @@
-import { SplitScreenPage } from './types';
+import { Template_SplitScreen } from './types';
 
-export const emptySplitScreenPage: SplitScreenPage = {
+export const emptySplitScreen: Template_SplitScreen = {
   ID: 0,
   Title: '',
   Background: '',

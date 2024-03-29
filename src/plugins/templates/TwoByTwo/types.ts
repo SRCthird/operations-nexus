@@ -1,7 +1,7 @@
 import { Apps } from '@apps';
 
-export type TwoByTwoPage = {
-  ID: number;
+export type Template_TwoByTwo = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;

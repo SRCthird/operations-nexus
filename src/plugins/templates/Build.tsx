@@ -2,16 +2,16 @@ import NotFound from "@pages/NotFound";
 import { Displays } from "@hooks/useDisplays";
 import BuildApp from "@apps";
 import { useTemplates, Templates } from "@templates";
-import FullDisplay, { FullDisplayPage, emptyFullDisplayPage } from "@templates/FullDisplay";
-import FullDisplay2, { emptyFullDisplay2Page, FullDisplay2Page } from "@templates/FullDisplay2";
-import FullDisplay3, { emptyFullDisplay3Page, FullDisplay3Page } from "@templates/FullDisplay3";
-import FullDisplay4, { emptyFullDisplay4Page, FullDisplay4Page } from "@templates/FullDisplay4";
-import FullDisplay5, { emptyFullDisplay5Page, FullDisplay5Page } from "@templates/FullDisplay5";
-import FullWithCircle, { FullWithCirclePage, emptyFullWithCirclePage } from "@templates/FullWithCircle";
-import OneByThree, { OneByThreePage, emptyOneByThreePage } from "@templates/OneByThree";
-import SplitScreen, { SplitScreenPage, emptySplitScreenPage } from "@templates/SplitScreen";
-import ThreeOnTwo, { ThreeOnTwoPage, emptyThreeOnTwoPage } from "@templates/ThreeOnTwo";
-import TwoByTwo, { TwoByTwoPage, emptyTwoByTwoPage } from "@templates/TwoByTwo";
+import FullDisplay, { emptyFullDisplay, Template_FullDisplay } from "@templates/FullDisplay";
+import FullDisplay2, { emptyFullDisplay2, Template_FullDisplay2 } from "@templates/FullDisplay2";
+import FullDisplay3, { emptyFullDisplay3, Template_FullDisplay3 } from "@templates/FullDisplay3";
+import FullDisplay4, { emptyFullDisplay4, Template_FullDisplay4 } from "@templates/FullDisplay4";
+import FullDisplay5, { emptyFullDisplay5, Template_FullDisplay5 } from "@templates/FullDisplay5";
+import FullWithCircle, { emptyFullWithCircle, Template_FullWithCircle } from "@templates/FullWithCircle";
+import OneByThree, { emptyOneByThree, Template_OneByThree } from "@templates/OneByThree";
+import SplitScreen, { emptySplitScreen, Template_SplitScreen } from "@templates/SplitScreen";
+import ThreeOnTwo, { emptyThreeOnTwo, Template_ThreeOnTwo } from "@templates/ThreeOnTwo";
+import TwoByTwo, { emptyTwoByTwo, Template_TwoByTwo } from "@templates/TwoByTwo";
 
 interface Props {
   token: string;
@@ -26,7 +26,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
   })
 
   if (display.Page === Templates.FullDisplay) {
-    const page: FullDisplayPage = pages[0] || emptyFullDisplayPage;
+    const page: Template_FullDisplay = pages[0] || emptyFullDisplay;
     return (
       <FullDisplay
         title={page.Title}
@@ -42,7 +42,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.FullDisplay2) {
-    const page: FullDisplay2Page = pages[0] || emptyFullDisplay2Page;
+    const page: Template_FullDisplay2 = pages[0] || emptyFullDisplay2;
     return (
       <FullDisplay2
         title={page.Title}
@@ -66,7 +66,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.FullDisplay3) {
-    const page: FullDisplay3Page = pages[0] || emptyFullDisplay3Page;
+    const page: Template_FullDisplay3 = pages[0] || emptyFullDisplay3;
     return (
       <FullDisplay3
         title={page.Title}
@@ -97,7 +97,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.FullDisplay4) {
-    const page: FullDisplay4Page = pages[0] || emptyFullDisplay4Page;
+    const page: Template_FullDisplay4 = pages[0] || emptyFullDisplay4;
     return (
       <FullDisplay4
         title={page.Title}
@@ -135,7 +135,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.FullDisplay5) {
-    const page: FullDisplay5Page = pages[0] || emptyFullDisplay5Page;
+    const page: Template_FullDisplay5 = pages[0] || emptyFullDisplay5;
     return (
       <FullDisplay5
         title={page.Title}
@@ -180,7 +180,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.FullWithCircle) {
-    const page: FullWithCirclePage = pages[0] || emptyFullWithCirclePage;
+    const page: Template_FullWithCircle = pages[0] || emptyFullWithCircle;
     return (
       <FullWithCircle
         title={page.Title}
@@ -204,7 +204,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
     )
 
   } else if (display.Page === Templates.OneByThree) {
-    const page: OneByThreePage = pages[0] || emptyOneByThreePage;
+    const page: Template_OneByThree = pages[0] || emptyOneByThree;
     return (
       <OneByThree
         title={page.Title}
@@ -241,7 +241,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.SplitScreen) {
-    const page: SplitScreenPage = pages[0] || emptySplitScreenPage;
+    const page: Template_SplitScreen = pages[0] || emptySplitScreen;
     return (
       <SplitScreen
         title={page.Title}
@@ -264,7 +264,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.ThreeOnTwo) {
-    const page: ThreeOnTwoPage = pages[0] || emptyThreeOnTwoPage;
+    const page: Template_ThreeOnTwo = pages[0] || emptyThreeOnTwo;
     return (
       <ThreeOnTwo
         title={page.Title}
@@ -308,7 +308,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
   } else if (display.Page === Templates.TwoByTwo) {
-    const page: TwoByTwoPage = pages[0] || emptyTwoByTwoPage;
+    const page: Template_TwoByTwo = pages[0] || emptyTwoByTwo;
     return (
       <TwoByTwo
         title={page.Title}

@@ -1,6 +1,6 @@
-import { FullDisplay3Page } from './types'; 
+import { Template_FullDisplay3 } from './types'; 
 
-export const emptyFullDisplay3Page: FullDisplay3Page = {
+export const emptyFullDisplay3: Template_FullDisplay3 = {
   ID: 0,
   Title: '',
   Background: '',

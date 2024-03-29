@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios, { CanceledError } from "axios";
 import { Templates } from "@templates";
 import { Apps } from '@apps';
-import { PowerBIApp, PowerBITypes } from './types';
+import { App_PowerBI, PowerBITypes } from './types';
 import { emptyPowerBI } from './empty';
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 
 export const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
   const [error, setError] = useState("");
-  const [data, setData] = useState<PowerBIApp>({ ...emptyPowerBI });
+  const [data, setData] = useState<App_PowerBI>({ ...emptyPowerBI });
 
   useEffect(() => {
     const getApp = ( ID: number ) => {
@@ -51,7 +51,7 @@ export const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, s
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: PowerBIApp) => {
+  const handleUpdate = (data: App_PowerBI) => {
     const controller = new AbortController();
     axios.patch(`/api/app/${Apps.PowerBI}/${data.ID}`, data)
       .catch(err => {
@@ -61,7 +61,7 @@ export const PowerBIForm = ({ appNumber, appID, editMode, setEditMode, submit, s
     return () => controller.abort();
   };
 
-  const handleCreate = (data: PowerBIApp) => {
+  const handleCreate = (data: App_PowerBI) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/app/${Apps.PowerBI}/`, newData)

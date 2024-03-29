@@ -1,5 +1,5 @@
 
-export interface PowerBIApp {
+export type App_PowerBI = {
   ID: number;
   Type: string;
   PowerBI_ID: string;

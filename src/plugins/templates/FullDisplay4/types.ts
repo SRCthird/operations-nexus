@@ -1,11 +1,11 @@
 import { Apps } from '@apps'
 
-export type FullDisplay4Page = {
-  ID: number;
+export type Template_FullDisplay4 = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;
-  Transition: number;
+  Transition: number; //@default(30)
   App1?: Apps;
   App1_ID?: number;
   App2?: Apps;

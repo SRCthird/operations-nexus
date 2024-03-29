@@ -1,4 +1,3 @@
-
 export enum Templates {
   FullDisplay = 'FullDisplay',
   FullDisplay2 = 'FullDisplay2',
@@ -10,5 +9,4 @@ export enum Templates {
   OneByThree = 'OneByThree',
   SplitScreen = 'SplitScreen',
   TwoByTwo = 'TwoByTwo'
-  // Add new pages here!
 }

@@ -1,6 +1,6 @@
-import { PowerPointApp } from "./types";
+import { App_PowerPoint } from "./types";
 
-export const emptyPowerPoint: PowerPointApp = {
+export const emptyPowerPoint: App_PowerPoint = {
   ID: 0,
   Main: false,
   Department: ""

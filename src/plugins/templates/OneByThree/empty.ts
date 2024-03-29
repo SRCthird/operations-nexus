@@ -1,6 +1,6 @@
-import { OneByThreePage } from './types';
+import { Template_OneByThree } from './types';
 
-export const emptyOneByThreePage: OneByThreePage = {
+export const emptyOneByThree: Template_OneByThree = {
   ID: 0,
   Title: '',
   Background: '',

@@ -1,7 +1,7 @@
 import { Apps } from '@apps';
 
-export type OneByThreePage = {
-  ID: number;
+export type Template_OneByThree = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;

@@ -1,7 +1,7 @@
 import { Apps } from '@apps'
 
-export type FullDisplayPage = {
-  ID: number;
+export type Template_FullDisplay = {
+  ID: number; //@id @default(autoincrement())
   Title: string;
   Background: string;
   Gradient?: string;

@@ -6,7 +6,7 @@ import { Apps } from "@apps";
 import useDepartment from "@hooks/useDepartments";
 
 import { emptyPowerPoint } from './empty';
-import { PowerPointApp } from './types';
+import { App_PowerPoint } from './types';
 
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 
 export const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
   const [error, setError] = useState("");
-  const [data, setData] = useState<PowerPointApp>({ ...emptyPowerPoint });
+  const [data, setData] = useState<App_PowerPoint>({ ...emptyPowerPoint });
   const { departments, departmentLoading} = useDepartment({});
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: PowerPointApp) => {
+  const handleUpdate = (data: App_PowerPoint) => {
     const controller = new AbortController();
     axios.patch(`/api/app/${Apps.PowerPoint}/${data.ID}`, data)
       .catch(err => {
@@ -66,7 +66,7 @@ export const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit
     return () => controller.abort();
   };
 
-  const handleCreate = (data: PowerPointApp) => {
+  const handleCreate = (data: App_PowerPoint) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/app/${Apps.PowerPoint}/`, newData)
