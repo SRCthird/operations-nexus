@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, NotFoundException } from '@nestjs/common';
-import { PageFullDisplayService } from './templates/full-display.service';
-import { PageFullDisplay2Service } from './templates/full-display2.service';
-import { PageFullDisplay3Service } from './templates/full-display3.service';
-import { PageFullDisplay4Service } from './templates/full-display4.service';
-import { PageFullDisplay5Service } from './templates/full-display5.service';
-import { PageFullWithCircleService } from './templates/full-with-circle.service';
-import { PageOneByThreeService } from './templates/one-by-three.service';
-import { PageSplitScreenService } from './templates/split-screen.service';
-import { PageThreeOnTwoService } from './templates/three-on-two.service';
-import { PageTwoByTwoService } from './templates/two-by-two.service';
+import { FullDisplayService } from './templates/full-display.service';
+import { FullDisplay2Service } from './templates/full-display2.service';
+import { FullDisplay3Service } from './templates/full-display3.service';
+import { FullDisplay4Service } from './templates/full-display4.service';
+import { FullDisplay5Service } from './templates/full-display5.service';
+import { FullWithCircleService } from './templates/full-with-circle.service';
+import { OneByThreeService } from './templates/one-by-three.service';
+import { SplitScreenService } from './templates/split-screen.service';
+import { ThreeOnTwoService } from './templates/three-on-two.service';
+import { TwoByTwoService } from './templates/two-by-two.service';
 
 @Controller('page')
 export class PagesController {
@@ -16,28 +16,28 @@ export class PagesController {
   private pagesMap: Record<string, any>;
 
   constructor(
-    private readonly pageFullDisplayService: PageFullDisplayService,
-    private readonly pageFullDisplay2Service: PageFullDisplay2Service,
-    private readonly pageFullDisplay3Service: PageFullDisplay3Service,
-    private readonly pageFullDisplay4Service: PageFullDisplay4Service,
-    private readonly pageFullDisplay5Service: PageFullDisplay5Service,
-    private readonly pageFullWithCircle: PageFullWithCircleService,
-    private readonly pageOneByThree: PageOneByThreeService,
-    private readonly pageSplitScreen: PageSplitScreenService,
-    private readonly pageThreeOnTwoService: PageThreeOnTwoService,
-    private readonly pageTwoByTwo: PageTwoByTwoService
+    private readonly fullDisplayService: FullDisplayService,
+    private readonly fullDisplay2Service: FullDisplay2Service,
+    private readonly fullDisplay3Service: FullDisplay3Service,
+    private readonly fullDisplay4Service: FullDisplay4Service,
+    private readonly fullDisplay5Service: FullDisplay5Service,
+    private readonly fullWithCircle: FullWithCircleService,
+    private readonly oneByThree: OneByThreeService,
+    private readonly splitScreen: SplitScreenService,
+    private readonly threeOnTwoService: ThreeOnTwoService,
+    private readonly twoByTwo: TwoByTwoService
   ) {
     this.pagesMap = {
-      'FullDisplay': this.pageFullDisplayService,
-      'FullDisplay2': this.pageFullDisplay2Service,
-      'FullDisplay3': this.pageFullDisplay3Service,
-      'FullDisplay4': this.pageFullDisplay4Service,
-      'FullDisplay5': this.pageFullDisplay5Service,
-      'FullWithCircle': this.pageFullWithCircle,
-      'OneByThree': this.pageOneByThree,
-      'SplitScreen': this.pageSplitScreen,
-      'ThreeOnTwo': this.pageThreeOnTwoService,
-      'TwoByTwo': this.pageTwoByTwo
+      'FullDisplay': this.fullDisplayService,
+      'FullDisplay2': this.fullDisplay2Service,
+      'FullDisplay3': this.fullDisplay3Service,
+      'FullDisplay4': this.fullDisplay4Service,
+      'FullDisplay5': this.fullDisplay5Service,
+      'FullWithCircle': this.fullWithCircle,
+      'OneByThree': this.oneByThree,
+      'SplitScreen': this.splitScreen,
+      'ThreeOnTwo': this.threeOnTwoService,
+      'TwoByTwo': this.twoByTwo
     };
   }
 
