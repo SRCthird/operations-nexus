@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ts = require('typescript');
-
+const readline = require("readline");
 
 const extractComments = (node) => {
   const comments = [];
@@ -10,6 +10,10 @@ const extractComments = (node) => {
     const comment = node.getFullText().slice(range.pos, range.end).trim();
     if (comment.startsWith('//')) {
       comments.push(comment.slice(2).trim());
+    }
+    if (comment.startsWith('/*')) {
+      comments.push('\n ');
+      comments.push(comment.slice(2, -2).trim());
     }
   });
   return comments;
@@ -21,7 +25,9 @@ const convertTypeToModel = (typeName, typeMembers) => {
     const name = member.name.escapedText;
     const type = member.type.kind === ts.SyntaxKind.TypeReference ? member.type.typeName.getText() : member.type.getText();
     const optional = member.questionToken ? '?' : '';
-    const prismaType = type === 'string' ? 'String' : type === 'number' ? 'Int' : type;
+    const prismaType = type === 'string' ? 'String' :
+      type === 'number' ? 'Int' :
+        type === 'boolean' ? 'Boolean' : type;
     const comments = member.comments ? ` ${member.comments.join(' ')}` : '';
     model += `  ${name} ${prismaType}${optional}${comments}\n`;
   }
@@ -31,7 +37,6 @@ const convertTypeToModel = (typeName, typeMembers) => {
 
 const getEnums = (baseSchema, pluginTypePath) => {
   const enumPath = path.join(pluginTypePath, 'types.ts');
-  let updatedSchema = baseSchema;
   if (fs.existsSync(enumPath)) {
     const sourceFile = ts.createSourceFile(
       enumPath,
@@ -47,15 +52,14 @@ const getEnums = (baseSchema, pluginTypePath) => {
           const comments = extractComments(member);
           enumValues += `  ${member.name.escapedText}${comments.length > 0 ? ' ' + comments.join(' ') : ''}\n`;
         });
-        updatedSchema += `\nenum ${enumName} {\n${enumValues}}\n`;
+        baseSchema += `\nenum ${enumName} {\n${enumValues}}\n`;
       }
     });
   }
-  return updatedSchema;
+  return baseSchema;
 }
 
 const getModels = (baseSchema, pluginTypePath) => {
-  let updatedSchema = baseSchema;
   fs.readdirSync(pluginTypePath).forEach(pluginDir => {
     const typesFilePath = path.join(pluginTypePath, pluginDir, 'types.ts');
     if (fs.existsSync(typesFilePath)) {
@@ -70,6 +74,7 @@ const getModels = (baseSchema, pluginTypePath) => {
           const typeName = node.name.escapedText;
           let previousTypeMember = null;
           const typeMembers = node.type.members.map((member, index) => {
+            const isLastMember = index === node.type.members.length - 1;
             const comments = extractComments(member);
             if (previousTypeMember && comments.length > 0) {
               previousTypeMember.comments = comments;
@@ -83,17 +88,13 @@ const getModels = (baseSchema, pluginTypePath) => {
             previousTypeMember = typeMember;
             return typeMember;
           });
-          if (previousTypeMember && previousTypeMember.comments.length === 0) {
-            // Handle comments for the last member
-            previousTypeMember.comments = extractComments(node.type.members[node.type.members.length - 1]);
-          }
           const prismaModel = convertTypeToModel(typeName, typeMembers);
-          updatedSchema += '\n' + prismaModel;
+          baseSchema += '\n' + prismaModel;
         }
       });
     }
   });
-  return updatedSchema;
+  return baseSchema;
 }
 
 const merge_schemas = (baseSchema, pluginsPath, pluginType) => {
@@ -106,16 +107,56 @@ const merge_schemas = (baseSchema, pluginsPath, pluginType) => {
 
 const getMasterSchema = () => {
   const pluginsPath = path.join(__dirname, '../plugins');
-  const baseSchemaPath = path.join(__dirname, '../../backend/prisma/schema.prisma');
+  const baseSchemaPath = path.join(__dirname, '../../backend/prisma/schema.test.prisma');
   const masterSchemaPath = path.join(__dirname, '../../backend/prisma/schema.master.prisma');
 
   let baseSchema = fs.readFileSync(masterSchemaPath, 'utf8');
   baseSchema = merge_schemas(baseSchema, pluginsPath, 'apps');
   baseSchema = merge_schemas(baseSchema, pluginsPath, 'templates');
 
-  console.log(baseSchema);
-  // Uncomment this line to write the merged schema to file
-  // fs.writeFileSync(baseSchemaPath, baseSchema);
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  let input = '';
+  let input2 = '';
+  rl.question("Would you like to view the updated schema before writing it to the file? (y/n)\n", (answer) => {
+    if (answer === 'y') {
+      console.log(baseSchema);
+      rl.question("Would you like to write the updated schema to the file? (y/n)\n", (answer2) => {
+        if (answer2 === 'y') {
+          fs.writeFileSync(baseSchemaPath, baseSchema);
+        }
+        rl.close();
+      });
+    } else {
+      fs.writeFileSync(baseSchemaPath, baseSchema);
+      rl.close();
+    }
+  });
+  /*
+  rl.question(
+    "Would you like to view the updated schema before writing it to the file? (y/n)\n", 
+    (answer) => {
+      input = answer;
+      rl.close();
+    }
+  );
+  if (input === 'y') {
+    console.log(baseSchema);
+    rl.question(
+      "Would you like to write the updated schema to the file? (y/n)\n",
+      (answer2) => {
+        input2 = answer2;
+        rl.close();
+      }
+    );
+  }
+  if (input2 === 'n') {
+    return;
+  }
+  fs.writeFileSync(baseSchemaPath, baseSchema);*/
 }
 
 getMasterSchema();

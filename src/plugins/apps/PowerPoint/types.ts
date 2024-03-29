@@ -15,8 +15,9 @@ export interface Slides {
  * @param {string} Department - The department of the PowerPointApp.
  */
 export type App_PowerPoint = {
-  ID: number;
-  Main: boolean;
-  Department: string;
+  ID: number //@id @default(autoincrement())
+  Main: boolean //@default(true) 
+  /*Departments Nexus_Department @relation(fields: [Department], references: [Department])*/
+  Department: string
 }
 

@@ -1,6 +1,6 @@
 
 export type App_PowerBI = {
-  ID: number;
+  ID: number; //@id @default(autoincrement())
   Type: string;
   PowerBI_ID: string;
   Group_ID: string;
