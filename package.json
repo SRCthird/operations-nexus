@@ -42,7 +42,7 @@
     "backend:slides": "cd backend/src && python slides.py",
     "frontend:dev": "craco start",
     "frontend:build": "craco build",
-    "frontend:prod": "node serve-script.js",
+    "frontend:prod": "node src/utils/serve-script.js",
     "frontend:test": "craco test",
     "frontend:eject": "react-scripts eject"
   },
