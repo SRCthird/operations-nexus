@@ -1,17 +1,10 @@
 import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery } from "@hooks/useDisplays";
-import { Departments } from "@hooks/useDepartments";
-import Body from "@components/admin/Body";
-import DepartmentList from "@components/DepartmentList";
-import DepartmentsForm from "./DepartmentsForm";
+import AdminBody from "@components/AdminBody";
+import { DisplayQuery } from "@core/Display";
+import { DepartmentsForm, Departments, DepartmentList } from "@core/Department";
 
-/**
- * Admin view of the Departments table
- *
- * @returns {JSX.Element} - returns the AdminDepartments element
- */
 const DepartmentsBody = (): JSX.Element => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
@@ -77,7 +70,7 @@ const DepartmentsBody = (): JSX.Element => {
   const remount = () => updateKey(key + 1);
 
   return (
-    <Body
+    <AdminBody
       resetForm={resetForm}
       onSearch={(searchText: string) => {
         setDisplayQuery({department: undefined, searchText });

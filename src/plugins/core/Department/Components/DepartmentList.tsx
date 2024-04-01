@@ -1,5 +1,5 @@
 import { List, ListItem, HStack, Image, Spinner, Button, Heading } from '@chakra-ui/react';
-import useDepartments, { Departments } from "@hooks/useDepartments";
+import { useDepartments, Departments } from "@core/Department";
 
 /**
  * Interface for the Departments List component.
@@ -19,7 +19,7 @@ interface Props {
  * @param {interface} Props - Properties of the Departments List component 
  * @returns {JSX.Element} - Returns the Departments List component 
  */
-const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
+export const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: Props): JSX.Element => {
   const { departments, departmentLoading } = useDepartments({department: undefined, searchText: searchText});
   return (
     <>
@@ -46,5 +46,3 @@ const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchText }: 
     </>
   )
 }
-
-export default DepartmentList

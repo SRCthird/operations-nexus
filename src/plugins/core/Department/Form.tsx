@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
-import useDepartment, { Departments } from "@hooks/useDepartments";
+import { useDepartments, Departments, emptyDepartment } from "@core/Department";
 
 /**
  * Properties of the Departments Admin Form
@@ -17,21 +17,14 @@ interface Props {
   onChange: (value: Departments) => void;
 }
 
-const emptyDepartment:Departments = {
-  ID: 0,
-  Main: "",
-  Department: "",
-  Background: "",
-  PPTXVersion: 0
-}
 
 /**
  * Admin Form of the Departments table
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
-const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
-  const { departments, departmentLoading } = useDepartment({department: `${id}`});
+export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
+  const { departments, departmentLoading } = useDepartments({department: `${id}`});
   const department: Departments = departments[0] ?? emptyDepartment; 
 
   const [formID, setFormID] = useState(0);
@@ -104,5 +97,3 @@ const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
   )
 
 }
-
-export default DepartmentsForm
