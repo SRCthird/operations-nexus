@@ -21,8 +21,8 @@ const emptyDisplay: Displays = {
   Department: "",
   Background: "",
   Display: "",
-  Page: undefined,
-  Page_ID: 0
+  Template: undefined,
+  Template_ID: 0
 }
 
 const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
@@ -34,13 +34,13 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
   const { departments, departmentLoading } = useDepartment({});
   const { displays } = useDisplays({ id: id ?? 0 });
   const display: Displays = displays[0] ?? emptyDisplay;
-  const { pages, isPageLoading } = useTemplates({ page: data.Page });
+  const { pages, isPageLoading } = useTemplates({ page: data.Template });
 
   useEffect(() => {
     if (!isPageLoading) {
-      const pageExists = pages.some(page => page.ID === data.Page_ID);
+      const pageExists = pages.some(page => page.ID === data.Template_ID);
       if (!pageExists) {
-        setData({ ...data, Page_ID: 0 });
+        setData({ ...data, Template_ID: 0 });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,8 +55,8 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
         Department: display.Department,
         Background: display.Background,
         Display: display.Display,
-        Page: display.Page,
-        Page_ID: display.Page_ID || 0
+        Template: display.Template,
+        Template_ID: display.Template_ID || 0
       });
     }
   }, [display]);
@@ -126,13 +126,13 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
         <FormControl isDisabled={!editMode}>
           <FormLabel>Page Layout</FormLabel>
           <Select
-            value={data.Page || ""}
+            value={data.Template || ""}
             onChange={(value) => {
-              setData({ ...data, Page: value.target.value as Templates });
-              onChange({ ...data, Page: value.target.value as Templates });
+              setData({ ...data, Template: value.target.value as Templates });
+              onChange({ ...data, Template: value.target.value as Templates });
             }}
           >
-            {!data.Page && <option value={""}></option>}
+            {!data.Template && <option value={""}></option>}
             {Object.values(Templates).map((name) => (
               <option key={name} value={name}>
                 {name}
@@ -143,10 +143,10 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
         <FormControl isDisabled={!editMode}>
           <FormLabel>Page ID</FormLabel>
           <Select
-            value={data.Page_ID}
+            value={data.Template_ID}
             onChange={(value) => {
-              setData({ ...data, Page_ID: +value.target.value });
-              onChange({ ...data, Page_ID: +value.target.value });
+              setData({ ...data, Template_ID: +value.target.value });
+              onChange({ ...data, Template_ID: +value.target.value });
             }}
           >
             {pages.map((page) => (
@@ -154,9 +154,9 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
                 {page.ID}
               </option>
             ))}
-            {(!pages.some(page => page.ID === data.Page_ID) && data.Page_ID !== 0) &&
-              <option value={data.Page_ID}>
-                {data.Page_ID}
+            {(!pages.some(page => page.ID === data.Template_ID) && data.Template_ID !== 0) &&
+              <option value={data.Template_ID}>
+                {data.Template_ID}
               </option>
             }
             <option value={0}>Create New</option>

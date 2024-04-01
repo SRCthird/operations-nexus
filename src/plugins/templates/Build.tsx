@@ -21,11 +21,11 @@ interface Props {
 
 const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
   const { pages } = useTemplates({
-    page: display.Page,
-    ids: [display.Page_ID || 0]
+    page: display.Template,
+    ids: [display.Template_ID || 0]
   })
 
-  if (display.Page === Templates.FullDisplay) {
+  if (display.Template === Templates.FullDisplay) {
     const page: Template_FullDisplay = pages[0] || emptyFullDisplay;
     return (
       <FullDisplay
@@ -41,7 +41,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.FullDisplay2) {
+  } else if (display.Template === Templates.FullDisplay2) {
     const page: Template_FullDisplay2 = pages[0] || emptyFullDisplay2;
     return (
       <FullDisplay2
@@ -65,7 +65,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.FullDisplay3) {
+  } else if (display.Template === Templates.FullDisplay3) {
     const page: Template_FullDisplay3 = pages[0] || emptyFullDisplay3;
     return (
       <FullDisplay3
@@ -96,7 +96,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.FullDisplay4) {
+  } else if (display.Template === Templates.FullDisplay4) {
     const page: Template_FullDisplay4 = pages[0] || emptyFullDisplay4;
     return (
       <FullDisplay4
@@ -134,7 +134,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.FullDisplay5) {
+  } else if (display.Template === Templates.FullDisplay5) {
     const page: Template_FullDisplay5 = pages[0] || emptyFullDisplay5;
     return (
       <FullDisplay5
@@ -179,7 +179,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.FullWithCircle) {
+  } else if (display.Template === Templates.FullWithCircle) {
     const page: Template_FullWithCircle = pages[0] || emptyFullWithCircle;
     return (
       <FullWithCircle
@@ -203,7 +203,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
       />
     )
 
-  } else if (display.Page === Templates.OneByThree) {
+  } else if (display.Template === Templates.OneByThree) {
     const page: Template_OneByThree = pages[0] || emptyOneByThree;
     return (
       <OneByThree
@@ -240,7 +240,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.SplitScreen) {
+  } else if (display.Template === Templates.SplitScreen) {
     const page: Template_SplitScreen = pages[0] || emptySplitScreen;
     return (
       <SplitScreen
@@ -263,7 +263,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.ThreeOnTwo) {
+  } else if (display.Template === Templates.ThreeOnTwo) {
     const page: Template_ThreeOnTwo = pages[0] || emptyThreeOnTwo;
     return (
       <ThreeOnTwo
@@ -307,7 +307,7 @@ const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
         }
       />
     )
-  } else if (display.Page === Templates.TwoByTwo) {
+  } else if (display.Template === Templates.TwoByTwo) {
     const page: Template_TwoByTwo = pages[0] || emptyTwoByTwo;
     return (
       <TwoByTwo

@@ -22,152 +22,152 @@ interface Props {
 }
 
 export const TemplateForm = ({ data, editMode, setEditMode, submitPage, setSubmitPage, setData, onChange }: Props) => {
-  if (data.Page === Templates.FullDisplay) {
+  if (data.Template === Templates.FullDisplay) {
     return (
       <FullDisplayForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.FullDisplay2) {
+  } else if (data.Template === Templates.FullDisplay2) {
     return (
       <FullDisplay2Form
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.FullDisplay3) {
+  } else if (data.Template === Templates.FullDisplay3) {
     return (
       <FullDisplay3Form
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.FullDisplay4) {
+  } else if (data.Template === Templates.FullDisplay4) {
     return (
       <FullDisplay4Form
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.FullDisplay5) {
+  } else if (data.Template === Templates.FullDisplay5) {
     return (
       <FullDisplay5Form
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.FullWithCircle) {
+  } else if (data.Template === Templates.FullWithCircle) {
     return (
       <FullWithCircleForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.OneByThree) {
+  } else if (data.Template === Templates.OneByThree) {
     return (
       <OneByThreeForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.SplitScreen) {
+  } else if (data.Template === Templates.SplitScreen) {
     return (
       <SplitScreenForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.ThreeOnTwo) {
+  } else if (data.Template === Templates.ThreeOnTwo) {
     return (
       <ThreeOnTwoForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />
     )
-  } else if (data.Page === Templates.TwoByTwo) {
+  } else if (data.Template === Templates.TwoByTwo) {
     return (
       <TwoByTwoForm
-        pageID={data.Page_ID || 0}
+        pageID={data.Template_ID || 0}
         editMode={editMode}
         setEditMode={setEditMode}
         submit={submitPage}
         setSubmit={setSubmitPage}
         getPageID={(newID) => {
-          setData({ ...data, Page_ID: newID });
-          onChange({ ...data, Page_ID: newID });
+          setData({ ...data, Template_ID: newID });
+          onChange({ ...data, Template_ID: newID });
         }}
         parentID={data.ID}
       />

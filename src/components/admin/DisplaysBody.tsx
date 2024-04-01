@@ -17,8 +17,8 @@ const DisplaysBody = () => {
     Department: "",
     Background: "",
     Display: "",
-    Page: undefined,
-    Page_ID: 0
+    Template: undefined,
+    Template_ID: 0
   })
 
   const [error, setError] = useState('');
@@ -66,8 +66,8 @@ const DisplaysBody = () => {
       Department: "",
       Background: "",
       Display: "",
-      Page: undefined,
-      Page_ID: 0
+      Template: undefined,
+      Template_ID: 0
     })
   }
 
@@ -94,8 +94,8 @@ const DisplaysBody = () => {
                 Department: display.Department,
                 Background: display.Background,
                 Display: display.Display,
-                Page: display.Page,
-                Page_ID: display.Page_ID || 0
+                Template: display.Template,
+                Template_ID: display.Template_ID || 0
               });
               toggleSelected(true);
             }
@@ -128,8 +128,8 @@ const DisplaysBody = () => {
                 Department: display.Department,
                 Background: display.Background,
                 Display: display.Display,
-                Page: display.Page,
-                Page_ID: display.Page_ID || 0
+                Template: display.Template,
+                Template_ID: display.Template_ID || 0
               });
             }
           }

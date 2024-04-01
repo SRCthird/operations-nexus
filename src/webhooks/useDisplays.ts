@@ -30,8 +30,8 @@ export interface Displays {
   Department: string;
   Display: string;
   Background: string;
-  Page?: Templates;
-  Page_ID?: number;
+  Template?: Templates;
+  Template_ID?: number;
 }
 
 /**
