@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Templates } from "@templates";
 import axios, { CanceledError } from "axios";
 import { Apps } from "@apps";
-import useDepartment from "@hooks/useDepartments";
+import { useDepartments } from "@core/Department";
 
 import { emptyPowerPoint } from './empty';
 import { App_PowerPoint } from './types';
@@ -24,7 +24,7 @@ interface Props {
 export const PowerPointForm = ({ appNumber, appID, editMode, setEditMode, submit, setSubmit, getAppID, parentID, parentType }: Props) => {
   const [error, setError] = useState("");
   const [data, setData] = useState<App_PowerPoint>({ ...emptyPowerPoint });
-  const { departments, departmentLoading} = useDepartment({});
+  const { departments, departmentLoading} = useDepartments({});
 
   useEffect(() => {
     const getApp = (ID: number) => {

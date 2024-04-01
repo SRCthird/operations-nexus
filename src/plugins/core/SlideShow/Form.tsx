@@ -1,7 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Grid, Input, Spinner } from "@chakra-ui/react";
-import useSlideshow from "@hooks/useSlideshow";
-import PowerPointListItem from "@components/PowerPointListItem";
+import { useSlideshow, PowerPointListItem } from "@core/SlideShow";
 
 interface Props {
   handleFileChange: (event: any) => void;
@@ -11,8 +10,7 @@ interface Props {
   department: string;
 }
 
-
-const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handleDelete, department }: Props) => {
+export const SlideShowForm = ({ handleFileChange, handleUpload, handleDownload, handleDelete, department }: Props) => {
   const { powerPoints, pptxError, isLoading } = useSlideshow(department);
   
   return (
@@ -43,5 +41,3 @@ const PowerPointList = ({ handleFileChange, handleUpload, handleDownload, handle
     </Box>
   )
 }
-
-export default PowerPointList

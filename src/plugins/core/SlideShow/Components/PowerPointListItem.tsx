@@ -1,4 +1,4 @@
-import { DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, DownloadIcon } from "@chakra-ui/icons";
 import { Grid, Text } from "@chakra-ui/react";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   onDownload: ()=>void;
 }
 
-const PowerPointListItem = ({ title, onDelete, onDownload }: Props) => {
+export const PowerPointListItem = ({ title, onDelete, onDownload }: Props) => {
   return (
     <Grid 
       templateColumns={'1fr 34px 34px'}
@@ -20,5 +20,3 @@ const PowerPointListItem = ({ title, onDelete, onDownload }: Props) => {
     </Grid>
   )
 }
-
-export default PowerPointListItem;

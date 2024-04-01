@@ -1,17 +1,17 @@
 import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery } from "@hooks/useDisplays";
-import Body from "@components/admin/Body";
-import DepartmentList from "@components/DepartmentList";
-import PowerPointList from "@components/PowerPointList";
+import AdminBody from "@components/AdminBody";
+import { DisplayQuery } from "@core/Display";
+import { DepartmentList } from "@core/Department";
+import { SlideShowForm } from "@core/SlideShow";
 
 /**
  * Admin view of the Slide Shows
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
-const SlideShowsForm = (): JSX.Element => {
+const SlideShowsBody = (): JSX.Element => {
   const [key, updateKey] = useState(1);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -99,7 +99,7 @@ const SlideShowsForm = (): JSX.Element => {
   };
 
   return (
-    <Body
+    <AdminBody
       resetForm={resetForm}
       onSearch={(searchText: string) => {
         setDisplayQuery({ department: undefined, searchText });
@@ -130,7 +130,7 @@ const SlideShowsForm = (): JSX.Element => {
       error={error}
       data={data}
       form={
-        <PowerPointList
+        <SlideShowForm
           key={key}
           handleDownload={handleDownload}
           handleDelete={handleDelete}
@@ -146,4 +146,4 @@ const SlideShowsForm = (): JSX.Element => {
 
 }
 
-export default SlideShowsForm
+export default SlideShowsBody
