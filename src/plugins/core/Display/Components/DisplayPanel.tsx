@@ -1,6 +1,5 @@
 import { List, Heading } from '@chakra-ui/react';
-import useDisplay, { Displays } from "@hooks/useDisplays";
-import DisplayList from './DisplayList';
+import { useDisplays, Displays, DisplayList} from "@core/Display";
 
 interface Props {
   searchText?: string;
@@ -8,8 +7,8 @@ interface Props {
   selectedDisplay?: string;
 }
 
-const DisplayPanel = ({ onSelectDisplay, selectedDisplay, searchText }: Props): JSX.Element => {
-  const { displays } = useDisplay({ searchText: searchText });
+export const DisplayPanel = ({ onSelectDisplay, selectedDisplay, searchText }: Props): JSX.Element => {
+  const { displays } = useDisplays({ searchText: searchText });
 
   const groupedDisplays = displays.reduce((acc, display) => {
     if (!acc[display.Department]) {
@@ -36,5 +35,3 @@ const DisplayPanel = ({ onSelectDisplay, selectedDisplay, searchText }: Props): 
     </>
   )
 }
-
-export default DisplayPanel

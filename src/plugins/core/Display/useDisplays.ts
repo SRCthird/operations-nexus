@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Templates } from "@templates";
+import { Displays } from '@core/Display';
 
 /**
  * The query object used to specify displays from the backend.
@@ -15,31 +15,11 @@ export interface DisplayQuery {
 }
 
 /**
- * Represents the Display object that will be returned to the client.
- * @param {number} ID - The ID of the display.
- * @param {string} Main - Main branch of the department.
- * @param {string} Sub - Department name of the display.
- * @param {string} Department - Child department of the display.
- * @param {string} Display - Name of the display.
- * @param {string} Background - Background Image of the display. (link to image)
- */
-export interface Displays {
-  ID: number;
-  Main: string;
-  Sub: string;
-  Department: string;
-  Display: string;
-  Background: string;
-  Template?: Templates;
-  Template_ID?: number;
-}
-
-/**
  * The webhook that fetches the displays from the backend.
  * 
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
  */
-const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
+export const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
   const [displays, setDisplay] = useState<Displays[]>([]);
   const [error, setError] = useState('');
   const [displayLoading, setLoading] = useState(false);
@@ -90,5 +70,3 @@ const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
 
   return { displays, error, displayLoading };
 }
-
-export default useDisplays

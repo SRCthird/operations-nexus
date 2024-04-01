@@ -3,9 +3,9 @@ import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
-import useDisplays, { Displays } from "@hooks/useDisplays";
-import useDepartment from "@hooks/useDepartments";
+import { useDepartments } from "@core/Department";
 import { useTemplates, Templates, TemplateForm } from "@templates";
+import { useDisplays, emptyDisplay, Displays } from '@core/Display';
 
 interface Props {
   id: number;
@@ -14,24 +14,13 @@ interface Props {
   onChange: (value: Displays) => void;
 }
 
-const emptyDisplay: Displays = {
-  ID: 0,
-  Main: "",
-  Sub: "",
-  Department: "",
-  Background: "",
-  Display: "",
-  Template: undefined,
-  Template_ID: 0
-}
-
-const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
+export const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
   const [key, setKey] = useState(0);
   const [data, setData] = useState<Displays>({ ...emptyDisplay });
   const [submitPage, setSubmitPage] = useState(false);
   const [viewPage, setViewPage] = useState(false);
 
-  const { departments, departmentLoading } = useDepartment({});
+  const { departments, departmentLoading } = useDepartments({});
   const { displays } = useDisplays({ id: id ?? 0 });
   const display: Displays = displays[0] ?? emptyDisplay;
   const { pages, isPageLoading } = useTemplates({ page: data.Template });
@@ -223,5 +212,3 @@ const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
   )
 
 }
-
-export default DisplaysForm

@@ -1,26 +1,14 @@
 import { useState } from "react";
-import DisplayPanel from "@src/components/DisplayPanel";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
-import { DisplayQuery, Displays } from "@hooks/useDisplays";
-import Body from "@components/admin/Body";
-import DisplaysForm from "@components/admin/DisplaysForm";
+import AdminBody from "@components/AdminBody";
+import { DisplayQuery, Displays, DisplaysForm, emptyDisplay, DisplayPanel } from "@core/Display";
 
 const DisplaysBody = () => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [data, setData] = useState<Displays>({
-    ID: 0,
-    Main: "",
-    Sub: "",
-    Department: "",
-    Background: "",
-    Display: "",
-    Template: undefined,
-    Template_ID: 0
-  })
-
+  const [data, setData] = useState<Displays>({...emptyDisplay});
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
@@ -74,7 +62,7 @@ const DisplaysBody = () => {
   const remount = () => updateKey(key + 1);
 
   return (
-    <Body
+    <AdminBody
       resetForm={resetForm}
       onSearch={(searchText: string) => {
         setDisplayQuery({ searchText });

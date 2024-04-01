@@ -1,6 +1,6 @@
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { List, ListItem, Button, Heading, SimpleGrid } from '@chakra-ui/react';
-import { Displays } from "@hooks/useDisplays";
+import { Displays } from "@core/Display";
 import { useState } from 'react';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   selectedDisplay?: string;
 }
 
-const DisplayList = ({ department, displays, onSelectDisplay, selectedDisplay }: Props): JSX.Element => {
+export const DisplayList = ({ department, displays, onSelectDisplay, selectedDisplay }: Props): JSX.Element => {
   const [viewList, setViewList] = useState(false);
 
   return (
@@ -58,5 +58,3 @@ const DisplayList = ({ department, displays, onSelectDisplay, selectedDisplay }:
     </>
   )
 }
-
-export default DisplayList 
