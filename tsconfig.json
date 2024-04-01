@@ -12,7 +12,9 @@
       "@components/*": ["src/components/*"],
       "@context/*": ["src/context/*"],
       "@apps/*": ["src/plugins/apps/*"],
-      "@apps": ["src/plugins/apps"]
+      "@apps": ["src/plugins/apps"],
+      "@core/*": ["src/plugins/core/*"],
+      "@core": ["src/plugins/core"]
     },
     "target": "es5",
     "lib": [

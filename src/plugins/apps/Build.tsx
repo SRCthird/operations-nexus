@@ -1,7 +1,7 @@
 import { Box, Spinner } from "@chakra-ui/react";
-import useApps, { Apps, PowerBIApp, PowerPointApp } from "@hooks/useApps";
-import PowerBI, { emptyPowerBI, PowerBITypes } from "./PowerBI";
-import Slideshow, { emptyPowerPoint } from "./PowerPoint";
+import { Apps, useApps } from '@apps';
+import PowerBI, { emptyPowerBI, App_PowerBI, PowerBITypes } from "./PowerBI";
+import Slideshow, { emptyPowerPoint, App_PowerPoint } from "./PowerPoint";
 
 interface Props {
   type?: Apps;
@@ -13,7 +13,7 @@ const BuildApp = ({ type, id, slideShowKey }: Props) => {
   const { apps, isAppLoading } = useApps({ app: type, ids: [id] });
 
   if (type === Apps.PowerBI && !isAppLoading) {
-    const app: PowerBIApp = apps[0] || emptyPowerBI;
+    const app: App_PowerBI = apps[0] || emptyPowerBI;
     let appType: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
     switch (app.Type) {
       case PowerBITypes.Dashboard: {
@@ -48,7 +48,7 @@ const BuildApp = ({ type, id, slideShowKey }: Props) => {
     )
   }
   if (type === Apps.PowerPoint) {
-    const app: PowerPointApp = apps[0] || emptyPowerPoint;
+    const app: App_PowerPoint = apps[0] || emptyPowerPoint;
     return (
       <Slideshow
         key={slideShowKey}

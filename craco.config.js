@@ -11,6 +11,7 @@ module.exports = {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@context': path.resolve(__dirname, 'src/context/'),
       '@apps': path.resolve(__dirname, 'src/plugins/apps/'),
+      '@core': path.resolve(__dirname, 'src/plugins/core/'),
     }
   },
 };

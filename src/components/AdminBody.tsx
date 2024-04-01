@@ -5,23 +5,6 @@ import SearchInput from "@components/SearchInput";
 import "@styles/Admin.css"
 import DeleteConfirmation from "@components/DeleteConfirmation";
 
-/**
- * Properties for the Admin Body
- *
- * @param {()=>void} resetForm - The lambda function to reset the form
- * @param {(searchText: string)=>void} onSearch - The lambda function to get the searched text
- * @param {(Data: any)=>void} handleCreate - The CRUD method of creating a new entry
- * @param {ReactNode} handleRead - The CRUD method of displaying a gallery of entries
- * @param {(Data: any)=>void} handleUpdate - The CRUD method of updating an entry
- * @param {(ID: number)=>void} handleDelete - The CRUD method of deleting an entry
- * @param {string} header - the header of the view/edit field
- * @param {(toggle: boolean)=>void} setEditMode - the useState which toggles the editMode
- * @param {boolean} editMode - determines the state of the view
- * @param {string} error - a string of any errors
- * @param {any} data - the data to be viewed in the view/edit screen
- * @param {ReactNode} form - the form to display the data
- * @param {()=>void} remound - the lambda function to remound/refresh the handleRead element
- */
 interface Props {
   resetForm: () => void;
   onSearch: (searchText: string) => void;
@@ -41,16 +24,10 @@ interface Props {
   hideAffects?: boolean;
 }
 
-/**
- * The body of the Admin form to create, read, update, and delete information.
- *
- * @param {Props} The properties of the Admin Body
- * @returns {JSX.Element} Returns the Admin Body element
- */
-const Body = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
+const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
   const { isOpen, onToggle, onClose } = useDisclosure()
   const [createMode, setCreateMode] = useState(false);
-  const [SizeSmall, SizeMed, SizeLarge, SizeXL] = useMediaQuery(['(max-width: 600px)', '(max-width: 900px)', '(max-width: 1280px)', '(min-width: 1280px)']);
+  const [SizeMed] = useMediaQuery(['(max-width: 900px)']);
   const layout = SizeMed ? '1fr' : '30vw 1fr';
 
   const handleCheck = (Data: any) => {
@@ -166,4 +143,4 @@ const Body = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, 
 
 }
 
-export default Body
+export default AdminBody

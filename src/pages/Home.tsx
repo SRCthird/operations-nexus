@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { Box, Grid, GridItem, Show } from '@chakra-ui/react'
 import NavBar from '@components/NavBar';
-import DisplayGrid from '@components/DisplayGrid';
-import DepartmentList from '@components/DepartmentList';
-import DisplayHeading from '@components/DisplayHeading';
-import { DisplayQuery } from '@hooks/useDisplays';
-import { Departments } from '@src/webhooks/useDepartments';
+import { DisplayGrid, DisplayHeading, DisplayQuery } from '@core/Display';
+import { Departments, DepartmentList } from '@core/Department';
 
 /**
  * The home page of the application. Used to select the display.
@@ -13,10 +10,7 @@ import { Departments } from '@src/webhooks/useDepartments';
  * @returns {JSX.Element} - Returns the Home page component.
  */
 const Home = (): JSX.Element => {
-    const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({
-        department: undefined,
-        searchText: undefined
-    });
+    const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
     return (
         <Grid templateAreas={{

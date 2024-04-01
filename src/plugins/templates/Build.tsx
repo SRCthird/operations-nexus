@@ -1,5 +1,5 @@
 import NotFound from "@pages/NotFound";
-import { Displays } from "@hooks/useDisplays";
+import { Displays } from "@core/Display";
 import BuildApp from "@apps";
 import { useTemplates, Templates } from "@templates";
 import FullDisplay, { emptyFullDisplay, Template_FullDisplay } from "@templates/FullDisplay";

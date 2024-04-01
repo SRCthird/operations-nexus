@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import NotFound from '@pages/NotFound';
 import Admin from '@pages/Admin';
 import Home from '@pages/Home';
-import useDisplays from '@hooks/useDisplays';
-import useDepartments from '@hooks/useDepartments';
+import { useDisplays } from '@core/Display';
+import { useDepartments }  from '@core/Department';
 import useAccount from '@hooks/useAccount';
 import useAdmin from '@hooks/useAdmin';
 import BuildTemplate from '@templates';

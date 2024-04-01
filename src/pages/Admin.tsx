@@ -1,9 +1,9 @@
 import { Box, Grid, Heading, Button, MenuButton, Menu, MenuList, MenuItem, } from "@chakra-ui/react"
 import { useState } from "react";
 import "@styles/Admin.css"
-import DisplaysBody from "@components/admin/DisplaysBody";
-import DepartmentsBody from "@components/admin/DepartmentsBody";
-import SlideShowsForm from "@components/admin/SlideShowsForm";
+import DisplaysBody from "@core/Display";
+import DepartmentsBody from "@core/Department";
+import SlideShowsBody from "@core/SlideShow";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 /**
@@ -52,7 +52,7 @@ const Admin = ({ title }: Props): JSX.Element => {
       </Grid>
       {display === 0 && <DepartmentsBody />}
       {display === 1 && <DisplaysBody />}
-      {display === 2 && <SlideShowsForm />}
+      {display === 2 && <SlideShowsBody />}
     </Box>
   )
 }
