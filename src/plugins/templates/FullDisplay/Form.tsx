@@ -1,8 +1,9 @@
-import { Box, FormControl, FormHelperText, FormLabel, Input } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useTemplates, Templates } from "@templates";
 import {  AppFormControl, useApps, Apps } from '@apps';
 import axios, { CanceledError } from "axios";
+import FormControl from '@components/FormControl';
 import { Template_FullDisplay, emptyFullDisplay } from "@templates/FullDisplay";
 
 interface Props {
@@ -86,37 +87,22 @@ export const FullDisplayForm = ({ pageID, editMode, setEditMode, submit, setSubm
 
   return (
     <Box>
-      <FormControl isDisabled={true}>
-        <FormLabel>ID</FormLabel>
-        <Input value={pageID === 0 ? "" : pageID} />
-      </FormControl>
-      <FormControl isDisabled={!editMode}>
-        <FormLabel>Title</FormLabel>
-        <Input value={data.Title}
-          onChange={(value) => {
-            setData({ ...data, Title: value.target.value });
-          }}
-        />
-        <FormHelperText>The title of this page.</FormHelperText>
-      </FormControl>
-      <FormControl isDisabled={!editMode}>
-        <FormLabel>Background</FormLabel>
-        <Input value={data.Background}
-          onChange={(value) => {
-            setData({ ...data, Background: value.target.value });
-          }}
-        />
-        <FormHelperText>The background color of this page, using HTML colors</FormHelperText>
-      </FormControl>
-      <FormControl isDisabled={!editMode}>
-        <FormLabel>Gradient</FormLabel>
-        <Input value={data.Gradient ?? ""}
-          onChange={(value) => {
-            setData({ ...data, Gradient: value.target.value });
-          }}
-        />
-        <FormHelperText>The name of the area where this display will be used.</FormHelperText>
-      </FormControl>
+      <FormControl.ID id={data.ID} />
+      <FormControl.Title 
+        title={data.Title} 
+        editMode={editMode}
+        setData={setData}
+      />
+      <FormControl.Background
+        background={data.Background}
+        editMode={editMode}
+        setData={setData}
+      />
+      <FormControl.Gradient
+        gradient={data.Gradient}
+        editMode={editMode}
+        setData={setData}
+      />
       <AppFormControl
         appNumber={1}
         appType={data.App1}
