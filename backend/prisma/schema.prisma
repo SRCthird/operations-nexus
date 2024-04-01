@@ -57,7 +57,7 @@ model Nexus_Display {
   Display     String           @unique
   Background  String?
   Template    Templates?
-  Page_ID     Int?
+  Template_ID Int?
 }
 
 enum Apps {
