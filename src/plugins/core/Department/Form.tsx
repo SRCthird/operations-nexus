@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
-import { useDepartments, Departments, emptyDepartment } from "@core/Department";
+import { useDepartments, Nexus_Department, emptyDepartment } from "@core/Department";
 
 /**
  * Properties of the Departments Admin Form
@@ -14,7 +14,7 @@ import { useDepartments, Departments, emptyDepartment } from "@core/Department";
 interface Props {
   id: number;
   editMode: boolean;
-  onChange: (value: Departments) => void;
+  onChange: (value: Nexus_Department) => void;
 }
 
 
@@ -25,7 +25,7 @@ interface Props {
  */
 export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
   const { departments, departmentLoading } = useDepartments({department: `${id}`});
-  const department: Departments = departments[0] ?? emptyDepartment; 
+  const department: Nexus_Department = departments[0] ?? emptyDepartment; 
 
   const [formID, setFormID] = useState(0);
   const [formMain, setFormMain] = useState("");
@@ -49,7 +49,7 @@ export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element 
     }
   },[department, id]);
   
-  const data: Departments = {
+  const data: Nexus_Department = {
     ID: formID,
     Main: formMain,
     Department: formDepartment,

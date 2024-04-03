@@ -1,5 +1,5 @@
 import NotFound from "@pages/NotFound";
-import { Displays } from "@core/Display";
+import { Nexus_Display } from "@core/Display";
 import BuildApp from "@apps";
 import { useTemplates, Templates } from "@templates";
 import FullDisplay, { emptyFullDisplay, Template_FullDisplay } from "@templates/FullDisplay";
@@ -16,7 +16,7 @@ import TwoByTwo, { emptyTwoByTwo, Template_TwoByTwo } from "@templates/TwoByTwo"
 interface Props {
   token: string;
   slideShowKey: number;
-  display: Displays
+  display:Nexus_Display 
 }
 
 const BuildTemplate = ({ token, slideShowKey, display }: Props) => {

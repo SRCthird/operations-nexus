@@ -2,17 +2,17 @@ import { useState } from "react";
 import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
 import AdminBody from "@components/AdminBody";
-import { DisplayQuery, Displays, DisplaysForm, emptyDisplay, DisplayPanel } from "@core/Display";
+import { DisplayQuery, Nexus_Display, DisplaysForm, emptyDisplay, DisplayPanel } from "@core/Display";
 
 const DisplaysBody = () => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [data, setData] = useState<Displays>({...emptyDisplay});
+  const [data, setData] = useState<Nexus_Display>({...emptyDisplay});
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
-  const handleCreate = (data: Displays) => {
+  const handleCreate = (data: Nexus_Display) => {
     const { ID: _, ...newData } = data;
     const controller = new AbortController();
     axios.post(`/api/display`, newData)
@@ -23,7 +23,7 @@ const DisplaysBody = () => {
     return () => controller.abort();
   }
 
-  const handleUpdate = (data: Displays) => {
+  const handleUpdate = (data: Nexus_Display) => {
     if (data.ID === 0) return;
     const controller = new AbortController();
     axios.patch(`/api/display/${data.ID}`, data)
@@ -47,16 +47,7 @@ const DisplaysBody = () => {
   }
 
   const resetForm = () => {
-    setData({
-      ID: 0,
-      Main: "",
-      Sub: "",
-      Department: "",
-      Background: "",
-      Display: "",
-      Template: undefined,
-      Template_ID: 0
-    })
+    setData({...emptyDisplay});
   }
 
   const remount = () => updateKey(key + 1);

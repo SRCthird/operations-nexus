@@ -1,9 +1,9 @@
 import { Card, CardBody, Heading, Image } from '@chakra-ui/react'
-import { Displays } from "@core/Display"
+import { Nexus_Display } from "@core/Display"
 import { useNavigate  } from "react-router-dom";
 
 interface Props {
-    display: Displays;
+    display: Nexus_Display;
 }
 
 /**

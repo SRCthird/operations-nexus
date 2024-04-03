@@ -1,12 +1,12 @@
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { List, ListItem, Button, Heading, SimpleGrid } from '@chakra-ui/react';
-import { Displays } from "@core/Display";
+import { Nexus_Display } from "@core/Display";
 import { useState } from 'react';
 
 interface Props {
   department: string;
-  displays: Displays[];
-  onSelectDisplay: (department: Displays) => void;
+  displays: Nexus_Display[];
+  onSelectDisplay: (department: Nexus_Display) => void;
   selectedDisplay?: string;
 }
 

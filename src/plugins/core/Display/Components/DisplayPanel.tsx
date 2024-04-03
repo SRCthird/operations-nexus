@@ -1,9 +1,9 @@
 import { List, Heading } from '@chakra-ui/react';
-import { useDisplays, Displays, DisplayList} from "@core/Display";
+import { useDisplays, Nexus_Display, DisplayList} from "@core/Display";
 
 interface Props {
   searchText?: string;
-  onSelectDisplay: (department: Displays) => void;
+  onSelectDisplay: (department: Nexus_Display) => void;
   selectedDisplay?: string;
 }
 

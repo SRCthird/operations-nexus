@@ -1,9 +1,9 @@
 import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Departments, DepartmentQuery } from './types';
+import { Nexus_Department, DepartmentQuery } from './types';
 
 export const useDepartments = ({ department, searchText }: DepartmentQuery) => {
-  const [departments, setDepartment] = useState<Departments[]>([]);
+  const [departments, setDepartment] = useState<Nexus_Department[]>([]);
   const [error, setError] = useState('');
   const [departmentLoading, setLoading] = useState(false);
 

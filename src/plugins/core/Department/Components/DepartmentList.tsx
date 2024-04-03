@@ -1,5 +1,5 @@
 import { List, ListItem, HStack, Image, Spinner, Button, Heading } from '@chakra-ui/react';
-import { useDepartments, Departments } from "@core/Department";
+import { useDepartments, Nexus_Department } from "@core/Department";
 
 /**
  * Interface for the Departments List component.
@@ -8,7 +8,7 @@ import { useDepartments, Departments } from "@core/Department";
  * @param {String} onSelectDepartment - The selected department in parent component
  */
 interface Props {
-  onSelectDepartment: (department: Departments) => void;
+  onSelectDepartment: (department: Nexus_Department) => void;
   selectedDepartment?: string;
   searchText?: string;
 }

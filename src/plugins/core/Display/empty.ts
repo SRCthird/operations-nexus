@@ -1,6 +1,6 @@
-import { Displays } from '@core/Display';
+import { Nexus_Display } from '@core/Display';
 
-export const emptyDisplay: Displays = {
+export const emptyDisplay: Nexus_Display = {
   ID: 0,
   Main: "",
   Sub: "",

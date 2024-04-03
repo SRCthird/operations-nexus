@@ -5,24 +5,24 @@ import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import { useDepartments } from "@core/Department";
 import { useTemplates, Templates, TemplateForm } from "@templates";
-import { useDisplays, emptyDisplay, Displays } from '@core/Display';
+import { useDisplays, emptyDisplay, Nexus_Display } from '@core/Display';
 
 interface Props {
   id: number;
   editMode: boolean;
   setEditMode: (value: boolean) => void;
-  onChange: (value: Displays) => void;
+  onChange: (value: Nexus_Display) => void;
 }
 
 export const DisplaysForm = ({ id, editMode, setEditMode, onChange }: Props) => {
   const [key, setKey] = useState(0);
-  const [data, setData] = useState<Displays>({ ...emptyDisplay });
+  const [data, setData] = useState<Nexus_Display>({ ...emptyDisplay });
   const [submitPage, setSubmitPage] = useState(false);
   const [viewPage, setViewPage] = useState(false);
 
   const { departments, departmentLoading } = useDepartments({});
   const { displays } = useDisplays({ id: id ?? 0 });
-  const display: Displays = displays[0] ?? emptyDisplay;
+  const display: Nexus_Display = displays[0] ?? emptyDisplay;
   const { pages, isPageLoading } = useTemplates({ page: data.Template });
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Grid, GridItem, Show } from '@chakra-ui/react'
 import NavBar from '@components/NavBar';
 import { DisplayGrid, DisplayHeading, DisplayQuery } from '@core/Display';
-import { Departments, DepartmentList } from '@core/Department';
+import { Nexus_Department, DepartmentList } from '@core/Department';
 
 /**
  * The home page of the application. Used to select the display.
@@ -34,7 +34,7 @@ const Home = (): JSX.Element => {
                     <DepartmentList 
                         selectedDepartment={displayQuery.department} 
                         onSelectDepartment={
-                          (department: Departments) => {
+                          (department: Nexus_Department) => {
                             setDisplayQuery({department: department.Department});
                           }
                         }

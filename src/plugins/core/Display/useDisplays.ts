@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Displays } from '@core/Display';
+import { Nexus_Display } from '@core/Display';
 
 /**
  * The query object used to specify displays from the backend.
@@ -20,7 +20,7 @@ export interface DisplayQuery {
  * @param {DisplayQuery} displayQuery - The query parameters sent to the backend.
  */
 export const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
-  const [displays, setDisplay] = useState<Displays[]>([]);
+  const [displays, setDisplay] = useState<Nexus_Display[]>([]);
   const [error, setError] = useState('');
   const [displayLoading, setLoading] = useState(false);
 
@@ -65,7 +65,7 @@ export const useDisplays = ({ id, department, searchText }: DisplayQuery) => {
   }, [department, searchText, id]);
 
   if (typeof displays !== "object") {
-    setDisplay([] as Displays[]);
+    setDisplay([] as Nexus_Display[]);
   };
 
   return { displays, error, displayLoading };

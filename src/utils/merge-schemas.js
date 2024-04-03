@@ -27,7 +27,8 @@ const convertTypeToModel = (typeName, typeMembers) => {
     const optional = member.questionToken ? '?' : '';
     const prismaType = type === 'string' ? 'String' :
       type === 'number' ? 'Int' :
-        type === 'boolean' ? 'Boolean' : type;
+      type === 'boolean' ? 'Boolean' : 
+      type === 'Date' ? 'DateTime' : type;
     const comments = member.comments ? ` ${member.comments.join(' ')}` : '';
     model += `  ${name} ${prismaType}${optional}${comments}\n`;
   }
@@ -73,8 +74,7 @@ const getModels = (baseSchema, pluginTypePath) => {
         if (ts.isTypeAliasDeclaration(node) && ts.isTypeLiteralNode(node.type)) {
           const typeName = node.name.escapedText;
           let previousTypeMember = null;
-          const typeMembers = node.type.members.map((member, index) => {
-            const isLastMember = index === node.type.members.length - 1;
+          const typeMembers = node.type.members.map((member, _) => {
             const comments = extractComments(member);
             if (previousTypeMember && comments.length > 0) {
               previousTypeMember.comments = comments;
@@ -112,6 +112,7 @@ const getMasterSchema = () => {
 
   let baseSchema = fs.readFileSync(masterSchemaPath, 'utf8');
   baseSchema = merge_schemas(baseSchema, pluginsPath, 'apps');
+  baseSchema = merge_schemas(baseSchema, pluginsPath, 'core');
   baseSchema = merge_schemas(baseSchema, pluginsPath, 'templates');
 
   const rl = readline.createInterface({
@@ -119,8 +120,6 @@ const getMasterSchema = () => {
     output: process.stdout
   });
 
-  let input = '';
-  let input2 = '';
   rl.question("Would you like to view the updated schema before writing it to the file? (y/n)\n", (answer) => {
     if (answer === 'y') {
       console.log(baseSchema);
@@ -135,28 +134,6 @@ const getMasterSchema = () => {
       rl.close();
     }
   });
-  /*
-  rl.question(
-    "Would you like to view the updated schema before writing it to the file? (y/n)\n", 
-    (answer) => {
-      input = answer;
-      rl.close();
-    }
-  );
-  if (input === 'y') {
-    console.log(baseSchema);
-    rl.question(
-      "Would you like to write the updated schema to the file? (y/n)\n",
-      (answer2) => {
-        input2 = answer2;
-        rl.close();
-      }
-    );
-  }
-  if (input2 === 'n') {
-    return;
-  }
-  fs.writeFileSync(baseSchemaPath, baseSchema);*/
 }
 
 getMasterSchema();

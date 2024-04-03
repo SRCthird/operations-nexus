@@ -3,7 +3,7 @@ import "@styles/Admin.css"
 import axios, { CanceledError } from "axios";
 import AdminBody from "@components/AdminBody";
 import { DisplayQuery } from "@core/Display";
-import { DepartmentsForm, Departments, DepartmentList } from "@core/Department";
+import { DepartmentsForm, Nexus_Department, DepartmentList } from "@core/Department";
 
 const DepartmentsBody = (): JSX.Element => {
   const [key, updateKey] = useState(0);
@@ -17,7 +17,7 @@ const DepartmentsBody = (): JSX.Element => {
   const [error, setError] = useState('');
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
-  const handleCreate = (Data: Departments) => {
+  const handleCreate = (Data: Nexus_Department) => {
     const { ID: _, ...newData } = Data;
     const controller = new AbortController();
     axios.post(`/api/departments`, newData)
@@ -28,7 +28,7 @@ const DepartmentsBody = (): JSX.Element => {
     return () => controller.abort();
   }
 
-  const handleUpdate = (Data: Departments) => {
+  const handleUpdate = (Data: Nexus_Department) => {
     if (Data.ID === -1) return;
     const controller = new AbortController();
     axios.patch(`/api/departments/${Data.ID}`, Data)
@@ -51,7 +51,7 @@ const DepartmentsBody = (): JSX.Element => {
     return () => controller.abort();
   }
 
-  const data: Departments = {
+  const data: Nexus_Department = {
     ID: formID,
     Main: formMain,
     Department: formDepartment,

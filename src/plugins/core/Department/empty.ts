@@ -1,6 +1,6 @@
-import { Departments } from './types';
+import { Nexus_Department } from './types';
 
-export const emptyDepartment:Departments = {
+export const emptyDepartment:Nexus_Department = {
   ID: 0,
   Main: "",
   Department: "",
