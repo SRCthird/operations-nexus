@@ -25,7 +25,7 @@ const DepartmentsBody = (): JSX.Element => {
   }
 
   const handleUpdate = (Data: Nexus_Department) => {
-    if (Data.ID === -1) return;
+    if (Data.ID === 0) return;
     const controller = new AbortController();
     axios.patch(`/api/departments/${Data.ID}`, Data)
       .catch(err => {
@@ -36,7 +36,7 @@ const DepartmentsBody = (): JSX.Element => {
   }
 
   const handleDelete = (ID: string) => {
-    if (+ID === -1) return;
+    if (+ID === 0) return;
     const controller = new AbortController();
     axios.delete(`/api/departments/${ID}`)
       .catch(err => {
@@ -57,7 +57,7 @@ const DepartmentsBody = (): JSX.Element => {
     <AdminBody
       resetForm={resetForm}
       onSearch={(searchText: string) => {
-        setDisplayQuery({ department: undefined, searchText });
+        setDisplayQuery({ searchText });
       }}
       handleCreate={handleCreate}
       handleRead={
@@ -111,7 +111,6 @@ const DepartmentsBody = (): JSX.Element => {
       remount={remount}
     />
   )
-
 }
 
 export default DepartmentsBody
