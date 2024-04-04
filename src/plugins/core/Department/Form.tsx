@@ -17,83 +17,64 @@ interface Props {
   onChange: (value: Nexus_Department) => void;
 }
 
-
 /**
  * Admin Form of the Departments table
  *
  * @returns {JSX.Element} - returns the AdminDepartments element
  */
 export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
-  const { departments, departmentLoading } = useDepartments({department: `${id}`});
-  const department: Nexus_Department = departments[0] ?? emptyDepartment; 
+  const { departments, departmentLoading } = useDepartments({ department: `${id}` });
+  const department: Nexus_Department = departments[0] ?? emptyDepartment;
+  const [data, setData] = useState({ ...emptyDepartment });
 
-  const [formID, setFormID] = useState(0);
-  const [formMain, setFormMain] = useState("");
-  const [formDepartment, setFormDepartment] = useState("");
-  const [formBackground, setFormBackground] = useState("");
-  const [formPPTXVersion, setFormPPTXVersion] = useState(0); 
-  
-  useEffect(()=>{
-    if (id===0) {
-      setFormID(0);
-      setFormMain("");
-      setFormDepartment("");
-      setFormBackground("");
-      setFormPPTXVersion(0);
-    } else {
-      setFormID(department.ID);
-      setFormMain(department.Main);
-      setFormDepartment(department.Department);
-      setFormBackground(department.Background);
-      setFormPPTXVersion(department.PPTXVersion);
+  useEffect(() => {
+    if (id !== 0) {
+      setData({
+        ID: department.ID,
+        Main: department.Main,
+        Department: department.Department,
+        Background: department.Background,
+        PPTXVersion: department.PPTXVersion
+      })
     }
-  },[department, id]);
-  
-  const data: Nexus_Department = {
-    ID: formID,
-    Main: formMain,
-    Department: formDepartment,
-    Background: formBackground,
-    PPTXVersion: formPPTXVersion
-  }
+  }, [department, id]);
 
   return (
     <Form className="Admin-Form">
       <FormControl isDisabled={true}>
         <FormLabel>Id</FormLabel>
-        <Input value={formID === -1 ? "" : formID} />
+        <Input value={data.ID === 0 ? "" : data.ID} />
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Main</FormLabel>
-        <Input value={formMain}
+        <Input value={data.Main}
           onChange={(value) => {
-            setFormMain(value.target.value);
-              onChange({...data, Main: value.target.value });
+            setData({ ...data, Main: value.target.value });
+            onChange({ ...data, Main: value.target.value });
           }}
         />
         <FormHelperText>The main branch this display is under.</FormHelperText>
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Department</FormLabel>
-        <Input value={formDepartment}
+        <Input value={data.Department}
           onChange={(value) => {
-            setFormDepartment(value.target.value);
-              onChange({...data, Department: value.target.value });
+            setData({ ...data, Department: value.target.value });
+            onChange({ ...data, Department: value.target.value });
           }}
         />
         <FormHelperText>The name of the area where this display will be used.</FormHelperText>
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Background</FormLabel>
-        <Input value={formBackground}
+        <Input value={data.Background}
           onChange={(value) => {
-            setFormBackground(value.target.value);
-              onChange({...data, Background: value.target.value });
+            setData({ ...data, Background: value.target.value });
+            onChange({ ...data, Background: value.target.value });
           }}
         />
         <FormHelperText>The icon to be displayed next to the department.</FormHelperText>
       </FormControl>
     </Form>
   )
-
 }
