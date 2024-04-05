@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppPowerBiService } from './app_power-bi.service';
+import { PowerPointService } from './power-point.service';
 
-describe('AppPowerBiService', () => {
-  let service: AppPowerBiService;
+describe('PowerPointService', () => {
+  let service: PowerPointService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AppPowerBiService],
+      providers: [PowerPointService],
     }).compile();
 
-    service = module.get<AppPowerBiService>(AppPowerBiService);
+    service = module.get<PowerPointService>(PowerPointService);
   });
 
   it('should be defined', () => {

@@ -6,14 +6,12 @@ import { DisplaysModule } from './displays/displays.module';
 import { DepartmentsModule } from './departments/departments.module';
 import { PowerpointModule } from './powerpoint/powerpoint.module';
 import { StaticModule } from './static/static.module';
-import { ActionTrackerModule } from './action-tracker/action-tracker.module';
-import { AppPowerBiModule } from './app_power-bi/app_power-bi.module';
-import { AppPowerPointModule } from './app_power-point/app_power-point.module';
 import { PagesModule } from './pages/pages.module';
 import { AdminModule } from './admin/admin.module';
+import { AppsModule } from './apps/app.module';
 
 @Module({
-  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, ActionTrackerModule, AppPowerBiModule, AppPowerPointModule, PagesModule, AdminModule,],
+  imports: [AppsModule, DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, PagesModule, AdminModule,],
   controllers: [AppController],
   providers: [AppService],
 })

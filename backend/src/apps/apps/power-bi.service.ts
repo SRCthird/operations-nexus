@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
-export class AppPowerBiService {
+export class PowerBiService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 

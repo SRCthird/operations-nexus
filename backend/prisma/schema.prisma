@@ -41,7 +41,7 @@ model App_PowerPoint {
   Department String 
 }
 
-model Nexus_ActionTracker {
+model App_ActionTracker {
   ID Int @id @default(autoincrement()) 
   Departments Nexus_Department @relation(fields: [Department], references: [Department])
   Department String 
@@ -61,7 +61,7 @@ Date_Due DateTime? @db.Date
 model Nexus_Department {
   ID Int @id @default(autoincrement())
   Main String 
-  Actions     Nexus_ActionTracker[]
+  Actions     App_ActionTracker[]
   Displays    Nexus_Display[]
   PowerPoint  App_PowerPoint[]
   Department String @unique

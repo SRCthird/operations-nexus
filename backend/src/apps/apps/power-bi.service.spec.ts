@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ActionTrackerService } from './action-tracker.service';
+import { PowerBiService } from './power-bi.service';
 
-describe('ActionTrackerService', () => {
-  let service: ActionTrackerService;
+describe('PowerBiService', () => {
+  let service: PowerBiService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ActionTrackerService],
+      providers: [PowerBiService],
     }).compile();
 
-    service = module.get<ActionTrackerService>(ActionTrackerService);
+    service = module.get<PowerBiService>(PowerBiService);
   });
 
   it('should be defined', () => {
