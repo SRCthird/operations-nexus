@@ -1,7 +1,7 @@
 export type Nexus_Department = {
   ID: number //@id @default(autoincrement())
   Main: string
-  /*Actions     Nexus_ActionTracker[]
+  /*Actions     App_ActionTracker[]
   Displays    Nexus_Display[]
   PowerPoint  App_PowerPoint[]*/
   Department: string //@unique
