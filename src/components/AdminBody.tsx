@@ -60,9 +60,9 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
               boxSize={'25px'} 
               onClick={() => {
                 setCreateMode(true);
-                resetForm();
                 toggleSelected(true);
                 setEditMode(true);
+                resetForm();
               }} />
             <Box />
             <RepeatIcon boxSize={'25px'} onClick={() => remount()} />

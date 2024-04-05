@@ -49,6 +49,7 @@ const DepartmentsBody = (): JSX.Element => {
 
   const resetForm = () => {
     setData({ ...emptyDepartment });
+    remount();
   }
 
   const remount = () => updateKey(key + 1);

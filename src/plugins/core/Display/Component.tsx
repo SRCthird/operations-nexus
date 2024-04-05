@@ -48,6 +48,7 @@ const DisplaysBody = () => {
 
   const resetForm = () => {
     setData({...emptyDisplay});
+    remount();
   }
 
   const remount = () => updateKey(key + 1);
