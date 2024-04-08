@@ -23,6 +23,14 @@ model Nexus_Admins {
 enum Apps {
   PowerBI
   PowerPoint
+  ActionTracker
+}
+
+model App_ActionTracker {
+  ID Int @id @default(autoincrement()) 
+  Departments Nexus_Department @relation(fields: [Department], references: [Department])
+  Department String 
+  Area String? 
 }
 
 model App_PowerBI {
@@ -39,23 +47,6 @@ model App_PowerPoint {
   Main Boolean @default(true) 
   Departments Nexus_Department @relation(fields: [Department], references: [Department])
   Department String 
-}
-
-model App_ActionTracker {
-  ID Int @id @default(autoincrement()) 
-  Departments Nexus_Department @relation(fields: [Department], references: [Department])
-  Department String 
-  Line String 
-  Date_Opened DateTime @db.Date
-Date_Due DateTime? @db.Date
-  Date_Closed DateTime? @db.Date
-  Category String 
-  Description String 
-  Updates String? 
-  Owner String? 
-  Status Int 
-  Priority Int 
-  Logged_By String 
 }
 
 model Nexus_Department {

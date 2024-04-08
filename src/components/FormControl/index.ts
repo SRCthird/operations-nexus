@@ -1,17 +1,26 @@
-import { FormControlID } from './FormID';
-import { FormControlTitle } from './FormTitle';
+import { FormControlArea } from './FormArea';
 import { FormControlBackground } from './FormBackground';
+import { FormControlDepartment } from './FormDepartment';
 import { FormControlGradient } from './FormGradient';
-export * from './FormID';
-export * from './FormTitle';
+import { FormControlID } from './FormID';
+import { FormControlMainSlides } from './FormMainSlides';
+import { FormControlTitle } from './FormTitle';
+export * from './FormArea';
 export * from './FormBackground';
-
+export * from './FormDepartment';
+export * from './FormGradient';
+export * from './FormID';
+export * from './FormMainSlides';
+export * from './FormTitle';
 
 const FormControl = {
-  ID: FormControlID, 
-  Title: FormControlTitle,
+  Area: FormControlArea,
   Background: FormControlBackground,
+  Department: FormControlDepartment,
   Gradient: FormControlGradient,
+  ID: FormControlID, 
+  MainSlides: FormControlMainSlides,
+  Title: FormControlTitle,
 } 
 
 export default FormControl;
