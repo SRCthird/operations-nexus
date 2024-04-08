@@ -37,6 +37,8 @@
     "start": "npm-run-all -p backend:prod frontend:prod",
     "start:dev": "npm-run-all -p backend:dev frontend:dev",
     "prisma:merge": "node src/utils/merge-schemas.js",
+    "prisma:migrate": "cd backend && npx prisma migrate dev",
+    "prisma:generate": "cd backend && npx prisma generate",
     "backend:dev": "cd backend && npm run start:dev",
     "backend:build": "cd backend && npm run build",
     "backend:prod": "cd backend && npm run start:prod",

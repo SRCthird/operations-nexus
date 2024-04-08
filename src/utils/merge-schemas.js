@@ -107,7 +107,7 @@ const merge_schemas = (baseSchema, pluginsPath, pluginType) => {
 
 const getMasterSchema = () => {
   const pluginsPath = path.join(__dirname, '../plugins');
-  const baseSchemaPath = path.join(__dirname, '../../backend/prisma/schema.test.prisma');
+  const baseSchemaPath = path.join(__dirname, '../../backend/prisma/schema.prisma');
   const masterSchemaPath = path.join(__dirname, '../../backend/prisma/schema.master.prisma');
 
   let baseSchema = fs.readFileSync(masterSchemaPath, 'utf8');
