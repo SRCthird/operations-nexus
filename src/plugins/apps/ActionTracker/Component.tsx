@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
 import useAccount from "@hooks/useAccount";
-import { sharePointApiUrl } from "@src/Config";
+import { ActionTrackerApiUrl } from "@src/Config";
 import { Box, Spinner } from "@chakra-ui/react";
 import axios, { CanceledError } from "axios";
 
 interface Props {
-  site: string;
-  list: string;
+  department: string;
+  departmentField: string;
+  area?: string;
+  areaField?: string;
 }
 
-const ActionTracker = ({ site, list }: Props) => {
+const ActionTracker = ({ department, departmentField, area, areaField }: Props) => {
   const user = useAccount();
   const { instance } = useMsal();
   const [data, setData] = useState<any[]>([]);
@@ -38,11 +40,13 @@ const ActionTracker = ({ site, list }: Props) => {
 
   useEffect(() => {
     if (!accessToken) return;
+    let url = `${ActionTrackerApiUrl}?$filter=${departmentField} eq ${department}`; 
+    if (area) url += ` and ${areaField} eq ${area}`;
 
     setLoading(true);
     const controller = new AbortController();
     axios.get(
-      `${sharePointApiUrl}/sites/${site}/lists/${list}/items`,
+      url,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
         signal: controller.signal
@@ -58,7 +62,7 @@ const ActionTracker = ({ site, list }: Props) => {
         setLoading(false);
       });
     return () => controller.abort();
-  }, [site, list, accessToken]);
+  }, [accessToken]);
 
   return (
     <Box>

@@ -30,7 +30,9 @@ model App_ActionTracker {
   ID Int @id @default(autoincrement()) 
   Departments Nexus_Department @relation(fields: [Department], references: [Department])
   Department String 
+  DepartmentField String 
   Area String? 
+  AreaField String? 
 }
 
 model App_PowerBI {

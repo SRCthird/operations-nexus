@@ -15,9 +15,9 @@ export const authorityUrl: string = `https://login.microsoftonline.com/${tenantI
 export const powerBiApiUrl: string = "https://api.powerbi.com/";
 
 /**
- * End point URL for SharePoint API
+ * End point URL for Action Tracker Sharepoint API
  */
-export const sharePointApiUrl: string = "https://<!-- your site -->.sharepoint.com";
+export const sharePointApiUrl: string = "https://<!-- your company -->.sharepoint.com/sites/<!-- your site --> /_api/web/lists/GetByTitle('<!-- your list -->')";
 
 /**
  * Client Id (Application Id) of the AAD app.
