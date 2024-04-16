@@ -16,7 +16,7 @@ export class AdminService {
   }
 
   async validate(email: string): Promise<boolean> {
-    const result = await this.databaseService.nexus_Admins.findFirst({ where: { Email: email } });
+    const result = await this.databaseService.nexus_Admins.findFirst({ where: { email: email } });
     return result !== null;
   }
 
@@ -32,19 +32,19 @@ export class AdminService {
   }
 
   findOne(id: number) {
-    return this.databaseService.nexus_Admins.findFirst({ where: { ID: id } });
+    return this.databaseService.nexus_Admins.findFirst({ where: { id: id } });
   }
 
   update(id: number, updateAdminDto: Prisma.Nexus_AdminsUpdateInput) {
     return this.databaseService.nexus_Admins.update({
-      where: { ID: id },
+      where: { id: id },
       data: updateAdminDto
     })
   }
 
   remove(id: number) {
     return this.databaseService.nexus_Admins.delete({
-      where: { ID: id }
+      where: { id: id }
     });
   }
 }

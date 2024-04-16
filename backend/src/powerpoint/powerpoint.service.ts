@@ -115,7 +115,7 @@ export class PowerpointService {
 
   async validateLocation(location: string): Promise<boolean> {
     const result = await this.databaseService.nexus_Department.findUnique({
-      where: { Department: location },
+      where: { department: location },
     });
     return !!result;
   }
