@@ -21,14 +21,15 @@ model Nexus_Admins {
 }
 
 model Nexus_Department {
-  id          Int                 @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   main        String
-  actions     App_ActionTracker[]
-  displays    Nexus_Display[]
-  powerPoint  App_PowerPoint[]
-  department  String              @unique
-  pptxVersion Int                 @default(1)
+  department  String @unique
+  pptxVersion Int    @default(1)
   background  String
+
+  actions    App_ActionTracker[]
+  displays   Nexus_Display[]
+  powerPoint App_PowerPoint[]
 }
 
 model Nexus_Display {
@@ -41,54 +42,6 @@ model Nexus_Display {
   templateID Int?
 
   template    Template?        @relation(fields: [templateID], references: [id])
-  departments Nexus_Department @relation(fields: [department], references: [department])
-}
-
-enum Apps {
-  PowerBI
-  PowerPoint
-  ActionTracker
-}
-
-model App {
-  id            Int                @id @default(autoincrement())
-  name          String             @unique
-  type          Apps
-  templates     TemplateOnApp[]
-
-  powerBI       App_PowerBI?       @relation("AppPowerBI")
-  powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
-  actionTracker App_ActionTracker? @relation("AppActionTracker")
-}
-
-model App_ActionTracker {
-  id              Int     @id
-  department      String
-  departmentField String
-  area            String?
-  areaField       String?
-
-  app         App              @relation("AppActionTracker", fields: [id], references: [id])
-  departments Nexus_Department @relation(fields: [department], references: [department])
-}
-
-model App_PowerBI {
-  id          Int     @id
-  type        String
-  reportID    String
-  groupID     String
-  customEmbed String?
-  pageName    String?
-
-  app App @relation("AppPowerBI", fields: [id], references: [id])
-}
-
-model App_PowerPoint {
-  id         Int     @id
-  main       Boolean @default(true)
-  department String
-
-  app         App              @relation("AppPowerPoint", fields: [id], references: [id])
   departments Nexus_Department @relation(fields: [department], references: [department])
 }
 
@@ -119,11 +72,64 @@ model Template {
 
 model TemplateOnApp {
   templateId Int
-  appId      Int
-  position   Int    @default(0)
+  appName    String
+  position   Int @default(0)
 
-  template Template @relation(fields: [templateId], references: [id])
-  app      App      @relation(fields: [appId], references: [id])
+  template Template @relation(onDelete: Cascade, fields: [templateId], references: [id])
+  app      App      @relation(onDelete: Cascade, fields: [appName], references: [name])
 
-  @@id([templateId, appId])
+  @@id([templateId, appName])
+}
+
+enum Apps {
+  PowerBI
+  PowerPoint
+  ActionTracker
+}
+
+model App {
+  id        Int             @id @default(autoincrement())
+  name      String          @unique
+  type      Apps
+  templates TemplateOnApp[]
+
+  powerBI       App_PowerBI?       @relation("AppPowerBI")
+  powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
+  actionTracker App_ActionTracker? @relation("AppActionTracker")
+}
+
+model App_ActionTracker {
+  id              Int     @id
+  department      String
+  departmentField String
+  area            String?
+  areaField       String?
+
+  app         App              @relation("AppActionTracker", fields: [id], references: [id])
+  departments Nexus_Department @relation(fields: [department], references: [department])
+}
+
+enum PowerBIType {
+  Report
+  Dashboard
+}
+
+model App_PowerBI {
+  id          Int     @id
+  type        String
+  reportID    String
+  groupID     String
+  customEmbed String?
+  pageName    String?
+
+  app App @relation("AppPowerBI", fields: [id], references: [id])
+}
+
+model App_PowerPoint {
+  id         Int     @id
+  main       Boolean @default(true)
+  department String
+
+  app         App              @relation("AppPowerPoint", fields: [id], references: [id])
+  departments Nexus_Department @relation(fields: [department], references: [department])
 }
