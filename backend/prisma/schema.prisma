@@ -54,10 +54,11 @@ model App {
   id            Int                @id @default(autoincrement())
   name          String             @unique
   type          Apps
+  templates     TemplateOnApp[]
+
   powerBI       App_PowerBI?       @relation("AppPowerBI")
   powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
   actionTracker App_ActionTracker? @relation("AppActionTracker")
-  templates     TemplateOnApp[]
 }
 
 model App_ActionTracker {
