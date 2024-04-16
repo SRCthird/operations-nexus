@@ -19,48 +19,46 @@ export class DisplaysService {
   }
 
   async findAll(department?: string, search?: string) {
-    let query: any = {};
+    let query: Prisma.Nexus_DisplayFindManyArgs = {};
 
     if (department) {
-      query.Department = department;
+      query.where.department = department;
     }
     if (search) {
-      query.OR = [
-        { Main: { contains: search } },
-        { Sub: { contains: search } },
-        { Department: { contains: search } },
-        { Display: { contains: search } },
-        { Background: { contains: search } },
+      query.where.OR = [
+        { main: { contains: search } },
+        { sub: { contains: search } },
+        { department: { contains: search } },
+        { display: { contains: search } },
+        { background: { contains: search } },
       ];
     }
 
-    return this.databaseService.nexus_Display.findMany({ where: query });
+    return this.databaseService.nexus_Display.findMany( query );
   }
 
   async findOne({id, name}: findOneParam) {
-    let conditions: any;
+    let conditions: Prisma.Nexus_DisplayFindFirstArgs = {};
     if (id !== undefined) {
-      conditions = { ID: id };
+      conditions.where = { id: id };
     }
     if (name !== undefined) {
-      conditions = { Department: name };
+      conditions.where = { department: name };
     }
 
-    return this.databaseService.nexus_Display.findFirst({
-      where: conditions 
-    });
+    return this.databaseService.nexus_Display.findFirst( conditions );
   }
 
   async update(id: number, updateDisplayDto: Prisma.Nexus_DisplayUpdateInput) {
     return this.databaseService.nexus_Display.update({
-      where: {ID: id},
+      where: {id: id},
       data: updateDisplayDto
     })
   }
 
   async remove(id: number) {
     return this.databaseService.nexus_Display.delete({ 
-      where: {ID: id} 
+      where: {id: id} 
     });
   }
 }
