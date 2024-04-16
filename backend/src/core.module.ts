@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CoreController } from './core.controller';
+import { CoreService } from './core.service';
 import { DatabaseModule } from './database/database.module';
 import { DisplaysModule } from './displays/displays.module';
 import { DepartmentsModule } from './departments/departments.module';
 import { PowerpointModule } from './powerpoint/powerpoint.module';
 import { StaticModule } from './static/static.module';
 import { AdminModule } from './admin/admin.module';
+import { AppModule } from './app/app.module';
 
 @Module({
-  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, AdminModule,],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, AdminModule, AppModule,],
+  controllers: [CoreController],
+  providers: [CoreService],
 })
-export class AppModule {}
+export class CoreModule {}

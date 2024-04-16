@@ -1,22 +1,22 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { AppService } from './app.service';
+import { CoreService } from './core.service';
 
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class CoreController {
+  constructor(private readonly coreService: CoreService) {}
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.coreService.getHello();
   }
 
   @Get('delay')
   async getDelay(): Promise<number> {
-    return this.appService.getDelay();
+    return this.coreService.getDelay();
   }
 
   @Get('delay/:delay')
   async setDelay(@Param('delay') delay: string): Promise<string> {
-    return this.appService.setDelay(+delay);
+    return this.coreService.setDelay(+delay);
   }
 }
