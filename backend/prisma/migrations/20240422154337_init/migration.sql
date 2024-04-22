@@ -31,12 +31,25 @@ CREATE TABLE `Nexus_Department` (
 CREATE TABLE `Nexus_Display` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `main` VARCHAR(191) NOT NULL,
-    `sub` VARCHAR(191) NOT NULL,
     `department` VARCHAR(191) NOT NULL,
     `display` VARCHAR(191) NOT NULL,
     `background` VARCHAR(191) NOT NULL,
-    `templateID` INTEGER NULL,
+    `title` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Nexus_Display_display_key`(`display`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Template` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
+    `design` ENUM('FullDisplay', 'FullDisplay2', 'FullDisplay3', 'FullDisplay4', 'FullDisplay5', 'FullWithCircle', 'ThreeOnTwo', 'OneByThree', 'SplitScreen', 'TwoByTwo') NOT NULL DEFAULT 'FullDisplay',
+    `background` VARCHAR(191) NOT NULL,
+    `gradient` VARCHAR(191) NULL,
+    `transition` INTEGER NOT NULL DEFAULT 30,
+
+    UNIQUE INDEX `Template_title_key`(`title`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -83,28 +96,16 @@ CREATE TABLE `App_PowerPoint` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Template` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(191) NOT NULL,
-    `design` ENUM('FullDisplay', 'FullDisplay2', 'FullDisplay3', 'FullDisplay4', 'FullDisplay5', 'FullWithCircle', 'ThreeOnTwo', 'OneByThree', 'SplitScreen', 'TwoByTwo') NOT NULL DEFAULT 'FullDisplay',
-    `background` VARCHAR(191) NOT NULL,
-    `gradient` VARCHAR(191) NULL,
-    `transition` INTEGER NOT NULL DEFAULT 30,
+CREATE TABLE `_AppToTemplate` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
 
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `TemplateOnApp` (
-    `templateId` INTEGER NOT NULL,
-    `appId` INTEGER NOT NULL,
-    `position` INTEGER NOT NULL DEFAULT 0,
-
-    PRIMARY KEY (`templateId`, `appId`)
+    UNIQUE INDEX `_AppToTemplate_AB_unique`(`A`, `B`),
+    INDEX `_AppToTemplate_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Nexus_Display` ADD CONSTRAINT `Nexus_Display_templateID_fkey` FOREIGN KEY (`templateID`) REFERENCES `Template`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Nexus_Display` ADD CONSTRAINT `Nexus_Display_title_fkey` FOREIGN KEY (`title`) REFERENCES `Template`(`title`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Nexus_Display` ADD CONSTRAINT `Nexus_Display_department_fkey` FOREIGN KEY (`department`) REFERENCES `Nexus_Department`(`department`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -125,7 +126,7 @@ ALTER TABLE `App_PowerPoint` ADD CONSTRAINT `App_PowerPoint_id_fkey` FOREIGN KEY
 ALTER TABLE `App_PowerPoint` ADD CONSTRAINT `App_PowerPoint_department_fkey` FOREIGN KEY (`department`) REFERENCES `Nexus_Department`(`department`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `TemplateOnApp` ADD CONSTRAINT `TemplateOnApp_templateId_fkey` FOREIGN KEY (`templateId`) REFERENCES `Template`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `_AppToTemplate` ADD CONSTRAINT `_AppToTemplate_A_fkey` FOREIGN KEY (`A`) REFERENCES `App`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `TemplateOnApp` ADD CONSTRAINT `TemplateOnApp_appId_fkey` FOREIGN KEY (`appId`) REFERENCES `App`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `_AppToTemplate` ADD CONSTRAINT `_AppToTemplate_B_fkey` FOREIGN KEY (`B`) REFERENCES `Template`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
