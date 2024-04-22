@@ -93,6 +93,14 @@ export class TemplateService {
     });
   }
 
+  async list() {
+    return this.databaseService.template.findMany({
+      select: {
+        title: true
+      }
+    });
+  }
+
   async findOne(id: number) {
     return this.databaseService.template.findUnique({
       where: { id },

@@ -15,6 +15,11 @@ export class TemplateController {
     return this.templateService.findAll();
   }
 
+  @Get('list')
+  list() {
+    return this.templateService.list();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.templateService.findOne(+id);
