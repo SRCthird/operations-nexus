@@ -1,3 +1,12 @@
+/**
+ * Api endpoint
+ */
+export const apiUrl: string = "https://localhost:5000/api";
+
+/**
+ * Api key
+ */ 
+export const apiKey: string = "YOUR_API_KEY";
 
 /**
  * Tenant Id (Company Id) of the apps organization.
