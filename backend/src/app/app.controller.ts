@@ -20,6 +20,11 @@ export class AppController {
     return this.appService.findOne(+id);
   }
 
+  @Get('type/:type')
+  findByType(@Param('type') type: string) {
+    return this.appService.findByType(type);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDto: appUpdateDto) {
     return this.appService.update(+id, updateDto);

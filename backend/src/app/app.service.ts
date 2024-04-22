@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Apps, Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
 export type appCreateDto = Prisma.AppCreateInput & {
@@ -83,6 +83,17 @@ export class AppService {
   async findOne(id: number) {
     return this.databaseService.app.findUnique({
       where: { id },
+      include: {
+        powerBI: true,
+        powerPoint: true,
+        actionTracker: true,
+      }
+    });
+  }
+
+  async findByType(type: string) {
+    return this.databaseService.app.findMany({
+      where: { type: type as Apps },
       include: {
         powerBI: true,
         powerPoint: true,
