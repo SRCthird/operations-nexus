@@ -35,13 +35,12 @@ model Nexus_Department {
 model Nexus_Display {
   id         Int    @id @default(autoincrement())
   main       String
-  sub        String
   department String
-  display    String
+  display    String @unique
   background String
-  templateID Int?
+  title      String
 
-  template    Template?        @relation(fields: [templateID], references: [id])
+  template    Template?        @relation(fields: [title], references: [title])
   departments Nexus_Department @relation(fields: [department], references: [department])
 }
 
@@ -60,25 +59,14 @@ enum Design {
 
 model Template {
   id         Int     @id @default(autoincrement())
-  title      String
+  title      String  @unique
   design     Design  @default(FullDisplay)
   background String
   gradient   String?
   transition Int     @default(30)
 
+  apps     App[]
   displays Nexus_Display[]
-  apps     TemplateOnApp[]
-}
-
-model TemplateOnApp {
-  templateId Int
-  appName    String
-  position   Int @default(0)
-
-  template Template @relation(onDelete: Cascade, fields: [templateId], references: [id])
-  app      App      @relation(onDelete: Cascade, fields: [appName], references: [name])
-
-  @@id([templateId, appName])
 }
 
 enum Apps {
@@ -88,14 +76,15 @@ enum Apps {
 }
 
 model App {
-  id        Int             @id @default(autoincrement())
-  name      String          @unique
-  type      Apps
-  templates TemplateOnApp[]
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  type Apps
 
   powerBI       App_PowerBI?       @relation("AppPowerBI")
   powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
   actionTracker App_ActionTracker? @relation("AppActionTracker")
+
+  templates Template[]
 }
 
 model App_ActionTracker {
