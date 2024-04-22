@@ -8,9 +8,10 @@ import { PowerpointModule } from './powerpoint/powerpoint.module';
 import { StaticModule } from './static/static.module';
 import { AdminModule } from './admin/admin.module';
 import { AppModule } from './app/app.module';
+import { TemplateModule } from './template/template.module';
 
 @Module({
-  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, AdminModule, AppModule,],
+  imports: [DatabaseModule, DisplaysModule, DepartmentsModule, PowerpointModule, StaticModule, AdminModule, AppModule, TemplateModule,],
   controllers: [CoreController],
   providers: [CoreService],
 })
