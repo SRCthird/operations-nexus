@@ -99,8 +99,11 @@ model App_ActionTracker {
 }
 
 enum PowerBIType {
-  Report
-  Dashboard
+  report
+  dashboard
+  title
+  visual
+  qna
 }
 
 model App_PowerBI {
