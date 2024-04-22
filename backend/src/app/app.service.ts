@@ -1,31 +1,67 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+
+export type appCreateDto = Prisma.AppCreateInput & {
+  powerBI?: Prisma.App_PowerBICreateWithoutAppInput;
+  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput;
+  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput;
+};
+
+export type appUpdateDto = Prisma.AppUpdateInput & {
+  id?: number;
+  powerBI?: Prisma.App_PowerBIUpdateInput | Prisma.App_PowerBICreateInput;
+  powerPoint?: Prisma.App_PowerPointUpdateInput | Prisma.App_PowerPointCreateInput;
+  actionTracker?: Prisma.App_ActionTrackerUpdateInput | Prisma.App_ActionTrackerCreateInput;
+};
+
+export type appCreateOrUpdateInput = Prisma.AppCreateInput & {
+  id?: number;
+  powerBI?: Prisma.App_PowerBICreateWithoutAppInput | Prisma.App_PowerBIUpdateWithoutAppInput;
+  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput | Prisma.App_PowerPointUpdateWithoutAppInput;
+  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput | Prisma.App_ActionTrackerUpdateWithoutAppInput;
+};
 
 @Injectable()
 export class AppService {
 
   constructor(readonly databaseService: DatabaseService) { }
 
-  async create(data: Prisma.AppCreateInput & {
-    powerBI?: Prisma.App_PowerBICreateWithoutAppInput;
-    powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput;
-    actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput;
-  }) {
+  async create(createDto: appCreateDto, connectId?: number) {
+    const item = await this.databaseService.app.findFirst({
+      where: { 
+        name: createDto.name 
+      }
+    });
+
+    if (item) {
+      return new HttpException('App already exists', 400);
+    }
+
+    const data: Prisma.AppCreateInput = {
+      name: createDto.name,
+      type: createDto.type,
+      powerBI: createDto.powerBI ? {
+        create: createDto.powerBI
+      } : undefined,
+      powerPoint: createDto.powerPoint ? {
+        create: createDto.powerPoint
+      } : undefined,
+      actionTracker: createDto.actionTracker ? {
+        create: createDto.actionTracker
+      } : undefined,
+    };
+
+    if (connectId) {
+      data.templates = {
+        connect: {
+          id: connectId
+        }
+      };
+    }
+
     return this.databaseService.app.create({
-      data: {
-        name: data.name,
-        type: data.type,
-        powerBI: data.powerBI ? {
-          create: data.powerBI
-        } : undefined,
-        powerPoint: data.powerPoint ? {
-          create: data.powerPoint
-        } : undefined,
-        actionTracker: data.actionTracker ? {
-          create: data.actionTracker
-        } : undefined,
-      },
+      data,
       include: {
         powerBI: true,
         powerPoint: true,
@@ -55,45 +91,52 @@ export class AppService {
     });
   }
 
-  async update(id: number, updateDto: Prisma.AppUpdateInput & { 
-    powerBI?: Prisma.App_PowerBIUpdateInput | Prisma.App_PowerBICreateInput;
-    powerPoint?: Prisma.App_PowerPointUpdateInput | Prisma.App_PowerPointCreateInput;
-    actionTracker?: Prisma.App_ActionTrackerUpdateInput | Prisma.App_ActionTrackerCreateInput;
-  }) {
+  async update(id: number, updateDto: appUpdateDto, connectId?: number) {
     const data: Prisma.AppUpdateInput = {
       name: updateDto.name,
       type: updateDto.type,
     };
 
-    if (updateDto.type === "PowerBI" && updateDto.powerBI) {
-      data.powerBI = {
-        upsert: {
-          update: updateDto.powerBI as Prisma.App_PowerBIUpdateInput,
-          create: updateDto.powerBI as Prisma.App_PowerBICreateInput,
+    if (connectId) {
+      data.templates = {
+        connect: {
+          id: connectId
         }
       };
-      await this.databaseService.app_PowerPoint.deleteMany({where: {id}});
-      await this.databaseService.app_ActionTracker.deleteMany({where: {id}});
+    }
+
+    if (updateDto.type === "PowerBI" && updateDto.powerBI) {
+      const { id: _, ...powerBI } = updateDto.powerBI as any;
+      data.powerBI = {
+        upsert: {
+          update: powerBI as Prisma.App_PowerBIUpdateInput,
+          create: powerBI as Prisma.App_PowerBICreateInput,
+        }
+      };
+      await this.databaseService.app_PowerPoint.deleteMany({ where: { id } });
+      await this.databaseService.app_ActionTracker.deleteMany({ where: { id } });
     }
 
     if (updateDto.type === "PowerPoint" && updateDto.powerPoint) {
-      await this.databaseService.app_PowerBI.deleteMany({where: {id}});
+      const { id: _, ...powerPoint } = updateDto.powerPoint as any;
+      await this.databaseService.app_PowerBI.deleteMany({ where: { id } });
       data.powerPoint = {
         upsert: {
-          update: updateDto.powerPoint as Prisma.App_PowerPointUpdateInput,
-          create: updateDto.powerPoint as Prisma.App_PowerPointCreateInput,
+          update: powerPoint as Prisma.App_PowerPointUpdateInput,
+          create: powerPoint as Prisma.App_PowerPointCreateInput,
         }
       };
-      await this.databaseService.app_ActionTracker.deleteMany({where: {id}});
+      await this.databaseService.app_ActionTracker.deleteMany({ where: { id } });
     }
 
     if (updateDto.type === "ActionTracker" && updateDto.actionTracker) {
-      await this.databaseService.app_PowerBI.deleteMany({where: {id}});
-      await this.databaseService.app_PowerPoint.deleteMany({where: {id}});
+      const { id: _, ...actionTracker } = updateDto.actionTracker as any;
+      await this.databaseService.app_PowerBI.deleteMany({ where: { id } });
+      await this.databaseService.app_PowerPoint.deleteMany({ where: { id } });
       data.actionTracker = {
         upsert: {
-          update: updateDto.actionTracker as Prisma.App_ActionTrackerUpdateInput,
-          create: updateDto.actionTracker as Prisma.App_ActionTrackerCreateInput,
+          update: actionTracker as Prisma.App_ActionTrackerUpdateInput,
+          create: actionTracker as Prisma.App_ActionTrackerCreateInput,
         }
       };
     }
