@@ -1,25 +1,81 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { templateUpdateDto, templateCreateOrUpdateInput } from 'src/template/template.service';
 
-interface findOneParam {
+type findOneParam = {
   id?: number;
   name?: string;
 }
 
+export type displayCreateDto = Prisma.Nexus_DisplayCreateInput & {
+  title?: string;
+  department?: string;
+  template: templateCreateOrUpdateInput;
+};
+
+export type displayUpdateDto = Prisma.Nexus_DisplayUpdateInput & {
+  title?: string;
+  department?: string;
+  template: templateUpdateDto;
+};
+
 @Injectable()
 export class DisplaysService {
 
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) { }
 
-  async create(createDisplayDto: Prisma.Nexus_DisplayCreateInput) {
+  async create(createDisplayDto: displayCreateDto) {
+    const data: Prisma.Nexus_DisplayCreateInput = {
+      main: createDisplayDto.main,
+      departments: {
+        connect: {
+          department: createDisplayDto.department
+        }
+      },
+      display: createDisplayDto.display,
+      background: createDisplayDto.background,
+      template: {
+        connect: {
+          title: createDisplayDto.title,
+        }
+      }
+    }
+
     return this.databaseService.nexus_Display.create({
-      data: createDisplayDto
+      data,
+      include: {
+        template: {
+          include: {
+            apps: {
+              include: {
+                powerBI: true,
+                powerPoint: true,
+                actionTracker: true,
+              }
+            }
+          }
+        }
+      }
     });
   }
 
   async findAll(department?: string, search?: string) {
-    let query: Prisma.Nexus_DisplayFindManyArgs = {};
+    let query: Prisma.Nexus_DisplayFindManyArgs = {
+      include: {
+        template: {
+          include: {
+            apps: {
+              include: {
+                powerBI: true,
+                powerPoint: true,
+                actionTracker: true,
+              }
+            }
+          }
+        }
+      }
+    };
 
     if (department) {
       query.where.department = department;
@@ -33,11 +89,25 @@ export class DisplaysService {
       ];
     }
 
-    return this.databaseService.nexus_Display.findMany( query );
+    return this.databaseService.nexus_Display.findMany(query);
   }
 
-  async findOne({id, name}: findOneParam) {
-    let conditions: Prisma.Nexus_DisplayFindFirstArgs = {};
+  async findOne({ id, name }: findOneParam) {
+    let conditions: Prisma.Nexus_DisplayFindFirstArgs = {
+      include: {
+        template: {
+          include: {
+            apps: {
+              include: {
+                powerBI: true,
+                powerPoint: true,
+                actionTracker: true,
+              }
+            }
+          }
+        }
+      }
+    };
     if (id !== undefined) {
       conditions.where = { id: id };
     }
@@ -45,19 +115,35 @@ export class DisplaysService {
       conditions.where = { department: name };
     }
 
-    return this.databaseService.nexus_Display.findFirst( conditions );
+    return this.databaseService.nexus_Display.findFirst(conditions);
   }
 
-  async update(id: number, updateDisplayDto: Prisma.Nexus_DisplayUpdateInput) {
+  async update(id: number, updateDto: displayUpdateDto) {
+    const data: Prisma.Nexus_DisplayUpdateInput = {
+      main: updateDto.main,
+      display: updateDto.display,
+      departments: {
+        connect: {
+          department: updateDto.department
+        }
+      },
+      background: updateDto.background,
+      template: {
+        connect: {
+          title: updateDto.title
+        }
+      }
+    }
+
     return this.databaseService.nexus_Display.update({
-      where: {id: id},
-      data: updateDisplayDto
+      where: { id: id },
+      data
     })
   }
 
   async remove(id: number) {
-    return this.databaseService.nexus_Display.delete({ 
-      where: {id: id} 
+    return this.databaseService.nexus_Display.delete({
+      where: { id: id }
     });
   }
 }

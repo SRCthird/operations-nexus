@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { DisplaysService } from './displays.service';
-import { Prisma } from '@prisma/client';
+import { DisplaysService, displayCreateDto, displayUpdateDto } from './displays.service';
 
 @Controller('display')
 export class DisplaysController {
   constructor(private readonly displaysService: DisplaysService) {}
 
   @Post()
-  create(@Body() createDisplayDto: Prisma.Nexus_DisplayCreateInput) {
-    return this.displaysService.create(createDisplayDto);
+  create(@Body() createDto: displayCreateDto) {
+    return this.displaysService.create(createDto);
   }
 
   @Get()
@@ -26,8 +25,8 @@ export class DisplaysController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDisplayDto: Prisma.Nexus_DisplayUpdateInput) {
-    return this.displaysService.update(+id, updateDisplayDto);
+  update(@Param('id') id: string, @Body() updateDto: displayUpdateDto) {
+    return this.displaysService.update(+id, updateDto);
   }
 
   @Delete(':id')
