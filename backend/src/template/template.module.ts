@@ -8,5 +8,6 @@ import { AppModule } from 'src/app/app.module';
   imports: [DatabaseModule, AppModule],
   controllers: [TemplateController],
   providers: [TemplateService],
+  exports: [TemplateService]
 })
 export class TemplateModule {}

@@ -11,6 +11,10 @@ export type templateUpdateDto = Prisma.TemplateUpdateInput & {
   apps: appUpdateDto[];
 };
 
+export type templateCreateOrUpdateInput = Prisma.TemplateCreateInput & {
+  apps: appCreateOrUpdateInput[];
+};
+
 @Injectable()
 export class TemplateService {
 
@@ -19,22 +23,32 @@ export class TemplateService {
     readonly appService: AppService
   ) { }
 
-  async create(data: templateCreateDto) {
+  async create(createDto: templateCreateDto, connectId?: number) {
+    const data: Prisma.TemplateCreateInput = {
+      title: createDto.title,
+      design: createDto.design,
+      background: createDto.background,
+      gradient: createDto.gradient,
+      transition: createDto.transition,
+    }
+
+    if (connectId) {
+      data.displays = {
+        connect: {
+          id: connectId
+        }
+      };
+    }
+
     const template = await this.databaseService.template.create({
-      data: {
-        title: data.title,
-        design: data.design,
-        background: data.background,
-        gradient: data.gradient,
-        transition: data.transition,
-      },
+      data,
       include: {
         apps: true
       }
     });
 
-    if (data.apps && data.apps.length > 0) {
-      await Promise.all(data.apps.map(app => {
+    if (createDto.apps && createDto.apps.length > 0) {
+      await Promise.all(createDto.apps.map(app => {
         if (app.id) {
           try {
             this.appService.update(app.id, app, template.id)
@@ -94,24 +108,34 @@ export class TemplateService {
     });
   }
 
-  async update(id: number, data: templateUpdateDto) {
+  async update(id: number, updateDto: templateUpdateDto, connectId?: number) {
+    const data: Prisma.TemplateUpdateInput = {
+      title: updateDto.title,
+      design: updateDto.design,
+      background: updateDto.background,
+      gradient: updateDto.gradient,
+      transition: updateDto.transition,
+    }
+
+    if (connectId) {
+      data.displays = {
+        connect: {
+          id: connectId
+        }
+      };
+    }
+
     try {
       await this.databaseService.template.update({
         where: { id },
-        data: {
-          title: data.title,
-          design: data.design,
-          background: data.background,
-          gradient: data.gradient,
-          transition: data.transition,
-        }
+        data
       });
     } catch (error) {
       return new HttpException(error, 500);
     }
 
-    if (data.apps && data.apps.length > 0) {
-      await Promise.all(data.apps.map(app => {
+    if (updateDto.apps && updateDto.apps.length > 0) {
+      await Promise.all(updateDto.apps.map(app => {
         try {
           if (app.id) {
             this.appService.update(app.id, app, id)
