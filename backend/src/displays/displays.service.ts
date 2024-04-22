@@ -27,7 +27,6 @@ export class DisplaysService {
     if (search) {
       query.where.OR = [
         { main: { contains: search } },
-        { sub: { contains: search } },
         { department: { contains: search } },
         { display: { contains: search } },
         { background: { contains: search } },
