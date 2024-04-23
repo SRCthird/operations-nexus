@@ -3,23 +3,23 @@ import { Apps, Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
 export type appCreateDto = Prisma.AppCreateInput & {
-  powerBI?: Prisma.App_PowerBICreateWithoutAppInput;
-  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput;
-  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput;
+  powerBI?: Prisma.App_PowerBICreateWithoutAppInput & { id?: number };
+  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput & { id?: number };
+  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput & { id?: number };
 };
 
 export type appUpdateDto = Prisma.AppUpdateInput & {
   id?: number;
-  powerBI?: Prisma.App_PowerBIUpdateInput | Prisma.App_PowerBICreateInput;
-  powerPoint?: Prisma.App_PowerPointUpdateInput | Prisma.App_PowerPointCreateInput;
-  actionTracker?: Prisma.App_ActionTrackerUpdateInput | Prisma.App_ActionTrackerCreateInput;
+  powerBI?: Prisma.App_PowerBIUpdateInput | Prisma.App_PowerBICreateInput & { id?: number };
+  powerPoint?: Prisma.App_PowerPointUpdateInput | Prisma.App_PowerPointCreateInput & { id?: number };
+  actionTracker?: Prisma.App_ActionTrackerUpdateInput | Prisma.App_ActionTrackerCreateInput & { id?: number };
 };
 
 export type appCreateOrUpdateInput = Prisma.AppCreateInput & {
   id?: number;
-  powerBI?: Prisma.App_PowerBICreateWithoutAppInput | Prisma.App_PowerBIUpdateWithoutAppInput;
-  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput | Prisma.App_PowerPointUpdateWithoutAppInput;
-  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput | Prisma.App_ActionTrackerUpdateWithoutAppInput;
+  powerBI?: Prisma.App_PowerBICreateWithoutAppInput | Prisma.App_PowerBIUpdateWithoutAppInput & { id?: number };
+  powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput | Prisma.App_PowerPointUpdateWithoutAppInput & { id?: number };
+  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput | Prisma.App_ActionTrackerUpdateWithoutAppInput & { id?: number };
 };
 
 @Injectable()
@@ -38,6 +38,15 @@ export class AppService {
       return new HttpException('App already exists', 400);
     }
 
+    if (createDto.powerBI && createDto.powerBI.id === 0) {
+      delete createDto.powerBI.id;
+    }
+    if (createDto.powerPoint && createDto.powerPoint.id === 0) {
+      delete createDto.powerPoint.id;
+    }
+    if (createDto.actionTracker && createDto.actionTracker.id === 0) {
+      delete createDto.actionTracker.id;
+    }
     const data: Prisma.AppCreateInput = {
       name: createDto.name,
       type: createDto.type,
@@ -83,6 +92,17 @@ export class AppService {
   async findOne(id: number) {
     return this.databaseService.app.findUnique({
       where: { id },
+      include: {
+        powerBI: true,
+        powerPoint: true,
+        actionTracker: true,
+      }
+    });
+  }
+
+  async findByName(name: string) {
+    return this.databaseService.app.findUnique({
+      where: { name },
       include: {
         powerBI: true,
         powerPoint: true,

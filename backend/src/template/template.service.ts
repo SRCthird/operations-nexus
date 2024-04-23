@@ -48,8 +48,16 @@ export class TemplateService {
     });
 
     if (createDto.apps && createDto.apps.length > 0) {
+      await this.databaseService.template.update({
+        where: { id: template.id },
+        data: {
+          apps: {
+            set: []
+          }
+        }
+      })
       await Promise.all(createDto.apps.map(app => {
-        if (app.id) {
+        if (app.id && app.id > 0) {
           try {
             this.appService.update(app.id, app, template.id)
           } catch (error) {
@@ -143,6 +151,14 @@ export class TemplateService {
     }
 
     if (updateDto.apps && updateDto.apps.length > 0) {
+      await this.databaseService.template.update({
+        where: { id },
+        data: {
+          apps: {
+            set: []
+          }
+        }
+      })
       await Promise.all(updateDto.apps.map(app => {
         try {
           if (app.id) {

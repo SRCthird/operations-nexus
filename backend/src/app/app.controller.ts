@@ -20,6 +20,11 @@ export class AppController {
     return this.appService.findOne(+id);
   }
 
+  @Get('name/:name')
+  findByTitle(@Param('name') name: string) {
+    return this.appService.findByName(name);
+  }
+
   @Get('type/:type')
   findByType(@Param('type') type: string) {
     return this.appService.findByType(type);
