@@ -1,5 +1,5 @@
-import { Box, Button, FormControl, FormHelperText, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
-import { Template } from "@templates";
+import { Box, Button, FormControl, FormHelperText, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select } from "@chakra-ui/react";
+import { Template, Templates } from "@templates";
 import { AppFormControl, useApps, Apps } from '@apps';
 import { Dispatch, SetStateAction, useState } from "react";
 import "@styles/Admin.css"
@@ -20,6 +20,23 @@ export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
       <FormControl isDisabled={true}>
         <FormLabel>ID</FormLabel>
         <Input value={template.id === 0 ? "" : template.id} />
+      </FormControl>
+      <FormControl isDisabled={!editMode}>
+        <FormLabel>Format</FormLabel>
+        <Select
+          value={template.design}
+          onChange={(value) => {
+            setTemplate(prev => ({ ...prev, design: value.target.value as Templates }));
+          }}
+        >
+          {!template.design && <option value={""}></option>}
+          {Object.values(Templates).map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </Select>
+        <FormHelperText>The layout of the page.</FormHelperText>
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Title</FormLabel>
