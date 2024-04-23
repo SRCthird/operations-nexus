@@ -1,4 +1,5 @@
-import axios, { CanceledError } from 'axios';
+import api from '@src/utils/api';
+import { CanceledError } from 'axios';
 import { useEffect, useState } from 'react'
 
 const useAdmin = ({ email }: { email: string }) => {
@@ -9,7 +10,7 @@ const useAdmin = ({ email }: { email: string }) => {
   useEffect(() => {
     setLoading(true);
     const controller = new AbortController();
-    axios.get('/api/admin/validate', { headers: { email: email } })
+    api.get('/admin/validate', { headers: { email: email } })
       .then(response => {
         setResult(response.data);
         setLoading(false);
