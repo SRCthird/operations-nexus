@@ -20,12 +20,13 @@ const DisplaysBody = () => {
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
+        console.error(err);
       });
     return () => controller.abort();
   }
 
   const handleUpdate = (data: Nexus_Display) => {
-    if (data.id === 0) return;
+    if (data.id === 0) return handleCreate(data);
     const controller = new AbortController();
     api.patch(`/display/${data.id}`, data)
       .catch(err => {
