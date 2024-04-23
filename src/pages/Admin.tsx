@@ -37,16 +37,17 @@ const Admin = ({ title }: Props): JSX.Element => {
                 as={Button} 
                 rightIcon={<ChevronDownIcon />}
               >
-                {isOpen? 
-                  'Close views': 
-                  display===0? 'Departments':
-                  display===1? 'Displays': 'SlideShows'
+                {isOpen? 'Close views': 
+                 display===0? 'Departments':
+                 display===1? 'Displays': 
+                 display===2? 'Templates':
+                 'SlideShows'
                 }
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => { setDisplay(0) }}>Departments</MenuItem>
                 <MenuItem onClick={() => { setDisplay(1) }}>Displays</MenuItem>
-                <MenuItem onClick={() => { setDisplay(2) }}>Tempaltes</MenuItem>
+                <MenuItem onClick={() => { setDisplay(2) }}>Templates</MenuItem>
                 <MenuItem onClick={() => { setDisplay(3) }}>SlideShows</MenuItem>
               </MenuList>
             </>)}
