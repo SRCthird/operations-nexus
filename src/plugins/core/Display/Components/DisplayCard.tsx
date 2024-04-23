@@ -6,18 +6,11 @@ interface Props {
     display: Nexus_Display;
 }
 
-/**
- * The outline of a single display card for the Home.tsx component.
- * 
- * @param {interface} Props - Properties for the DisplayCard component.
- * @returns {JSX.Element} - Returns the DisplayCard component.
- */
 export const DisplayCard = ({ display }:Props): JSX.Element => {
   const navigate = useNavigate();
   
-  // Dynamically handle the URL for the display page.
   const handleClick = () => {
-    navigate('/' + display.Display);
+    navigate('/' + display.display);
   }
 
   return (
@@ -28,14 +21,14 @@ export const DisplayCard = ({ display }:Props): JSX.Element => {
       _hover={{ transform: "scale(1.05)" }}
     >
         <Image 
-          src={display.Background} 
+          src={display.background} 
           height={200} 
           overflow='hidden'
           borderTopRadius={10} 
           objectFit='cover'
         />
         <CardBody>
-            <Heading fontSize='2xl' height={50}>{display.Display}</Heading>
+            <Heading fontSize='2xl' height={50}>{display.display}</Heading>
         </CardBody>
     </Card>
   )

@@ -1,23 +1,19 @@
-import axios, { CanceledError } from "axios";
+import api from "@src/utils/api";
+import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Slides } from './types';
 
-/**
- * Properties of the Secondary Slides webhook.
- * 
- * @param {string} location - The name of the directory of slide in the backend.
- */
 interface Props {
   location?: string
 }
 
 const useSecondarySlides = ({ location }: Props) => {
-  const [secondarySlides, setSecondarySlides] = useState<Slides[]>([]);
+  const [secondarySlides, setSecondarySlides] = useState<string[]>([]);
   const [secondarySlideError, setError] = useState('');
 
   useEffect(() => {
+    if (location === "") return;
     const controller = new AbortController();
-    axios.get(`/api/static/${location}`, { signal: controller.signal })
+    api.get(`/static/${location}`, { signal: controller.signal })
       .then(response => {
         setSecondarySlides(response.data);
       })

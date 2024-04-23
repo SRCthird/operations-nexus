@@ -2,22 +2,24 @@ import { useState } from "react";
 import "@styles/Admin.css"
 import { CanceledError } from "axios";
 import AdminBody from "@components/AdminBody";
-import { DisplayQuery } from "@core/Display";
-import { DepartmentsForm, Nexus_Department, DepartmentList, emptyDepartment } from "@core/Department";
+import { emptyTemplate } from "@templates/empty";
 import api from "@src/utils/api";
+import { Template } from "./types";
+import TemplateList from "./components/templateList";
+import { TemplateForm } from "./Form";
 
-const DepartmentsBody = (): JSX.Element => {
+const TemplatesBody = () => {
   const [key, updateKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [data, setData] = useState<Template>({...emptyTemplate});
   const [error, setError] = useState('');
-  const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
-  const [data, setData] = useState({ ...emptyDepartment });
+  const [query, setQuery] = useState('');
 
-  const handleCreate = (Data: Nexus_Department) => {
-    const { id: _, ...newData } = Data;
+  const handleCreate = (data: Template) => {
+    const { id: _, ...newData } = data;
     const controller = new AbortController();
-    api.post(`/departments`, newData)
+    api.post("/template", newData)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -25,10 +27,10 @@ const DepartmentsBody = (): JSX.Element => {
     return () => controller.abort();
   }
 
-  const handleUpdate = (Data: Nexus_Department) => {
-    if (Data.id === 0) return;
+  const handleUpdate = (data: Template) => {
+    if (data.id === 0) return;
     const controller = new AbortController();
-    api.patch(`/departments/${Data.id}`, Data)
+    api.patch(`/template/${data.id}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -36,10 +38,10 @@ const DepartmentsBody = (): JSX.Element => {
     return () => controller.abort();
   }
 
-  const handleDelete = (ID: string) => {
-    if (+ID === 0) return;
+  const handleDelete = (id: string) => {
+    if (+id === 0) return;
     const controller = new AbortController();
-    api.delete(`/departments/${ID}`)
+    api.delete(`/template/${id}`)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -49,7 +51,7 @@ const DepartmentsBody = (): JSX.Element => {
   }
 
   const resetForm = () => {
-    setData({ ...emptyDepartment });
+    setData({...emptyTemplate});
     remount();
   }
 
@@ -59,22 +61,24 @@ const DepartmentsBody = (): JSX.Element => {
     <AdminBody
       resetForm={resetForm}
       onSearch={(searchText: string) => {
-        setDisplayQuery({ searchText });
+        setQuery(searchText);
       }}
       handleCreate={handleCreate}
       handleRead={
-        <DepartmentList
+        <TemplateList
           key={key}
-          searchText={displayQuery.searchText}
-          selectedDepartment={displayQuery.department}
-          onSelectDepartment={
-            (department) => {
+          searchText={query}
+          selected={data.title}
+          onSelect={
+            (template) => {
               setData({
-                id: department.id,
-                main: department.main,
-                department: department.department,
-                background: department.background,
-                pptxVersion: department.pptxVersion
+                id: template.id,
+                title: template.title,
+                design: template.design,
+                background: template.background,
+                gradient: template.gradient,
+                transition: template.transition,
+                apps: template.apps,
               });
               toggleSelected(true);
             }
@@ -83,7 +87,7 @@ const DepartmentsBody = (): JSX.Element => {
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={data.department || "Select a department"}
+      header={data.title || "Select a template"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -93,26 +97,17 @@ const DepartmentsBody = (): JSX.Element => {
       error={error}
       data={data}
       form={
-        <DepartmentsForm
+        <TemplateForm
           key={key}
-          id={data.id}
+          template={data}
+          setTemplate={setData}
           editMode={editMode}
-          onChange={
-            (department) => {
-              setData({
-                id: department.id,
-                main: department.main,
-                department: department.department,
-                background: department.background,
-                pptxVersion: department.pptxVersion
-              });
-            }
-          }
         />
       }
       remount={remount}
     />
   )
+
 }
 
-export default DepartmentsBody
+export default TemplatesBody 

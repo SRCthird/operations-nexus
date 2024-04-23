@@ -1,180 +1,123 @@
-import NotFound from "@src/pages/NotFound";
-import { FullDisplayForm } from "./FullDisplay";
-import { FullDisplay2Form } from "./FullDisplay2";
-import { FullDisplay3Form } from "./FullDisplay3";
-import { FullDisplay4Form } from "./FullDisplay4";
-import { FullDisplay5Form } from "./FullDisplay5";
-import { FullWithCircleForm } from "./FullWithCircle";
-import { OneByThreeForm } from "./OneByThree";
-import { SplitScreenForm } from "./SplitScreen";
-import { ThreeOnTwoForm } from "./ThreeOnTwo";
-import { TwoByTwoForm } from "./TwoByTwo";
-import { Templates } from "./types";
+import { Box, Button, FormControl, FormHelperText, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
+import { Template } from "@templates";
+import { AppFormControl, useApps, Apps } from '@apps';
+import { Dispatch, SetStateAction, useState } from "react";
+import "@styles/Admin.css"
+import { emptyApp } from "../apps/empty";
 
 interface Props {
-  data: any;
+  template: Template;
+  setTemplate: Dispatch<SetStateAction<Template>>;
   editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
-  submitPage: boolean;
-  setSubmitPage: (submitPage: boolean) => void;
-  setData: (data: any) => void;
-  onChange: (data: any) => void;
 }
 
-export const TemplateForm = ({ data, editMode, setEditMode, submitPage, setSubmitPage, setData, onChange }: Props) => {
-  if (data.Template === Templates.FullDisplay) {
-    return (
-      <FullDisplayForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
+export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
+  const { apps: pbiApps } = useApps({ type: Apps.PowerBI });
+  const { apps: pptApps } = useApps({ type: Apps.PowerPoint });
+
+  return (
+    <Box className="Admin-Form">
+      <FormControl isDisabled={true}>
+        <FormLabel>ID</FormLabel>
+        <Input value={template.id === 0 ? "" : template.id} />
+      </FormControl>
+      <FormControl isDisabled={!editMode}>
+        <FormLabel>Title</FormLabel>
+        <Input value={template.title}
+          onChange={(value) => {
+            setTemplate(prev => ({ ...prev, title: value.target.value }));
+          }}
+        />
+        <FormHelperText>The title of this page.</FormHelperText>
+      </FormControl>
+      <FormControl isDisabled={!editMode}>
+        <FormLabel>Background</FormLabel>
+        <Input value={template.background}
+          onChange={(value) => {
+            setTemplate(prev => ({ ...prev, background: value.target.value }));
+          }}
+        />
+        <FormHelperText>The background color of this page, using HTML colors</FormHelperText>
+      </FormControl>
+      <FormControl isDisabled={!editMode}>
+        <FormLabel>Gradient</FormLabel>
+        <Input value={template.gradient ?? ""}
+          onChange={(value) => {
+            setTemplate(prev => ({ ...prev, gradient: value.target.value }));
+          }}
+        />
+        <FormHelperText>The name of the area where this display will be used.</FormHelperText>
+      </FormControl>
+      <FormControl isDisabled={!editMode}>
+        <FormLabel>Transition Time</FormLabel>
+        <NumberInput
+          value={template.transition}
+          min={30}
+          max={600}
+          onChange={(_, value) => {
+            setTemplate(prev => ({ ...prev, transition: value }));
+          }}
+        >
+          <NumberInputField
+          />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+        <FormHelperText>The amount of time an app will stay on the screen before transitioning</FormHelperText>
+      </FormControl>
+      {template.apps.map((app, index) => {
+        return (
+          <AppFormControl
+            key={index}
+            app={app}
+            editMode={editMode}
+            onChange={
+              (value) => {
+                const newApps = [...template.apps];
+                newApps[index] = value;
+                setTemplate(prev => ({ ...prev, apps: newApps }));
+              }
+            }
+            pptApps={pptApps}
+            pbiApps={pbiApps}
+          />
+        );
+      })}
+      <Box
+        style={{
+          display: "flex",
         }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.FullDisplay2) {
-    return (
-      <FullDisplay2Form
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.FullDisplay3) {
-    return (
-      <FullDisplay3Form
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.FullDisplay4) {
-    return (
-      <FullDisplay4Form
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.FullDisplay5) {
-    return (
-      <FullDisplay5Form
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.FullWithCircle) {
-    return (
-      <FullWithCircleForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.OneByThree) {
-    return (
-      <OneByThreeForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.SplitScreen) {
-    return (
-      <SplitScreenForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.ThreeOnTwo) {
-    return (
-      <ThreeOnTwoForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else if (data.Template === Templates.TwoByTwo) {
-    return (
-      <TwoByTwoForm
-        pageID={data.Template_ID || 0}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        submit={submitPage}
-        setSubmit={setSubmitPage}
-        getPageID={(newID) => {
-          setData({ ...data, Template_ID: newID });
-          onChange({ ...data, Template_ID: newID });
-        }}
-        parentID={data.ID}
-      />
-    )
-  } else {
-    return (
-      <NotFound />
-    )
-  }
+      >
+        <Button
+          onClick={() => {
+            const newApps = [...template.apps];
+            newApps.pop();
+            setTemplate(prev => ({ ...prev, apps: newApps }));
+          }}
+        >
+          Remove Last App
+        </Button>
+        <Button
+          onClick={() => {
+            const newApps = [...template.apps];
+            newApps.push(emptyApp);
+            setTemplate(prev => ({ ...prev, apps: newApps }));
+          }}
+        >
+          Add New App
+        </Button>
+        <Button
+          onClick={() => {
+            const newApps = [...template.apps];
+            newApps.push({ ...emptyApp, id: -1 });
+            setTemplate(prev => ({ ...prev, apps: newApps }));
+          }}
+        >
+          Add Existing App
+        </Button>
+      </Box>
+    </Box>
+  );
 }

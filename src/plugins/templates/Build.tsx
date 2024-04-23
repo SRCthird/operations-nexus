@@ -1,17 +1,17 @@
 import NotFound from "@pages/NotFound";
 import { Nexus_Display } from "@core/Display";
 import BuildApp from "@apps";
-import { useTemplates, Templates } from "@templates";
-import FullDisplay, { emptyFullDisplay, Template_FullDisplay } from "@templates/FullDisplay";
-import FullDisplay2, { emptyFullDisplay2, Template_FullDisplay2 } from "@templates/FullDisplay2";
-import FullDisplay3, { emptyFullDisplay3, Template_FullDisplay3 } from "@templates/FullDisplay3";
-import FullDisplay4, { emptyFullDisplay4, Template_FullDisplay4 } from "@templates/FullDisplay4";
-import FullDisplay5, { emptyFullDisplay5, Template_FullDisplay5 } from "@templates/FullDisplay5";
-import FullWithCircle, { emptyFullWithCircle, Template_FullWithCircle } from "@templates/FullWithCircle";
-import OneByThree, { emptyOneByThree, Template_OneByThree } from "@templates/OneByThree";
-import SplitScreen, { emptySplitScreen, Template_SplitScreen } from "@templates/SplitScreen";
-import ThreeOnTwo, { emptyThreeOnTwo, Template_ThreeOnTwo } from "@templates/ThreeOnTwo";
-import TwoByTwo, { emptyTwoByTwo, Template_TwoByTwo } from "@templates/TwoByTwo";
+import {  Templates } from "@templates";
+import FullDisplay from "@templates/components/FullDisplay";
+import FullDisplay2 from "@templates/components/FullDisplay2";
+import FullDisplay3 from "@templates/components/FullDisplay3";
+import FullDisplay4 from "@templates/components/FullDisplay4";
+import FullDisplay5 from "@templates/components/FullDisplay5";
+import FullWithCircle from "@templates/components/FullWithCircle";
+import OneByThree from "@templates/components/OneByThree";
+import SplitScreen from "@templates/components/SplitScreen";
+import ThreeOnTwo from "@templates/components/ThreeOnTwo";
+import TwoByTwo from "@templates/components/TwoByTwo";
 
 interface Props {
   token: string;
@@ -20,325 +20,279 @@ interface Props {
 }
 
 const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
-  const { pages } = useTemplates({
-    page: display.Template,
-    ids: [display.Template_ID || 0]
-  })
 
-  if (display.Template === Templates.FullDisplay) {
-    const page: Template_FullDisplay = pages[0] || emptyFullDisplay;
+  if (display.template?.design === Templates.FullDisplay) {
     return (
       <FullDisplay
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.FullDisplay2) {
-    const page: Template_FullDisplay2 = pages[0] || emptyFullDisplay2;
+  } else if (display.template?.design === Templates.FullDisplay2) {
     return (
       <FullDisplay2
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
-        transition={page.Transition}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
+        transition={display.template.transition || 30}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.FullDisplay3) {
-    const page: Template_FullDisplay3 = pages[0] || emptyFullDisplay3;
+  } else if (display.template?.design === Templates.FullDisplay3) {
     return (
       <FullDisplay3
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
-        transition={page.Transition}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
+        transition={display.template.transition || 30}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.FullDisplay4) {
-    const page: Template_FullDisplay4 = pages[0] || emptyFullDisplay4;
+  } else if (display.template?.design === Templates.FullDisplay4) {
     return (
       <FullDisplay4
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
-        transition={page.Transition}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
+        transition={display.template.transition || 30}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
         app4={
           <BuildApp
-            type={page.App4}
-            id={page.App4_ID || 0}
+            app={display.template.apps[3]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.FullDisplay5) {
-    const page: Template_FullDisplay5 = pages[0] || emptyFullDisplay5;
+  } else if (display.template?.design === Templates.FullDisplay5) {
     return (
       <FullDisplay5
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
-        transition={page.Transition}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
+        transition={display.template.transition || 30}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
         app4={
           <BuildApp
-            type={page.App4}
-            id={page.App4_ID || 0}
+            app={display.template.apps[3]}
             slideShowKey={slideShowKey}
           />
         }
         app5={
           <BuildApp
-            type={page.App5}
-            id={page.App5_ID || 0}
+            app={display.template.apps[4]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.FullWithCircle) {
-    const page: Template_FullWithCircle = pages[0] || emptyFullWithCircle;
+  } else if (display.template?.design === Templates.FullWithCircle) {
     return (
       <FullWithCircle
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
 
-  } else if (display.Template === Templates.OneByThree) {
-    const page: Template_OneByThree = pages[0] || emptyOneByThree;
+  } else if (display.template?.design === Templates.OneByThree) {
     return (
       <OneByThree
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
         app4={
           <BuildApp
-            type={page.App4}
-            id={page.App4_ID || 0}
+            app={display.template.apps[3]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.SplitScreen) {
-    const page: Template_SplitScreen = pages[0] || emptySplitScreen;
+  } else if (display.template?.design === Templates.SplitScreen) {
     return (
       <SplitScreen
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.ThreeOnTwo) {
-    const page: Template_ThreeOnTwo = pages[0] || emptyThreeOnTwo;
+  } else if (display.template?.design === Templates.ThreeOnTwo) {
     return (
       <ThreeOnTwo
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
         app4={
           <BuildApp
-            type={page.App4}
-            id={page.App4_ID || 0}
+            app={display.template.apps[3]}
             slideShowKey={slideShowKey}
           />
         }
         app5={
           <BuildApp
-            type={page.App5}
-            id={page.App5_ID || 0}
+            app={display.template.apps[4]}
             slideShowKey={slideShowKey}
           />
         }
       />
     )
-  } else if (display.Template === Templates.TwoByTwo) {
-    const page: Template_TwoByTwo = pages[0] || emptyTwoByTwo;
+  } else if (display.template?.design === Templates.TwoByTwo) {
     return (
       <TwoByTwo
-        title={page.Title}
-        backgroundColor={page.Background}
-        backgroundGradient={page.Gradient}
+        title={display.template.title}
+        backgroundColor={display.template.background}
+        backgroundGradient={display.template.gradient}
         app1={
           <BuildApp
-            type={page.App1}
-            id={page.App1_ID || 0}
+            app={display.template.apps[0]}
             slideShowKey={slideShowKey}
           />
         }
         app2={
           <BuildApp
-            type={page.App2}
-            id={page.App2_ID || 0}
+            app={display.template.apps[1]}
             slideShowKey={slideShowKey}
           />
         }
         app3={
           <BuildApp
-            type={page.App3}
-            id={page.App3_ID || 0}
+            app={display.template.apps[2]}
             slideShowKey={slideShowKey}
           />
         }
         app4={
           <BuildApp
-            type={page.App4}
-            id={page.App4_ID || 0}
+            app={display.template.apps[3]}
             slideShowKey={slideShowKey}
           />
         }

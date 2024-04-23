@@ -14,7 +14,7 @@ export const FormControlMainSlides = ({ editMode, main, setData, helperText }: P
       <Select
         value={main ? "true" : "false"}
         onChange={(event) => {
-          setData((prev: any) => ({ ...prev, Main: event.target.value === "true" }));
+          setData((prev: any) => ({ ...prev, main: event.target.value === "true" }));
         }}
       >
         <option value={"true"}>true</option>

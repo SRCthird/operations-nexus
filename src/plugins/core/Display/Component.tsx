@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "@styles/Admin.css"
-import axios, { CanceledError } from "axios";
+import { CanceledError } from "axios";
 import AdminBody from "@components/AdminBody";
 import { DisplayQuery, Nexus_Display, DisplaysForm, emptyDisplay, DisplayPanel } from "@core/Display";
+import api from "@src/utils/api";
 
 const DisplaysBody = () => {
   const [key, updateKey] = useState(0);
@@ -13,9 +14,9 @@ const DisplaysBody = () => {
   const [displayQuery, setDisplayQuery] = useState<DisplayQuery>({});
 
   const handleCreate = (data: Nexus_Display) => {
-    const { ID: _, ...newData } = data;
+    const { id: _, ...newData } = data;
     const controller = new AbortController();
-    axios.post(`/api/display`, newData)
+    api.post("/display", newData)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -24,9 +25,9 @@ const DisplaysBody = () => {
   }
 
   const handleUpdate = (data: Nexus_Display) => {
-    if (data.ID === 0) return;
+    if (data.id === 0) return;
     const controller = new AbortController();
-    axios.patch(`/api/display/${data.ID}`, data)
+    api.patch(`/display/${data.id}`, data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -34,10 +35,10 @@ const DisplaysBody = () => {
     return () => controller.abort();
   }
 
-  const handleDelete = (ID: string) => {
-    if (+ID === 0) return;
+  const handleDelete = (id: string) => {
+    if (+id === 0) return;
     const controller = new AbortController();
-    axios.delete(`/api/display/${ID}`)
+    api.delete(`/display/${id}`)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -68,14 +69,13 @@ const DisplaysBody = () => {
           onSelectDisplay={
             (display) => {
               setData({
-                ID: display.ID,
-                Main: display.Main,
-                Sub: display.Sub,
-                Department: display.Department,
-                Background: display.Background,
-                Display: display.Display,
-                Template: display.Template,
-                Template_ID: display.Template_ID || 0
+                id: display.id,
+                main: display.main,
+                department: display.department,
+                background: display.background,
+                display: display.display,
+                title: display.title,
+                template: display.template
               });
               toggleSelected(true);
             }
@@ -84,7 +84,7 @@ const DisplaysBody = () => {
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={data.Display || "Select a display"}
+      header={data.display || "Select a display"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -96,20 +96,18 @@ const DisplaysBody = () => {
       form={
         <DisplaysForm
           key={key}
-          id={data.ID}
+          id={data.id}
           editMode={editMode}
-          setEditMode={setEditMode}
           onChange={
             (display) => {
               setData({
-                ID: display.ID,
-                Main: display.Main,
-                Sub: display.Sub,
-                Department: display.Department,
-                Background: display.Background,
-                Display: display.Display,
-                Template: display.Template,
-                Template_ID: display.Template_ID || 0
+                id: display.id,
+                main: display.main,
+                department: display.department,
+                background: display.background,
+                display: display.display,
+                title: display.title,
+                template: display.template
               });
             }
           }

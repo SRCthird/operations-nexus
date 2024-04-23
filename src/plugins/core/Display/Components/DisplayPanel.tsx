@@ -11,10 +11,10 @@ export const DisplayPanel = ({ onSelectDisplay, selectedDisplay, searchText }: P
   const { displays } = useDisplays({ searchText: searchText });
 
   const groupedDisplays = displays.reduce((acc, display) => {
-    if (!acc[display.Department]) {
-      acc[display.Department] = [];
+    if (!acc[display.department]) {
+      acc[display.department] = [];
     }
-    acc[display.Department].push(display);
+    acc[display.department].push(display);
     return acc;
   }, {} as Record<string, typeof displays>);
 

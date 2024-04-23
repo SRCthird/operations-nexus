@@ -13,7 +13,7 @@ export const FormControlGradient = ({ editMode, gradient, setData, helperText }:
       <FormLabel>Gradient</FormLabel>
       <Input value={gradient ?? ""}
         onChange={(value) => {
-          setData((prev: any) => ({ ...prev, Gradient: value.target.value }));
+          setData((prev: any) => ({ ...prev, gradient: value.target.value }));
         }}
       />
       <FormHelperText>{helperText ?? "The gradient of this page."}</FormHelperText>

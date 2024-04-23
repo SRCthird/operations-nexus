@@ -14,7 +14,7 @@ export const FormControlTitle = ({ editMode, title, setData, helperText }: Props
       <Input
         value={title}
         onChange={(event) => {
-          setData((prev: any) => ({ ...prev, Title: event.target.value }));
+          setData((prev: any) => ({ ...prev, title: event.target.value }));
         }}
       />
       <FormHelperText>{helperText ?? "The title of this page."}</FormHelperText>

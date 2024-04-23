@@ -27,17 +27,17 @@ export const DepartmentList = ({ onSelectDepartment, selectedDepartment, searchT
       <List>
         {departmentLoading && <Spinner />}
         {departments.map(department => (
-          <ListItem key={department.ID}>
+          <ListItem key={department.id}>
             <HStack>
-              <Image objectFit='cover' boxSize='32px' borderRadius={8} src={department.Background} />
+              <Image objectFit='cover' boxSize='32px' borderRadius={8} src={department.background} />
               <Button 
                 whiteSpace={'normal'} 
                 textAlign={'left'} 
-                fontWeight={department.Department === selectedDepartment ? 'bold' : 'noraml'} 
+                fontWeight={department.department === selectedDepartment ? 'bold' : 'noraml'} 
                 onClick={() => (onSelectDepartment(department))} 
                 fontSize='lg' 
                 variant='link' 
-                padding={3}>{department.Department}
+                padding={3}>{department.department}
               </Button>
             </HStack>
           </ListItem>

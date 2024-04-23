@@ -1,99 +1,45 @@
-import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import { useState } from 'react';
-import { Templates } from '@templates';
-
-import { PowerBIForm } from "./PowerBI";
-import { PowerPointForm } from "./PowerPoint";
-import { Apps } from './types';
+import { Dispatch, SetStateAction } from "react";
+import { emptyPowerBI, PowerBIForm } from "./PowerBI";
+import { emptyPowerPoint, PowerPointForm } from "./PowerPoint";
+import { App, Apps } from './types';
 
 interface Props {
-  appNumber: number
-  appType?: Apps
-  appID?: number
+  app: App;
+  setApp: Dispatch<SetStateAction<App>>;
   editMode: boolean;
-  setEditMode: (value: boolean) => void;
-  getAppID: (value: number)=> void;
-  parentID: number;
-  parentType: Templates;
 }
 
 
-export const AppForm = ({ appNumber, appType, appID, editMode, setEditMode, getAppID, parentID, parentType}: Props) => {
+export const AppForm = ({ app, setApp, editMode }: Props) => {
   const [viewApp, setViewApp] = useState(false);
-  const [submitApp, setSubmitApp] = useState(false);
-  const [key, setKey] = useState(0);
 
   return (
     <Box padding={2} border={'1px'} borderRadius={5}>
-      {!editMode &&
-        <SimpleGrid templateColumns={'1fr 34px'} >
-          <Text>App Information</Text>
-          {!viewApp && <ViewIcon onClick={
-            () => setViewApp(true)
-          } />}
-          {viewApp && <ViewOffIcon onClick={
-            () => setViewApp(false)
-          } />}
-        </SimpleGrid>
-      }
-      {editMode &&
-        <SimpleGrid templateColumns={'1fr 34px 34px 34px'} >
-          <Text>Page Information</Text>
-          {!viewApp && <ViewIcon onClick={
-            () => setViewApp(true)
-          } />}
-          {viewApp && <ViewOffIcon onClick={
-            () => setViewApp(false)
-          } />}
-          <CheckIcon
-            onClick={
-              () => {
-                setSubmitApp(true);
-                setEditMode(false);
-              }
-            }
-          />
-          <CloseIcon
-            onClick={
-              () => {
-                setKey(key + 1);
-                setViewApp(false);
-                setEditMode(false);
-              }
-            }
-          />
-        </SimpleGrid>
-      }
+      <SimpleGrid templateColumns={'1fr 34px'} >
+        <Text>App Information</Text>
+        {!viewApp && <ViewIcon onClick={
+          () => setViewApp(true)
+        } />}
+        {viewApp && <ViewOffIcon onClick={
+          () => setViewApp(false)
+        } />}
+      </SimpleGrid>
       <Box hidden={!viewApp}>
-        {appType === Apps.PowerBI &&
+        {app.type === Apps.PowerBI &&
           <PowerBIForm
-            appNumber={appNumber}
-            appID={appID || 0}
+            app={app.powerBI || emptyPowerBI}
+            setApp={setApp}
             editMode={editMode}
-            setEditMode={setEditMode}
-            submit={submitApp}
-            setSubmit={setSubmitApp}
-            getAppID={
-              (id)=>{getAppID(id)}
-            }
-            parentID={parentID}
-            parentType={parentType}
           />
         }
-        {appType === Apps.PowerPoint &&
+        {app.type === Apps.PowerPoint &&
           <PowerPointForm
-            appNumber={appNumber}
-            appID={appID || 0}
+            app={app.powerPoint || emptyPowerPoint}
+            setApp={setApp}
             editMode={editMode}
-            setEditMode={setEditMode}
-            submit={submitApp}
-            setSubmit={setSubmitApp}
-            getAppID={
-              (id)=>{getAppID(id)}
-            }
-            parentID={parentID}
-            parentType={parentType}
           />
         }
       </Box>

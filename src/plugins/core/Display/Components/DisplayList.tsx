@@ -10,7 +10,7 @@ interface Props {
   selectedDisplay?: string;
 }
 
-export const DisplayList = ({ department, displays, onSelectDisplay, selectedDisplay }: Props): JSX.Element => {
+export const DisplayList = ({ department, displays, onSelectDisplay, selectedDisplay }: Props) => {
   const [viewList, setViewList] = useState(false);
 
   return (
@@ -39,18 +39,18 @@ export const DisplayList = ({ department, displays, onSelectDisplay, selectedDis
       >
         {displays.map(display => (
           <ListItem 
-            key={display.ID}
+            key={display.id}
           >
             <Button
               whiteSpace={'normal'}
               textAlign={'left'}
-              fontWeight={display.Department === selectedDisplay ? 'bold' : 'noraml'}
+              fontWeight={display.department === selectedDisplay ? 'bold' : 'noraml'}
               onClick={() => (onSelectDisplay(display))}
               fontSize='lg'
               variant='link'
               padding={3}
             >
-              {display.Display}
+              {display.display}
             </Button>
           </ListItem>
         ))}

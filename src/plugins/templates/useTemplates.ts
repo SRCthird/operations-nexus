@@ -1,31 +1,31 @@
-import axios, { AxiosError } from "axios";
-import { useEffect, useState, useRef} from "react";
-import { Templates } from '@templates'
+import { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+import api from "@src/utils/api";
+import { Template } from "./types";
+import { emptyTemplate } from "./empty";
 
-/**
- * The pages available for selection in the admin menu.
- */
-
-
-interface Props {
-  page?: Templates;
-  ids?: number[];
+type Props = {
+  id?: number;
 }
-export const useTemplates = ({ page, ids }: Props) => {
-  const [pages, setPages] = useState<any[]>([]);
+
+export const useTemplates = ({ id }: Props) => {
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [template, setTemplate] = useState<Template>(emptyTemplate);
   const [pageError, setError] = useState('');
   const [isPageLoading, setLoading] = useState(false);
-  const prevPagesRef = useRef<any[]>();
 
   useEffect(() => {
+    if (id === 0) return;
     const controller = new AbortController();
+
+    const endpoint = id ? `/template/${id}` : '/template';
     setLoading(true);
-    const idArray = ids ? ids : [];
-    axios.get(`/api/page/${page}/?id=${idArray.join(",")}`, { signal: controller.signal })
+    api.get(endpoint, { signal: controller.signal })
       .then(response => {
-        if (JSON.stringify(prevPagesRef.current) !== JSON.stringify(response.data)) {
-          setPages(response.data);
-          prevPagesRef.current = response.data;
+        if (id) {
+          setTemplate(response.data);
+        } else {
+          setTemplates(response.data);
         }
         setLoading(false);
       })
@@ -38,11 +38,8 @@ export const useTemplates = ({ page, ids }: Props) => {
         setLoading(false);
       });
     return () => controller.abort();
-  }, [ids, page]);
+    // eslint-disable-next-line
+  }, []);
 
-  if (typeof pages !== 'object') {
-    setPages([]);
-  }
-
-  return { pages, pageError, isPageLoading };
+  return { template, templates, pageError, isPageLoading };
 }
