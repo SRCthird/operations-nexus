@@ -35,7 +35,7 @@ export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
         <Select
           value={app?.main ? "true" : "false"}
           onChange={(value) => {
-            setApp(prev => ({ ...prev, main: value.target.value === "true" }));
+            setPowerPoint(prev => ({ ...prev, main: value.target.value === "true" }));
           }}
         >
           <option value={"true"}>true</option>
@@ -47,7 +47,7 @@ export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
         <FormLabel>Department</FormLabel>
         <Select value={app?.department!}
           onChange={(value) => {
-            setApp(prev => ({ ...prev, department: value.target.value }));
+            setPowerPoint(prev => ({ ...prev, department: value.target.value }));
           }}
         >
           {departmentLoading && <option value={app?.department}>{app?.department}</option>}
