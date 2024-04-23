@@ -4,6 +4,7 @@ import { models, Report } from 'powerbi-client';
 import { tryRefreshUserPermissions, getPowerBIToken, refreshAADToken } from '@components/AzureUtils';
 import { msalInstance } from '@src/index';
 import './styles.css';
+import { PowerBITypes } from './types';
 
 /**
  * Properties of the PowerBI component.
@@ -15,7 +16,7 @@ import './styles.css';
  * @param {string} accessToken - The access token provided on login request.
  */
 interface Props {
-  type: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
+  type: PowerBITypes;
   reportId: string,
   groupId: string,
   customEmbedUrl?: string,

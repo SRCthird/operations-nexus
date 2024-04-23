@@ -12,7 +12,7 @@ export const FormControlArea = ({editMode, area, setData, helperText}: Props) =>
       <FormLabel>Area</FormLabel>
       <Input value={area}
         onChange={(value) => {
-          setData((prev: any) => ({ ...prev, Area: value.target.value }));
+          setData((prev: any) => ({ ...prev, area: value.target.value }));
         }}
       />
       <FormHelperText>{helperText ?? "The area of the department."}</FormHelperText>

@@ -1,14 +1,13 @@
-import { Templates } from '@templates';
+import { Template } from '@templates';
 
 export type Nexus_Display = {
-  ID: number //@id @default(autoincrement())
-  Main: string
-  Sub: string
-  /*Departments Nexus_Department @relation(fields: [Department], references: [Department])*/
-  Department: string
-  Display: string
-  Background: string
-  Template?: Templates
-  Template_ID?: number
+  id: number ;
+  main: string;
+  department: string;
+  display: string;
+  background: string;
+  title: string;
+
+  template: Template | null;
 }
 

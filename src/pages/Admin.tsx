@@ -5,6 +5,7 @@ import DisplaysBody from "@core/Display";
 import DepartmentsBody from "@core/Department";
 import SlideShowsBody from "@core/SlideShow";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import TemplatesBody from "@src/plugins/templates/Component";
 
 /**
  * Properties for the Admin dashboard.
@@ -36,23 +37,26 @@ const Admin = ({ title }: Props): JSX.Element => {
                 as={Button} 
                 rightIcon={<ChevronDownIcon />}
               >
-                {isOpen? 
-                  'Close views': 
-                  display===0? 'Departments':
-                  display===1? 'Displays': 'SlideShows'
+                {isOpen? 'Close views': 
+                 display===0? 'Departments':
+                 display===1? 'Displays': 
+                 display===2? 'Templates':
+                 'SlideShows'
                 }
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => { setDisplay(0) }}>Departments</MenuItem>
                 <MenuItem onClick={() => { setDisplay(1) }}>Displays</MenuItem>
-                <MenuItem onClick={() => { setDisplay(2) }}>SlideShows</MenuItem>
+                <MenuItem onClick={() => { setDisplay(2) }}>Templates</MenuItem>
+                <MenuItem onClick={() => { setDisplay(3) }}>SlideShows</MenuItem>
               </MenuList>
             </>)}
         </Menu>
       </Grid>
       {display === 0 && <DepartmentsBody />}
       {display === 1 && <DisplaysBody />}
-      {display === 2 && <SlideShowsBody />}
+      {display === 2 && <TemplatesBody />}
+      {display === 3 && <SlideShowsBody />}
     </Box>
   )
 }

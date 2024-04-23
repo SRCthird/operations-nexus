@@ -1,3 +1,15 @@
+import { App } from "../apps";
+
+export type Template  = {
+  id: number;
+  title: string;
+  design: Templates;
+  background: string;
+  gradient?: string;
+  transition?: number;
+  apps: App[];
+}
+
 export enum Templates {
   FullDisplay = 'FullDisplay',
   FullDisplay2 = 'FullDisplay2',

@@ -59,7 +59,7 @@ class Slides:
         """
         Set the name of the output directory.
 
-        :param str output: The name of the output directory 
+        :param str output: The name of the output directory
         :default: pptx
         """
         self.__output = output
@@ -67,7 +67,7 @@ class Slides:
 
     def getPublic(self):
         """
-        Get the location of the the public folder relative to the slides.py file.
+        Get the location of the the public folder relative to the slides file.
 
         :return: the public folder location
         :rtype: str
@@ -283,9 +283,9 @@ if __name__ == '__main__':
         url = f"http://localhost:5000/api/departments/{location}"
         response = requests.get(url)
         if response.status_code == 200:
-            current_version = response.json().get('PPTXVersion', 0)
+            current_version = response.json().get('pptxVersion', 0)
             new_version = current_version + 1
-            patch_data = {"PPTXVersion": new_version}
+            patch_data = {"pptxVersion": new_version}
             patch_response = requests.patch(url, json=patch_data)
             if patch_response.status_code == 200:
                 print("Successfully updated version to:", new_version)
@@ -301,7 +301,7 @@ if __name__ == '__main__':
             response = requests.get(url)
             response.raise_for_status()
 
-            return [department.get("Department") for department in response.json()]
+            return [department.get("department") for department in response.json()]
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
             return []

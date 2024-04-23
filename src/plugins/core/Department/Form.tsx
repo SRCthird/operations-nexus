@@ -4,37 +4,24 @@ import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
 import { useDepartments, Nexus_Department, emptyDepartment } from "@core/Department";
 
-/**
- * Properties of the Departments Admin Form
- *
- * @param {number} id - The ID of the currently selected item
- * @param {boolean} editMode - The boolean of if the form can be edited or not
- * @param {Departments => void} onChange - The lambda function that returns the changed values of the form
- */
 interface Props {
   id: number;
   editMode: boolean;
   onChange: (value: Nexus_Department) => void;
 }
 
-/**
- * Admin Form of the Departments table
- *
- * @returns {JSX.Element} - returns the AdminDepartments element
- */
 export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
-  const { departments, departmentLoading } = useDepartments({ department: `${id}` });
-  const department: Nexus_Department = departments[0] ?? emptyDepartment;
+  const { department, departmentLoading } = useDepartments({ department: `${id}` });
   const [data, setData] = useState({ ...emptyDepartment });
 
   useEffect(() => {
     if (id !== 0) {
       setData({
-        ID: department.ID,
-        Main: department.Main,
-        Department: department.Department,
-        Background: department.Background,
-        PPTXVersion: department.PPTXVersion
+        id: department.id,
+        main: department.main,
+        department: department.department,
+        background: department.background,
+        pptxVersion: department.pptxVersion
       })
     }
   }, [department, id]);
@@ -43,34 +30,34 @@ export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element 
     <Form className="Admin-Form">
       <FormControl isDisabled={true}>
         <FormLabel>Id</FormLabel>
-        <Input value={data.ID === 0 ? "" : data.ID} />
+        <Input value={data.id === 0 ? "" : data.id} />
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Main</FormLabel>
-        <Input value={data.Main}
+        <Input value={data.main}
           onChange={(value) => {
-            setData({ ...data, Main: value.target.value });
-            onChange({ ...data, Main: value.target.value });
+            setData({ ...data, main: value.target.value });
+            onChange({ ...data, main: value.target.value });
           }}
         />
         <FormHelperText>The main branch this display is under.</FormHelperText>
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Department</FormLabel>
-        <Input value={data.Department}
+        <Input value={data.department}
           onChange={(value) => {
-            setData({ ...data, Department: value.target.value });
-            onChange({ ...data, Department: value.target.value });
+            setData({ ...data, department: value.target.value });
+            onChange({ ...data, department: value.target.value });
           }}
         />
         <FormHelperText>The name of the area where this display will be used.</FormHelperText>
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Background</FormLabel>
-        <Input value={data.Background}
+        <Input value={data.background}
           onChange={(value) => {
-            setData({ ...data, Background: value.target.value });
-            onChange({ ...data, Background: value.target.value });
+            setData({ ...data, background: value.target.value });
+            onChange({ ...data, background: value.target.value });
           }}
         />
         <FormHelperText>The icon to be displayed next to the department.</FormHelperText>

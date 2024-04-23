@@ -35,7 +35,7 @@ const Home = (): JSX.Element => {
                         selectedDepartment={displayQuery.department} 
                         onSelectDepartment={
                           (department: Nexus_Department) => {
-                            setDisplayQuery({department: department.Department});
+                            setDisplayQuery({department: department.department});
                           }
                         }
                       />

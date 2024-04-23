@@ -12,7 +12,7 @@ export const FormControlBackground = ({editMode, background, setData, helperText
       <FormLabel>Background</FormLabel>
       <Input value={background}
         onChange={(value) => {
-          setData((prev: any) => ({ ...prev, Background: value.target.value }));
+          setData((prev: any) => ({ ...prev, background: value.target.value }));
         }}
       />
       <FormHelperText>{helperText ?? "The background color of this page, using HTML colors"}</FormHelperText>

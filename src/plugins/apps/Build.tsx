@@ -1,71 +1,50 @@
 import { Box, Spinner } from "@chakra-ui/react";
-import { Apps, useApps } from '@apps';
-import PowerBI, { emptyPowerBI, App_PowerBI, PowerBITypes } from "./PowerBI";
-import Slideshow, { emptyPowerPoint, App_PowerPoint } from "./PowerPoint";
-import ActionTracker, { App_ActionTracker, emptyActionTracker } from "./ActionTracker";
+import { App, Apps } from '@apps';
+import PowerBI, { PowerBITypes } from "./PowerBI";
+import Slideshow from "./PowerPoint";
+import ActionTracker from "./ActionTracker";
 
 interface Props {
-  type?: Apps;
-  id: number;
+  app?: App;
   slideShowKey: number;
 }
 
-const BuildApp = ({ type, id, slideShowKey }: Props) => {
-  const { apps, isAppLoading } = useApps({ app: type, ids: [id] });
+const BuildApp = ({ app, slideShowKey }: Props) => {
 
-  if (type === Apps.PowerBI && !isAppLoading) {
-    const app: App_PowerBI = apps[0] || emptyPowerBI;
-    let appType: 'report' | 'dashboard' | 'tile' | 'visual' | 'qna';
-    switch (app.Type) {
-      case PowerBITypes.Dashboard: {
-        appType = 'dashboard';
-        break;
-      }
-      case PowerBITypes.Title: {
-        appType = 'tile';
-        break;
-      }
-      case PowerBITypes.Visual: {
-        appType = 'visual';
-        break;
-      }
-      case PowerBITypes.QNA: {
-        appType = 'qna';
-        break;
-      }
-      default: {
-        appType = 'report';
-        break;
-      }
-    }
+  if (!app) {
+    return (
+      <Box paddingLeft={'40%'} paddingTop={'10vh'}>
+        <Spinner padding={'20%'} boxSize={'50px'} />
+      </Box>
+    )
+  }
+  if (app.type === Apps.PowerBI) {
     return (
       <PowerBI
-        type={appType}
-        reportId={app.PowerBI_ID}
-        groupId={app.Group_ID}
-        customEmbedUrl={app.Custom_Embed}
-        pageName={app.Page_Name}
+        type={app.powerBI?.type || PowerBITypes.report}
+        reportId={app.powerBI?.reportID!}
+        groupId={app.powerBI?.groupID!}
+        customEmbedUrl={app.powerBI?.customEmbed}
+        pageName={app.powerBI?.pageName}
       />
     )
   }
-  if (type === Apps.PowerPoint) {
-    const app: App_PowerPoint = apps[0] || emptyPowerPoint;
+  if (app.type === Apps.PowerPoint) {
     return (
       <Slideshow
         key={slideShowKey}
-        main={app.Main}
-        location={app.Department}
+        main={app.powerPoint?.main!}
+        location={app.powerPoint?.department!}
       />
     )
   }
-  if (type === Apps.ActionTracker) {
-    const app: App_ActionTracker = apps[0] || emptyActionTracker;
+  if (app.type === Apps.ActionTracker) {
     return (
       <ActionTracker
-        department={app.Department}
-        departmentField={app.DepartmentField}
-        area={app.Area}
-        areaField={app.AreaField}
+        department={app.actionTracker?.department!}
+        departmentField={app.actionTracker?.departmentField!}
+        area={app.actionTracker?.area}
+        areaField={app.actionTracker?.areaField}
       />
     )
   }

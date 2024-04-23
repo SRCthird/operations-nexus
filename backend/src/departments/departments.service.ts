@@ -8,14 +8,14 @@ interface findOneParam {
 }
 interface updateParam {
   id?: number;
-  name?: string;
+  department?: string;
   updateDepartmentDto: Prisma.Nexus_DepartmentUpdateInput;
 }
 
 @Injectable()
 export class DepartmentsService {
 
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) { }
 
   async create(createDepartmentDto: Prisma.Nexus_DepartmentCreateInput) {
     return this.databaseService.nexus_Department.create({
@@ -24,52 +24,45 @@ export class DepartmentsService {
   }
 
   async findAll(search?: string) {
-    let query: any = {};
+    let query: Prisma.Nexus_DepartmentFindManyArgs = {};
 
     if (search) {
-      query.OR = [
-        { Main: {contains: search}},
-        { Department: {contains: search}},
-        { Background: {contains: search}}
+      query.where.OR = [
+        { main: { contains: search } },
+        { department: { contains: search } },
+        { background: { contains: search } }
       ]
     }
 
-    return this.databaseService.nexus_Department.findMany({
-      where: query
-    }); 
+    return this.databaseService.nexus_Department.findMany(query);
   }
 
-  async findOne({id, name}: findOneParam) {
-    let conditions: any;
+  async findOne({ id, name }: findOneParam) {
+    let conditions: Prisma.Nexus_DepartmentFindFirstArgs = {};
     if (id !== undefined) {
-      conditions = { ID: id };
+      conditions.where = { id: id };
     }
     if (name !== undefined) {
-      conditions = { Department: name };
+      conditions.where = { department: name };
     }
 
-    return this.databaseService.nexus_Department.findFirst({
-      where: conditions 
-    });
+    return this.databaseService.nexus_Department.findFirst(conditions);
   }
 
-  async update({id, name, updateDepartmentDto}: updateParam) {
-    let conditions: any;
-    if (id !== undefined) {
-      conditions = { ID: id };
-    }
-    if (name !== undefined) {
-      conditions = { Department: name };
-    }
-    return this.databaseService.nexus_Department.update({
-      where: conditions,
-      data: updateDepartmentDto
-    });
+  async update({ id, department, updateDepartmentDto }: updateParam) {
+    let query: Prisma.Nexus_DepartmentWhereUniqueInput = id !== undefined ? { id } : { department };
+
+    let conditions: Prisma.Nexus_DepartmentUpdateArgs = {
+      where: query,
+      data: updateDepartmentDto,
+    };
+
+    return this.databaseService.nexus_Department.update(conditions);
   }
 
   async remove(id: number) {
     return this.databaseService.nexus_Department.delete({
-      where: {ID: id}
+      where: { id }
     });
   }
 }

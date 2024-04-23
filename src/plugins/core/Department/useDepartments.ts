@@ -1,29 +1,32 @@
-import axios, { CanceledError } from "axios";
+import api from "@src/utils/api";
+import { AxiosRequestConfig, CanceledError } from "axios";
 import { useEffect, useState } from "react";
+import { emptyDepartment } from "./empty";
 import { Nexus_Department, DepartmentQuery } from './types';
 
-export const useDepartments = ({ department, searchText }: DepartmentQuery) => {
-  const [departments, setDepartment] = useState<Nexus_Department[]>([]);
+export const useDepartments = ({ department: _department, searchText }: DepartmentQuery) => {
+  const [department, setDepartment] = useState<Nexus_Department>(emptyDepartment);
+  const [departments, setDepartments] = useState<Nexus_Department[]>([emptyDepartment]);
   const [error, setError] = useState('');
   const [departmentLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    let url: string;
-    if (department) {
-      url = `/api/departments/${department}`;
-    } else {
-      searchText ?
-        url = `/api/departments/?search=${searchText}` :
-        url = '/api/departments';
-    }
+    if (_department === "0" || _department === "") return;
+    const endpoint = _department ? `/departments/${_department}` : '/departments';
+
+    const requestConfig: AxiosRequestConfig =  {
+      params: {
+        search: searchText
+      },
+    };
     const controller = new AbortController();
     setLoading(true);
-    axios.get(url, { signal: controller.signal })
+    api.get(endpoint, { signal: controller.signal, ...requestConfig })
       .then(response => {
-        if (department) {
-          setDepartment([response.data]);
-        } else {
+        if (_department) {
           setDepartment(response.data);
+        } else {
+          setDepartments(response.data);
         }
         setLoading(false);
       })
@@ -33,11 +36,7 @@ export const useDepartments = ({ department, searchText }: DepartmentQuery) => {
         setLoading(false);
       });
     return () => controller.abort();
-  }, [searchText, department]);
+  }, [searchText, _department]);
 
-  if (typeof departments !== "object") {
-    setDepartment([]);
-  };
-
-  return { departments, error, departmentLoading }
+  return { department, departments, error, departmentLoading }
 }

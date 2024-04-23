@@ -22,7 +22,7 @@ export const FormControlDepartment = ({ editMode, isLoading, department, departm
         {isLoading? 
           <option value={department}>{department}</option>:
           departments.map(department => (
-            <option key={department.ID} value={department.Department}>{department.Department}</option>
+            <option key={department.id} value={department.department}>{department.department}</option>
           ))
         }
       </Select>

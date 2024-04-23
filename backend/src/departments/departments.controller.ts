@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 
 @Controller('departments')
 export class DepartmentsController {
-  constructor(private readonly departmentsService: DepartmentsService) {}
+  constructor(private readonly departmentsService: DepartmentsService) { }
 
   @Post()
   create(@Body() createDepartmentDto: Prisma.Nexus_DepartmentCreateInput) {
@@ -16,27 +16,27 @@ export class DepartmentsController {
     return this.departmentsService.findAll(search);
   }
 
-  @Get(':param')
-  findOne(@Param('param') param: string) {
-    const parsedParam = parseInt(param, 10);
-    if (!isNaN(parsedParam)) {
-      return this.departmentsService.findOne({ id: parsedParam });
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    const id = parseInt(name, 10);
+    if (!isNaN(id)) {
+      return this.departmentsService.findOne({ id });
     }
-    return this.departmentsService.findOne({ name: param });
+    return this.departmentsService.findOne({ name });
   }
 
   @Patch(':param')
   update(@Param('param') param: string, @Body() updateDepartmentDto: Prisma.Nexus_DepartmentUpdateInput) {
     const parsedParam = parseInt(param, 10);
-    if(!isNaN(parsedParam)) {
+    if (!isNaN(parsedParam)) {
       return this.departmentsService.update({
-        id: parsedParam, 
-        updateDepartmentDto: updateDepartmentDto
+        id: parsedParam,
+        updateDepartmentDto
       });
     }
     return this.departmentsService.update({
-      name: param, 
-      updateDepartmentDto: updateDepartmentDto
+      department: param,
+      updateDepartmentDto
     });
   }
 

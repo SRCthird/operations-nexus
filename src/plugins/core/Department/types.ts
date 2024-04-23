@@ -1,12 +1,9 @@
 export type Nexus_Department = {
-  ID: number //@id @default(autoincrement())
-  Main: string
-  /*Actions     App_ActionTracker[]
-  Displays    Nexus_Display[]
-  PowerPoint  App_PowerPoint[]*/
-  Department: string //@unique
-  PPTXVersion: number //@default(1)
-  Background: string
+  id: number 
+  main: string
+  department: string 
+  pptxVersion: number 
+  background: string
 }
 
 export interface DepartmentQuery {

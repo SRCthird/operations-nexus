@@ -1,26 +1,36 @@
-import axios, { CanceledError } from "axios";
-import { useEffect, useState, useRef } from "react";
-import { Apps } from "@apps";
+import api from "@src/utils/api";
+import { CanceledError } from "axios";
+import { useEffect, useState } from "react";
+import { emptyApp } from "./empty";
+import { App, Apps } from "./types";
 
 interface Props {
-  app?: Apps;
-  ids?: number[];
+  id?: number;
+  name?: string;
+  type?: Apps;
 }
 
-export const useApps = ({ app, ids }: Props) => {
-  const [apps, setApps] = useState<any[]>([]);
+export const useApps = ({ id, name, type }: Props) => {
+  const [apps, setApps] = useState<App[]>([emptyApp]);
+  const [app, setApp] = useState<App>(emptyApp);
   const [appError, setError] = useState('');
   const [isAppLoading, setLoading] = useState(false);
-  const prevAppsRef = useRef<any[]>();
 
   useEffect(() => {
+    if (id === 0) return;
+    if (name === "") return;
     const controller = new AbortController();
     setLoading(true);
-    axios.get(`/api/app/${app}/?id=${ids?.join(",") ?? ""}`, { signal: controller.signal })
+    const endpoint = id ? `/app/${id}`
+      : name ? `/app/name/${encodeURIComponent(name)}`
+        : type ? `/app/type/${type}`
+          : "/app/";
+    api.get(endpoint, { signal: controller.signal })
       .then(response => {
-        if (JSON.stringify(prevAppsRef.current) !== JSON.stringify(response.data)) {
+        if (id || name) {
+          setApp(response.data);
+        } else {
           setApps(response.data);
-          prevAppsRef.current = response.data;
         }
         setLoading(false);
       })
@@ -31,7 +41,7 @@ export const useApps = ({ app, ids }: Props) => {
       });
 
     return () => controller.abort();
-  }, [app]);
+  }, [name]);
 
-  return { apps, appError, isAppLoading };
+  return { app, apps, appError, isAppLoading };
 }

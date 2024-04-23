@@ -11,70 +11,40 @@ datasource db {
 }
 
 model Nexus_Settings {
-  ID    Int @id @default(autoincrement())
-  Delay Int @default(30000)
+  id    Int @id @default(autoincrement())
+  delay Int @default(30000)
 }
 
 model Nexus_Admins {
-  ID       Int    @id @default(autoincrement())
-  Email    String @unique
-}
-
-enum Apps {
-  PowerBI
-  PowerPoint
-  ActionTracker
-}
-
-model App_ActionTracker {
-  ID Int @id @default(autoincrement()) 
-  Departments Nexus_Department @relation(fields: [Department], references: [Department])
-  Department String 
-  DepartmentField String 
-  Area String? 
-  AreaField String? 
-}
-
-model App_PowerBI {
-  ID Int @id @default(autoincrement())
-  Type String 
-  PowerBI_ID String 
-  Group_ID String 
-  Custom_Embed String? 
-  Page_Name String? 
-}
-
-model App_PowerPoint {
-  ID Int @id @default(autoincrement())
-  Main Boolean @default(true) 
-  Departments Nexus_Department @relation(fields: [Department], references: [Department])
-  Department String 
+  id    Int    @id @default(autoincrement())
+  email String @unique
 }
 
 model Nexus_Department {
-  ID Int @id @default(autoincrement())
-  Main String 
-  Actions     App_ActionTracker[]
-  Displays    Nexus_Display[]
-  PowerPoint  App_PowerPoint[]
-  Department String @unique
-  PPTXVersion Int @default(1)
-  Background String 
+  id          Int    @id @default(autoincrement())
+  main        String
+  department  String @unique
+  pptxVersion Int    @default(1)
+  background  String
+
+  actions    App_ActionTracker[]
+  displays   Nexus_Display[]
+  powerPoint App_PowerPoint[]
 }
 
 model Nexus_Display {
-  ID Int @id @default(autoincrement())
-  Main String 
-  Sub String 
-  Departments Nexus_Department @relation(fields: [Department], references: [Department])
-  Department String 
-  Display String 
-  Background String 
-  Template Templates? 
-  Template_ID Int? 
+  id         Int    @id @default(autoincrement())
+  main       String
+  department String
+  display    String @unique
+  background String
+  title      String
+
+  template    Template?        @relation(fields: [title], references: [title])
+  departments Nexus_Department @relation(fields: [department], references: [department])
 }
 
-enum Templates {
+enum Design {
   FullDisplay
   FullDisplay2
   FullDisplay3
@@ -87,142 +57,71 @@ enum Templates {
   TwoByTwo
 }
 
-model Template_FullDisplay {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
+model Template {
+  id         Int     @id @default(autoincrement())
+  title      String  @unique
+  design     Design  @default(FullDisplay)
+  background String
+  gradient   String?
+  transition Int     @default(30)
+
+  apps     App[]
+  displays Nexus_Display[]
 }
 
-model Template_FullDisplay2 {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  Transition Int @default(30)
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
+enum Apps {
+  PowerBI
+  PowerPoint
+  ActionTracker
 }
 
-model Template_FullDisplay3 {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  Transition Int @default(30)
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
+model App {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  type Apps
+
+  powerBI       App_PowerBI?       @relation("AppPowerBI")
+  powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
+  actionTracker App_ActionTracker? @relation("AppActionTracker")
+
+  templates Template[]
 }
 
-model Template_FullDisplay4 {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  Transition Int @default(30)
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
-  App4 Apps? 
-  App4_ID Int? 
+model App_ActionTracker {
+  id              Int     @id
+  department      String
+  departmentField String
+  area            String?
+  areaField       String?
+
+  app         App              @relation("AppActionTracker", fields: [id], references: [id])
+  departments Nexus_Department @relation(fields: [department], references: [department])
 }
 
-model Template_FullDisplay5 {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  Transition Int @default(0)
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
-  App4 Apps? 
-  App4_ID Int? 
-  App5 Apps? 
-  App5_ID Int? 
+enum PowerBIType {
+  report
+  dashboard
+  title
+  visual
+  qna
 }
 
-model Template_FullWithCircle {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
+model App_PowerBI {
+  id          Int     @id
+  type        String
+  reportID    String
+  groupID     String
+  customEmbed String?
+  pageName    String?
+
+  app App @relation("AppPowerBI", fields: [id], references: [id])
 }
 
-model Template_OneByThree {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
-  App4 Apps? 
-  App4_ID Int? 
-}
+model App_PowerPoint {
+  id         Int     @id
+  main       Boolean @default(true)
+  department String
 
-model Template_SplitScreen {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-}
-
-model Template_ThreeOnTwo {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
-  App4 Apps? 
-  App4_ID Int? 
-  App5 Apps? 
-  App5_ID Int? 
-}
-
-model Template_TwoByTwo {
-  ID Int @id @default(autoincrement())
-  Title String 
-  Background String 
-  Gradient String? 
-  App1 Apps? 
-  App1_ID Int? 
-  App2 Apps? 
-  App2_ID Int? 
-  App3 Apps? 
-  App3_ID Int? 
-  App4 Apps? 
-  App4_ID Int? 
-  App5 Apps? 
-  App5_ID Int? 
+  app         App              @relation("AppPowerPoint", fields: [id], references: [id])
+  departments Nexus_Department @relation(fields: [department], references: [department])
 }

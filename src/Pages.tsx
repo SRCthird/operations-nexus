@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios, { CanceledError } from 'axios';
+import { CanceledError } from 'axios';
 import 'bootstrap/dist/css/bootstrap.css'
 import NotFound from '@pages/NotFound';
 import Admin from '@pages/Admin';
@@ -10,6 +10,7 @@ import { useDepartments }  from '@core/Department';
 import useAccount from '@hooks/useAccount';
 import useAdmin from '@hooks/useAdmin';
 import BuildTemplate from '@templates';
+import api from './utils/api';
 
 interface Props {
   token: string;
@@ -32,7 +33,7 @@ const Pages = ({ token }: Props): JSX.Element => {
     const getKey = async (department: string): Promise<number> => {
       let version: number = 0;
       try {
-        const response = await axios.get(`/api/departments/${department}`);
+        const response = await api.get(`/departments/${department}`);
         version = response.data.PPTXVersion;
       } catch (err: any) {
         if (err instanceof CanceledError) return 0;
@@ -44,8 +45,8 @@ const Pages = ({ token }: Props): JSX.Element => {
     const fetchKeys = setInterval(async () => {
       const keys: [string, number][] = await Promise.all(
         departments.map(async (department) => {
-          const version = await getKey(department.Department);
-          return [department.Department, version];
+          const version = await getKey(department.department);
+          return [department.department, version];
         })
       );
       setVersions(new Map(keys));
@@ -54,6 +55,7 @@ const Pages = ({ token }: Props): JSX.Element => {
     return function cleanup() {
       clearInterval(fetchKeys);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -62,13 +64,13 @@ const Pages = ({ token }: Props): JSX.Element => {
         <Route path="/" element={<Home />} />
         {displays.map((display) => (
           <Route
-            key={display.ID}
-            path={`/${display.Display}`}
+            key={display.id}
+            path={`/${display.display}`}
             element={
               <BuildTemplate
-                key={display.ID}
+                key={display.id}
                 slideShowKey={
-                  (versions.get(display.Department) || 0) +
+                  (versions.get(display.department) || 0) +
                   (versions.get("All") || 0)
                 }
                 token={token}

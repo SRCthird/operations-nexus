@@ -5,13 +5,9 @@ import AdminBody from "@components/AdminBody";
 import { DisplayQuery } from "@core/Display";
 import { DepartmentList } from "@core/Department";
 import { SlideShowForm } from "@core/SlideShow";
+import api from "@src/utils/api";
 
-/**
- * Admin view of the Slide Shows
- *
- * @returns {JSX.Element} - returns the AdminDepartments element
- */
-const SlideShowsBody = (): JSX.Element => {
+const SlideShowsBody = () => {
   const [key, updateKey] = useState(1);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -37,7 +33,7 @@ const SlideShowsBody = (): JSX.Element => {
 
     const formData = new FormData();
     formData.append('file', data);
-    axios.post(`/api/powerpoint/${department}`, formData)
+    api.post(`/powerpoint/${department}`, formData)
       .then(_ => {
         alert(`File uploaded successfully`);
         remount();
@@ -54,7 +50,7 @@ const SlideShowsBody = (): JSX.Element => {
   const handleDownload = (filename: string) => {
     const [location, name] = filename.split("\\");
     const encodedName = encodeURIComponent(name);
-    axios.get(`/api/powerpoint/${location}/${encodedName}`, {
+    api.get(`/powerpoint/${location}/${encodedName}`, {
       responseType: 'blob',
       signal: new AbortController().signal
     })
@@ -81,7 +77,7 @@ const SlideShowsBody = (): JSX.Element => {
     const [location, name] = filename.split("\\");
     const encodedName = encodeURIComponent(name);
     const controller = new AbortController();
-    axios.delete(`/api/powerpoint/${location}/${encodedName}`)
+    api.delete(`/powerpoint/${location}/${encodedName}`)
       .then(_ => {
         remount()
       })
@@ -111,7 +107,7 @@ const SlideShowsBody = (): JSX.Element => {
           selectedDepartment={displayQuery.department}
           onSelectDepartment={
             (department) => {
-              setDepartment(department.Department);
+              setDepartment(department.department);
               toggleSelected(true);
               remount();
             }

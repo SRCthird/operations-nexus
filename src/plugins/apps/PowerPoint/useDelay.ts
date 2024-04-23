@@ -1,4 +1,5 @@
-import axios, { CanceledError } from 'axios';
+import api from '@src/utils/api';
+import { CanceledError } from 'axios';
 import { useEffect, useState } from 'react'
 
 /**
@@ -23,7 +24,7 @@ const useDelay = (): typeDelay => {
 
     useEffect(() => {
       const controller = new AbortController();
-      axios.get('/api/delay')
+      api.get('/delay')
         .then(response => {
           setDelay(response.data);
         })

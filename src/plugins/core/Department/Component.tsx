@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "@styles/Admin.css"
-import axios, { CanceledError } from "axios";
+import { CanceledError } from "axios";
 import AdminBody from "@components/AdminBody";
 import { DisplayQuery } from "@core/Display";
 import { DepartmentsForm, Nexus_Department, DepartmentList, emptyDepartment } from "@core/Department";
+import api from "@src/utils/api";
 
 const DepartmentsBody = (): JSX.Element => {
   const [key, updateKey] = useState(0);
@@ -14,9 +15,9 @@ const DepartmentsBody = (): JSX.Element => {
   const [data, setData] = useState({ ...emptyDepartment });
 
   const handleCreate = (Data: Nexus_Department) => {
-    const { ID: _, ...newData } = Data;
+    const { id: _, ...newData } = Data;
     const controller = new AbortController();
-    axios.post(`/api/departments`, newData)
+    api.post(`/departments`, newData)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -25,9 +26,9 @@ const DepartmentsBody = (): JSX.Element => {
   }
 
   const handleUpdate = (Data: Nexus_Department) => {
-    if (Data.ID === 0) return;
+    if (Data.id === 0) return;
     const controller = new AbortController();
-    axios.patch(`/api/departments/${Data.ID}`, Data)
+    api.patch(`/departments/${Data.id}`, Data)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -38,7 +39,7 @@ const DepartmentsBody = (): JSX.Element => {
   const handleDelete = (ID: string) => {
     if (+ID === 0) return;
     const controller = new AbortController();
-    axios.delete(`/api/departments/${ID}`)
+    api.delete(`/departments/${ID}`)
       .catch(err => {
         if (err instanceof CanceledError) return;
         setError(err.message);
@@ -69,11 +70,11 @@ const DepartmentsBody = (): JSX.Element => {
           onSelectDepartment={
             (department) => {
               setData({
-                ID: department.ID,
-                Main: department.Main,
-                Department: department.Department,
-                Background: department.Background,
-                PPTXVersion: department.PPTXVersion
+                id: department.id,
+                main: department.main,
+                department: department.department,
+                background: department.background,
+                pptxVersion: department.pptxVersion
               });
               toggleSelected(true);
             }
@@ -82,7 +83,7 @@ const DepartmentsBody = (): JSX.Element => {
       }
       handleUpdate={handleUpdate}
       handleDelete={handleDelete}
-      header={data.Department || "Select a department"}
+      header={data.department || "Select a department"}
       setEditMode={(toggle: boolean) => {
         setEditMode(toggle);
       }}
@@ -94,16 +95,16 @@ const DepartmentsBody = (): JSX.Element => {
       form={
         <DepartmentsForm
           key={key}
-          id={data.ID}
+          id={data.id}
           editMode={editMode}
           onChange={
             (department) => {
               setData({
-                ID: department.ID,
-                Main: department.Main,
-                Department: department.Department,
-                Background: department.Background,
-                PPTXVersion: department.PPTXVersion
+                id: department.id,
+                main: department.main,
+                department: department.department,
+                background: department.background,
+                pptxVersion: department.pptxVersion
               });
             }
           }
