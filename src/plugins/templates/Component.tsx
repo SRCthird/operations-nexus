@@ -9,7 +9,8 @@ import TemplateList from "./components/templateList";
 import { TemplateForm } from "./Form";
 
 const TemplatesBody = () => {
-  const [key, updateKey] = useState(0);
+  const [listKey, updateListKey] = useState(0);
+  const [formKey, updateFormKey] = useState(0);
   const [itemSelected, toggleSelected] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [data, setData] = useState<Template>({...emptyTemplate});
@@ -55,7 +56,10 @@ const TemplatesBody = () => {
     remount();
   }
 
-  const remount = () => updateKey(key + 1);
+  const remount = () => {
+    updateListKey(listKey + 1);
+    updateFormKey(formKey + 1);
+  } 
 
   return (
     <AdminBody
@@ -66,11 +70,12 @@ const TemplatesBody = () => {
       handleCreate={handleCreate}
       handleRead={
         <TemplateList
-          key={key}
+          key={listKey}
           searchText={query}
           selected={data.title}
           onSelect={
             (template) => {
+              updateFormKey(formKey + 1);
               setData({
                 id: template.id,
                 title: template.title,
@@ -98,7 +103,7 @@ const TemplatesBody = () => {
       data={data}
       form={
         <TemplateForm
-          key={key}
+          key={formKey}
           template={data}
           setTemplate={setData}
           editMode={editMode}
