@@ -23,10 +23,6 @@ export const PowerBIForm = ({ app, setApp, editMode }: Props) => {
 
   return (
     <Box>
-      <FormControl isDisabled={true}>
-        <FormLabel>ID</FormLabel>
-        <Input value={app.id} />
-      </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Type</FormLabel>
         <Select

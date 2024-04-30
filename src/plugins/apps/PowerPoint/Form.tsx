@@ -14,7 +14,7 @@ interface Props {
 
 export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
   const [powerPoint, setPowerPoint] = useState<App_PowerPoint>(app || emptyPowerPoint);
-  const { departments, departmentLoading} = useDepartments({});
+  const { departments, departmentLoading } = useDepartments({});
 
   useEffect(() => {
     setApp(prev => ({
@@ -26,10 +26,6 @@ export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
 
   return (
     <Box>
-      <FormControl isDisabled={true}>
-        <FormLabel>ID</FormLabel>
-        <Input value={app?.id} />
-      </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Type</FormLabel>
         <Select

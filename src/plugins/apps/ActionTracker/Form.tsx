@@ -17,7 +17,6 @@ export const ActionTrackerForm = ({ id, editMode, loading, department, departmen
 
   return (
     <Box>
-      <FormControl.ID id={id || 0} />
       <FormControl.Department
         editMode={editMode}
         isLoading={loading}
