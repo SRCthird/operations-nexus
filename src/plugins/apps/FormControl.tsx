@@ -7,13 +7,14 @@ import { useApps } from './useApps';
 
 interface Props {
   app: App;
+  onDelete: () => void;
   editMode: boolean;
   onChange: (value: App) => void;
   pptApps: { name: string }[];
   pbiApps: { name: string }[];
 }
 
-export const AppFormControl = ({ app: _app, editMode, onChange, pptApps, pbiApps }: Props) => {
+export const AppFormControl = ({ app: _app, onDelete, editMode, onChange, pptApps, pbiApps }: Props) => {
   const [key, updateKey] = useState(0);
   const [app, setApp] = useState<App>(_app);
   const { app: newApp } = useApps({ name: app.name });
@@ -115,6 +116,7 @@ export const AppFormControl = ({ app: _app, editMode, onChange, pptApps, pbiApps
       <AppForm
         key={key}
         app={app}
+        onDelete={onDelete}
         setApp={setApp}
         editMode={editMode}
       />

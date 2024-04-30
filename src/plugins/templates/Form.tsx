@@ -90,6 +90,12 @@ export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
             key={index}
             app={app}
             editMode={editMode}
+            onDelete={() => {
+              if (!editMode) return;
+              const newApps = [...template.apps];
+              newApps.splice(index, 1);
+              setTemplate(prev => ({ ...prev, apps: newApps }));
+            }}
             onChange={
               (value) => {
                 const newApps = [...template.apps];
@@ -107,15 +113,6 @@ export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
           display: "flex",
         }}
       >
-        <Button
-          onClick={() => {
-            const newApps = [...template.apps];
-            newApps.pop();
-            setTemplate(prev => ({ ...prev, apps: newApps }));
-          }}
-        >
-          Remove Last App
-        </Button>
         <Button
           onClick={() => {
             const newApps = [...template.apps];
