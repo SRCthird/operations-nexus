@@ -58,7 +58,7 @@ const PowerPoint = ({main, location}:Props): JSX.Element => {
         <img
           key={index}
           className="slide"
-          src={`${apiUrl}/api/static/${imageUrl}`}
+          src={`${apiUrl}/static/${imageUrl}`}
           style={{ display: index === slideIndex ? 'block' : 'none' }}
           alt={`Slide ${index}`}
         />
