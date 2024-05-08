@@ -3,6 +3,7 @@ import useMainSlides from './useMainSlides';
 import useDelay from './useDelay';
 import useSecondarySlides from './useSecondarySlides';
 import './styles.css';
+import { apiUrl } from '@src/Config';
 
 /**
  * Properties for the Slideshow component.
@@ -57,7 +58,7 @@ const PowerPoint = ({main, location}:Props): JSX.Element => {
         <img
           key={index}
           className="slide"
-          src={`/api/static/${imageUrl}`}
+          src={`${apiUrl}/api/static/${imageUrl}`}
           style={{ display: index === slideIndex ? 'block' : 'none' }}
           alt={`Slide ${index}`}
         />

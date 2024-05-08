@@ -1,5 +1,6 @@
-import axios, { CanceledError } from "axios";
+import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
+import api from "@src/utils/api";
 
 export const useSlideshow = (department: string) => {
   const [powerPoints, setPowerPoints] = useState<string[]>([]);
@@ -10,7 +11,7 @@ export const useSlideshow = (department: string) => {
     const controller = new AbortController();
     setLoading(true);
 
-    axios.get(`/api/powerpoint/${department}`, { signal: controller.signal })
+    api.get(`/powerpoint/${department}`, { signal: controller.signal })
       .then(response => {
         setPowerPoints(response.data);
         setLoading(false);
