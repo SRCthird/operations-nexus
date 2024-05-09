@@ -47,30 +47,34 @@ export class TemplateService {
       }
     });
 
-    if (createDto.apps && createDto.apps.length > 0) {
-      await this.databaseService.template.update({
-        where: { id: template.id },
-        data: {
-          apps: {
-            set: []
+    try {
+      if (createDto.apps && createDto.apps.length > 0) {
+        await this.databaseService.template.update({
+          where: { id: template.id },
+          data: {
+            apps: {
+              set: []
+            }
           }
-        }
-      })
-      await Promise.all(createDto.apps.map(app => {
-        if (app.id && app.id > 0) {
-          try {
-            this.appService.update(app.id, app, template.id)
-          } catch (error) {
-            console.log(error)
+        })
+        await Promise.all(createDto.apps.map(app => {
+          if (app.id && app.id > 0) {
+            try {
+              this.appService.update(app.id, app, template.id)
+            } catch (error) {
+              console.log(error)
+            }
+          } else {
+            try {
+              this.appService.create(app as appCreateDto, template.id)
+            } catch (error) {
+              console.log(error)
+            }
           }
-        } else {
-          try {
-            this.appService.create(app as appCreateDto, template.id)
-          } catch (error) {
-            console.log(error)
-          }
-        }
-      }));
+        }));
+      }
+    } catch (error) {
+      throw new HttpException(error, 500);
     }
 
     return this.databaseService.template.findUnique({

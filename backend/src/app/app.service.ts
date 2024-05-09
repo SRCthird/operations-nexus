@@ -50,13 +50,13 @@ export class AppService {
     const data: Prisma.AppCreateInput = {
       name: createDto.name,
       type: createDto.type,
-      powerBI: createDto.powerBI ? {
+      powerBI: createDto.type === Apps.PowerBI ? {
         create: createDto.powerBI
       } : undefined,
-      powerPoint: createDto.powerPoint ? {
+      powerPoint: createDto.type === Apps.PowerPoint ? {
         create: createDto.powerPoint
       } : undefined,
-      actionTracker: createDto.actionTracker ? {
+      actionTracker: createDto.type === Apps.ActionTracker ? {
         create: createDto.actionTracker
       } : undefined,
     };
