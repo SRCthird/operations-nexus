@@ -62,6 +62,9 @@ export class DisplaysService {
 
   async findAll(department?: string, search?: string) {
     let query: Prisma.Nexus_DisplayFindManyArgs = {
+      where: {
+        departments: { department }
+      },
       include: {
         template: {
           include: {
@@ -77,9 +80,6 @@ export class DisplaysService {
       }
     };
 
-    if (department) {
-      query.where.department = department;
-    }
     if (search) {
       query.where.OR = [
         { main: { contains: search } },
@@ -88,7 +88,8 @@ export class DisplaysService {
         { background: { contains: search } },
       ];
     }
-
+    
+    console.log(query)
     return this.databaseService.nexus_Display.findMany(query);
   }
 
