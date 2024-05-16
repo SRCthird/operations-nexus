@@ -89,7 +89,6 @@ export class DisplaysService {
       ];
     }
     
-    console.log(query)
     return this.databaseService.nexus_Display.findMany(query);
   }
 
