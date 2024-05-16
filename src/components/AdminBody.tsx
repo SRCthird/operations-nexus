@@ -68,7 +68,7 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
             <RepeatIcon boxSize={'25px'} onClick={() => remount()} />
           </Grid>
           <Box h="1" bgColor="teal" borderRadius="5px" />
-          <Box className="Admin-DepartmentList">
+          <Box className="Admin-List">
             {handleRead}
           </Box>
         </Grid>

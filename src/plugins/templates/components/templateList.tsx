@@ -35,8 +35,8 @@ const TemplateList = ({ searchText, selected, onSelect }: Props) => {
         width: "100%",
         paddingTop: "10",
         borderRadius: "5px",
-        overflowY: "auto",
-        maxHeight: "calc(100vh - 10rem)"
+        marginLeft: "-10px",
+        paddingRight: "15px",
       }}
     >
       {isPageLoading && <div>Loading...</div>}

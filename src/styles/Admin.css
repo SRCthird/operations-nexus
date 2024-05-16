@@ -57,9 +57,8 @@
     background: white;
 }
 
-.Admin-DepartmentList {
+.Admin-List {
     overflow-y: auto;
-    height: 67vh;
 }
 
 .Admin-Form {
