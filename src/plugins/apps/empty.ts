@@ -6,5 +6,4 @@ export const emptyApp: App = {
   type: Apps.Empty,
   powerBI: null, 
   powerPoint: null,
-  actionTracker:null 
 }

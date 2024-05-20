@@ -5,21 +5,18 @@ import { DatabaseService } from 'src/database/database.service';
 export type appCreateDto = Prisma.AppCreateInput & {
   powerBI?: Prisma.App_PowerBICreateWithoutAppInput & { id?: number };
   powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput & { id?: number };
-  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput & { id?: number };
 };
 
 export type appUpdateDto = Prisma.AppUpdateInput & {
   id?: number;
   powerBI?: Prisma.App_PowerBIUpdateInput | Prisma.App_PowerBICreateInput & { id?: number };
   powerPoint?: Prisma.App_PowerPointUpdateInput | Prisma.App_PowerPointCreateInput & { id?: number };
-  actionTracker?: Prisma.App_ActionTrackerUpdateInput | Prisma.App_ActionTrackerCreateInput & { id?: number };
 };
 
 export type appCreateOrUpdateInput = Prisma.AppCreateInput & {
   id?: number;
   powerBI?: Prisma.App_PowerBICreateWithoutAppInput | Prisma.App_PowerBIUpdateWithoutAppInput & { id?: number };
   powerPoint?: Prisma.App_PowerPointCreateWithoutAppInput | Prisma.App_PowerPointUpdateWithoutAppInput & { id?: number };
-  actionTracker?: Prisma.App_ActionTrackerCreateWithoutAppInput | Prisma.App_ActionTrackerUpdateWithoutAppInput & { id?: number };
 };
 
 @Injectable()
@@ -44,9 +41,6 @@ export class AppService {
     if (createDto.powerPoint && createDto.powerPoint.id === 0) {
       delete createDto.powerPoint.id;
     }
-    if (createDto.actionTracker && createDto.actionTracker.id === 0) {
-      delete createDto.actionTracker.id;
-    }
     const data: Prisma.AppCreateInput = {
       name: createDto.name,
       type: createDto.type,
@@ -55,9 +49,6 @@ export class AppService {
       } : undefined,
       powerPoint: createDto.type === Apps.PowerPoint ? {
         create: createDto.powerPoint
-      } : undefined,
-      actionTracker: createDto.type === Apps.ActionTracker ? {
-        create: createDto.actionTracker
       } : undefined,
     };
 
@@ -74,7 +65,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -84,7 +74,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -95,7 +84,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -106,7 +94,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -117,7 +104,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -145,7 +131,6 @@ export class AppService {
         }
       };
       await this.databaseService.app_PowerPoint.deleteMany({ where: { id } });
-      await this.databaseService.app_ActionTracker.deleteMany({ where: { id } });
     }
 
     if (updateDto.type === "PowerPoint" && updateDto.powerPoint) {
@@ -157,20 +142,8 @@ export class AppService {
           create: powerPoint as Prisma.App_PowerPointCreateInput,
         }
       };
-      await this.databaseService.app_ActionTracker.deleteMany({ where: { id } });
     }
 
-    if (updateDto.type === "ActionTracker" && updateDto.actionTracker) {
-      const { id: _, ...actionTracker } = updateDto.actionTracker as any;
-      await this.databaseService.app_PowerBI.deleteMany({ where: { id } });
-      await this.databaseService.app_PowerPoint.deleteMany({ where: { id } });
-      data.actionTracker = {
-        upsert: {
-          update: actionTracker as Prisma.App_ActionTrackerUpdateInput,
-          create: actionTracker as Prisma.App_ActionTrackerCreateInput,
-        }
-      };
-    }
 
     return this.databaseService.app.update({
       where: { id },
@@ -178,7 +151,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }
@@ -191,9 +163,6 @@ export class AppService {
       await prisma.app_PowerPoint.deleteMany({
         where: { id }
       });
-      await prisma.app_ActionTracker.deleteMany({
-        where: { id }
-      });
     });
 
     return this.databaseService.app.delete({
@@ -201,7 +170,6 @@ export class AppService {
       include: {
         powerBI: true,
         powerPoint: true,
-        actionTracker: true,
       }
     });
   }

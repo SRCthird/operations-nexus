@@ -27,7 +27,6 @@ model Nexus_Department {
   pptxVersion Int    @default(1)
   background  String
 
-  actions    App_ActionTracker[]
   displays   Nexus_Display[]
   powerPoint App_PowerPoint[]
 }
@@ -72,7 +71,6 @@ model Template {
 enum Apps {
   PowerBI
   PowerPoint
-  ActionTracker
 }
 
 model App {
@@ -82,20 +80,8 @@ model App {
 
   powerBI       App_PowerBI?       @relation("AppPowerBI")
   powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
-  actionTracker App_ActionTracker? @relation("AppActionTracker")
 
   templates Template[]
-}
-
-model App_ActionTracker {
-  id              Int     @id
-  department      String
-  departmentField String
-  area            String?
-  areaField       String?
-
-  app         App              @relation("AppActionTracker", fields: [id], references: [id])
-  departments Nexus_Department @relation(fields: [department], references: [department])
 }
 
 enum PowerBIType {

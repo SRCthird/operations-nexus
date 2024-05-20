@@ -51,7 +51,6 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
-                actionTracker: true,
               }
             }
           }
@@ -72,7 +71,6 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
-                actionTracker: true,
               }
             }
           }
@@ -101,7 +99,6 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
-                actionTracker: true,
               }
             }
           }

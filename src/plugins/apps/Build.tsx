@@ -2,7 +2,6 @@ import { Box, Spinner } from "@chakra-ui/react";
 import { App, Apps } from '@apps';
 import PowerBI, { PowerBITypes } from "./PowerBI";
 import Slideshow from "./PowerPoint";
-import ActionTracker from "./ActionTracker";
 
 interface Props {
   app?: App;
@@ -35,16 +34,6 @@ const BuildApp = ({ app, slideShowKey }: Props) => {
         key={slideShowKey}
         main={app.powerPoint?.main!}
         location={app.powerPoint?.department!}
-      />
-    )
-  }
-  if (app.type === Apps.ActionTracker) {
-    return (
-      <ActionTracker
-        department={app.actionTracker?.department!}
-        departmentField={app.actionTracker?.departmentField!}
-        area={app.actionTracker?.area}
-        areaField={app.actionTracker?.areaField}
       />
     )
   }

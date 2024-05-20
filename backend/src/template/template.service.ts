@@ -84,7 +84,6 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
-            actionTracker: true,
           }
         }
       }
@@ -98,7 +97,6 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
-            actionTracker: true,
           }
         }
       }
@@ -121,7 +119,6 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
-            actionTracker: true,
           }
         }
       }
@@ -183,7 +180,6 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
-            actionTracker: true,
           }
         }
       }
