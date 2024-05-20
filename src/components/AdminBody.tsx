@@ -1,5 +1,5 @@
 import { AddIcon, ArrowLeftIcon, CheckIcon, CloseIcon, DeleteIcon, EditIcon, RepeatIcon } from "@chakra-ui/icons";
-import { Box, Grid, GridItem, Heading, useMediaQuery, useDisclosure } from "@chakra-ui/react"
+import { Box, Grid, GridItem, Heading, useMediaQuery, useDisclosure, useColorMode } from "@chakra-ui/react"
 import { useState, ReactNode } from "react";
 import SearchInput from "@components/SearchInput";
 import "@styles/Admin.css"
@@ -25,6 +25,7 @@ interface Props {
 }
 
 const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditMode, editMode, handleCreate, handleRead, handleUpdate, handleDelete, header, error, data, form, remount, hideAffects }: Props): JSX.Element => {
+  const { colorMode } = useColorMode();
   const { isOpen, onToggle, onClose } = useDisclosure()
   const [createMode, setCreateMode] = useState(false);
   const [SizeMed] = useMediaQuery(['(max-width: 900px)']);
@@ -48,7 +49,11 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
       gap={16}
     >
       {(!SizeMed || !itemSelected) &&
-        <Grid className="Admin-SideBar" gridTemplateRows={'40px 44px 1fr'} gap={5}>
+        <Grid 
+          className={colorMode === 'dark' ? "Admin-SideBar" : "Admin-SideBar-Light"} 
+          gridTemplateRows={'40px 44px 5px 1fr'} 
+          gap={5}
+        >
           <SearchInput
             onSearch={(searchText: string) => {
               onSearch(searchText);
@@ -68,14 +73,23 @@ const AdminBody = ({ resetForm, onSearch, toggleSelected, itemSelected, setEditM
             <RepeatIcon boxSize={'25px'} onClick={() => remount()} />
           </Grid>
           <Box h="1" bgColor="teal" borderRadius="5px" />
-          <Box className="Admin-List">
+          <Box 
+            className="Admin-List"
+          >
             {handleRead}
           </Box>
         </Grid>
       }
       {(!SizeMed || itemSelected) &&
-        <Grid className="Admin-Right" gridTemplateRows={'60px 1fr'} gap={5}>
-          <Grid className="Admin-SelectedRecord" templateColumns="repeat(10, 1fr)" gap={0}>
+        <Grid 
+          className={colorMode === 'dark' ? "Admin-Right": "Admin-Right-Light"} 
+          gridTemplateRows={'60px 1fr'} gap={5}
+        >
+          <Grid 
+            className={colorMode === 'dark' ? "Admin-SelectedRecord" : "Admin-SelectedRecord-Light"} 
+            templateColumns="repeat(10, 1fr)" 
+            gap={0}
+          >
             {SizeMed && <ArrowLeftIcon boxSize={'25px'}
               onClick={() => {
                 toggleSelected(false);

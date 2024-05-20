@@ -10,9 +10,22 @@
     background: #0077b6;
 }
 
+.Admin-Title-Light {
+    margin: 10px;
+    border-radius: 10px;
+    background: rgb(127, 187, 218);
+}
+
 .Admin-Body {
     padding: 10px;
     overflow-y: hidden;
+}
+
+.Admin-Right-Light {
+    padding: 2px;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 15px;
+    height: 84vh;
 }
 
 .Admin-Right {
@@ -34,11 +47,37 @@
     padding: 10px;
 }
 
+.Admin-SelectedRecord-Light {
+    border-radius: 10px;
+    border: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, .1);
+    background: white;
+    height: 70px;
+    padding: 15px;
+}
+
 .Admin-SelectedRecord {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background: grey;
     padding: 15px;
+}
+
+.Admin-SideBar-Light {
+    padding: 10px 16px 0 16px;
+    height: 84vh;
+    border-radius: 15px;
+    border: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, .1);
+    background: white;
+}
+
+.Admin-SideBar-Light form {
+    border-radius: 20px;
+    color: grey;
+    background: white;
 }
 
 .Admin-SideBar {
@@ -58,6 +97,16 @@
 }
 
 .Admin-List {
+    overflow-y: auto;
+}
+
+.Admin-Form-Light {
+    border-radius: 10px;
+    border: 10px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, .1);
+    background: white;
+    padding: 5px;
     overflow-y: auto;
 }
 

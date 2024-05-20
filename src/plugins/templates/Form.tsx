@@ -1,7 +1,7 @@
-import { Box, Button, FormControl, FormHelperText, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormHelperText, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Select, useColorMode } from "@chakra-ui/react";
 import { Template, Templates } from "@templates";
 import { AppFormControl, useApps, Apps } from '@apps';
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import "@styles/Admin.css"
 import { emptyApp } from "../apps/empty";
 
@@ -12,11 +12,14 @@ interface Props {
 }
 
 export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
+  const { colorMode } = useColorMode();
   const { apps: pbiApps } = useApps({ type: Apps.PowerBI });
   const { apps: pptApps } = useApps({ type: Apps.PowerPoint });
 
   return (
-    <Box className="Admin-Form">
+    <Box 
+      className={colorMode === 'dark' ? "Admin-Form" : "Admin-Form-Light"}
+    >
       <FormControl isDisabled={true}>
         <FormLabel>ID</FormLabel>
         <Input value={template.id === 0 ? "" : template.id} />

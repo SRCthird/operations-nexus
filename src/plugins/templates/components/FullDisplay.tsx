@@ -32,7 +32,10 @@ const FullDisplay = ({ title, app, backgroundColor, backgroundGradient }: Props)
     return (
         <div className="full-display">
             <Title title={title} />
-            <Box gap={6} margin={6} className="Containers">
+            <Box 
+              gap={6} 
+              margin={6} 
+              className="Containers">
                 {app}
             </Box>
         </div>

@@ -1,4 +1,4 @@
-import { Box, Grid, Heading, Button, MenuButton, Menu, MenuList, MenuItem, } from "@chakra-ui/react"
+import { Box, Grid, Heading, Button, MenuButton, Menu, MenuList, MenuItem, useColorMode, } from "@chakra-ui/react"
 import { useState } from "react";
 import "@styles/Admin.css"
 import DisplaysBody from "@core/Display";
@@ -23,11 +23,17 @@ interface Props {
  * @returns {JSX.Element} Returns the Admin element
  */
 const Admin = ({ title }: Props): JSX.Element => {
+  const { colorMode } = useColorMode();
   const [display, setDisplay] = useState(0);
 
   return (
     <Box className="Admin-Container">
-      <Grid className="Admin-Title" templateColumns={'1fr 200px'} gap={'15px'} padding={'15px'}>
+      <Grid 
+        className={colorMode === 'dark' ? "Admin-Title" : "Admin-Title-Light"} 
+        templateColumns={'1fr 200px'} 
+        gap={'15px'} 
+        padding={'15px'}
+      >
         <Heading as="h1" h="max-content">{title}</Heading>
         <Menu>
           {({ isOpen }) => (

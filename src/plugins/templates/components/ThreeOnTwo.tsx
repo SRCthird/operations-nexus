@@ -41,7 +41,9 @@ const ThreeOnTwo = ({ title, backgroundColor, backgroundGradient, app1, app2, ap
         <div className="ThreeOnTwo">
             <Title title={title}/>
             <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-                <GridItem className="Containers" w="100%" h="30vh">
+                <GridItem 
+                  bg={'white'}
+                  className="Containers" w="100%" h="30vh">
                     {app1}
                 </GridItem>
                 <GridItem className="Containers" w="100%" h="30vh">

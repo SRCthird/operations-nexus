@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, FormHelperText } from "@chakra-ui/react"
+import { FormControl, FormLabel, Input, FormHelperText, useColorMode } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import "@styles/Admin.css"
 import { Form } from "react-bootstrap";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element => {
+  const { colorMode } = useColorMode();
   const { department, departmentLoading } = useDepartments({ department: `${id}` });
   const [data, setData] = useState({ ...emptyDepartment });
 
@@ -27,7 +28,9 @@ export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element 
   }, [department, id]);
 
   return (
-    <Form className="Admin-Form">
+    <Form 
+    className={colorMode === 'dark' ? "Admin-Form" : "Admin-Form-Light"}
+    >
       <FormControl isDisabled={true}>
         <FormLabel>Id</FormLabel>
         <Input value={data.id === 0 ? "" : data.id} />
