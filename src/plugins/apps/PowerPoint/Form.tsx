@@ -1,4 +1,4 @@
-import { Box, FormControl, FormHelperText, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Box, FormControl, FormHelperText, FormLabel, Select } from "@chakra-ui/react";
 import { useDepartments } from "@core/Department";
 import { App_PowerPoint } from './types';
 import { Dispatch, SetStateAction, useState, useEffect } from "react";
@@ -42,7 +42,7 @@ export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
       <FormControl isDisabled={!editMode}>
         <FormLabel>Department</FormLabel>
         <Select 
-          value={app?.department || "All"}
+          value={app?.department!}
           onChange={(value) => {
             setPowerPoint(prev => ({ ...prev, department: value.target.value }));
           }}
