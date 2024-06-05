@@ -41,7 +41,8 @@ export const PowerPointForm = ({ editMode, app, setApp }: Props) => {
       </FormControl>
       <FormControl isDisabled={!editMode}>
         <FormLabel>Department</FormLabel>
-        <Select value={app?.department!}
+        <Select 
+          value={app?.department || "All"}
           onChange={(value) => {
             setPowerPoint(prev => ({ ...prev, department: value.target.value }));
           }}
