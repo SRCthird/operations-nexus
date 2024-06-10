@@ -1,0 +1,16 @@
+.transition2x2-3on2 {
+  margin: 20px;
+}
+
+.transition2x2-3on2 .Containers,
+.transition2x2-3on2 .Title {
+  background-color: rgba(128, 128, 128, 0.25);
+  border: solid;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transition2x2-3on2 .Containers {
+  overflow: hidden;
+  position: relative;
+}

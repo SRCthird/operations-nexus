@@ -54,6 +54,7 @@ enum Design {
   OneByThree
   SplitScreen
   TwoByTwo
+  Transition2x2_3on2
 }
 
 model Template {

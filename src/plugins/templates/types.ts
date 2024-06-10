@@ -20,5 +20,6 @@ export enum Templates {
   ThreeOnTwo = 'ThreeOnTwo',
   OneByThree = 'OneByThree',
   SplitScreen = 'SplitScreen',
-  TwoByTwo = 'TwoByTwo'
+  TwoByTwo = 'TwoByTwo',
+  Transition2x2_3on2 = 'Transition2x2_3on2',
 }
