@@ -13,6 +13,9 @@ import SplitScreen from "@templates/components/SplitScreen";
 import ThreeOnTwo from "@templates/components/ThreeOnTwo";
 import TwoByTwo from "@templates/components/TwoByTwo";
 import Transition2x2_3on2 from "./components/Transition2x2_3on2";
+import { useEffect, useState } from "react";
+import api from "@src/utils/api";
+import { isEqual } from 'lodash';
 
 interface Props {
   token: string;
@@ -20,7 +23,26 @@ interface Props {
   display: Nexus_Display
 }
 
-const BuildTemplate = ({ token, slideShowKey, display }: Props) => {
+const BuildTemplate = ({ token, slideShowKey, display: _display }: Props) => {
+  const [display, setDisplay] = useState<Nexus_Display>(_display);
+  const [nextDisplay, setNext] = useState<Nexus_Display>(_display);
+
+  useEffect(() => {
+    const watch = () => {
+      api.get(`/display/${display.id}`)
+        .then(response => {
+          if (isEqual(response.data, display)) return;
+          setDisplay(response.data);
+        })
+    }
+
+    const intervalId = setInterval(() => {
+      watch();
+    }, 30 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   switch (display.template?.design) {
     case Templates.FullDisplay:
       return (
