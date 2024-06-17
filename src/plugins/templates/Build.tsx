@@ -25,7 +25,6 @@ interface Props {
 
 const BuildTemplate = ({ token, slideShowKey, display: _display }: Props) => {
   const [display, setDisplay] = useState<Nexus_Display>(_display);
-  const [nextDisplay, setNext] = useState<Nexus_Display>(_display);
 
   useEffect(() => {
     const watch = () => {
