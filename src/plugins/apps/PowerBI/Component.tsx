@@ -1,21 +1,9 @@
-import { useState, useEffect } from 'react';
-import { PowerBIEmbed } from 'powerbi-client-react';
-import { models, Report } from 'powerbi-client';
-import { tryRefreshUserPermissions, getPowerBIToken, refreshAADToken } from '@components/AzureUtils';
-import { msalInstance } from '@src/index';
-import './styles.css';
+import { useEffect, useRef, useState } from 'react';
+import { models, service, factories } from 'powerbi-client';
+import { getPowerBIToken } from '@src/components/AzureUtils';
 import { PowerBITypes } from './types';
 
-/**
- * Properties of the PowerBI component.
- * 
- * @param {string} reportID - The ID of the Power BI report.
- * @param {string} groupId - The ID of the Power BI group.
- * @param {string} customEmbedUrl - The URL of the Power BI custom embed is necessary.
- * @param {string} pageName - The name of the page in the Power BI report.
- * @param {string} accessToken - The access token provided on login request.
- */
-interface Props {
+type Props = {
   type: PowerBITypes;
   reportId: string,
   groupId: string,
@@ -23,78 +11,43 @@ interface Props {
   pageName?: string
 }
 
-/**
- * The Power BI component that displays pages and reports.
- * 
- * @param {interface} Props - The properties of the Power BI component. 
- * @returns {JSX.Element} - Returns the Power BI component.  
- */
-const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): JSX.Element => {
-  const [report, setReport] = useState<Report | null>(null);
+const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props) => {
   const [accessToken, setAccessToken] = useState("");
-  const [powerBIToken, setPowerBIToken] = useState("");
+  const [error, setError] = useState<any>();
+  const embedContainer = useRef(null);
 
   const embedUrl = !customEmbedUrl
     ? `https://app.powerbi.com/${type}Embed?${type}Id=${reportId}&groupId=${groupId}&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1GLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19`
     : customEmbedUrl;
 
-  /** Refreshes the access token.*/ 
-  const fetchAADToken = async () => {
+  const fetchPBIToken = async () => {
     try {
-        const token = await refreshAADToken();
-        if (token) setAccessToken(token);
+      const token = await getPowerBIToken();
+      if (token) setAccessToken(token);
     } catch (error) {
-        console.error('Error getting AAD token:', error);
+      console.error('Error getting PowerBI token:', error);
     }
   }
 
-  /**
-   * Handles the error of the Power BI report.
-   * 
-   * @param {any} event - The event object. 
-   * @returns {Promise<void>} - Returns an asyn void.
-   */
-  const errorHandler = async (event: any): Promise<void> => {
-    console.log(event);
-    if (event.detail?.message?.includes("401")) {
-      const account = msalInstance.getAllAccounts()[0];
-
-      if (!account) {
-          // If no account found, ask the user to log in
-          await msalInstance.loginPopup();
-      }
-      fetchAADToken();
-      tryRefreshUserPermissions(accessToken);
-    }
-    report?.reload();
-  };
-
-  // Gets the Power BI token on mount.
   useEffect(() => {
-    /** Refreshes the Power BI token.*/ 
-    const fetchPBIToken = async () => {
-      try {
-          const token = await getPowerBIToken();
-          if (token) setPowerBIToken(token);
-      } catch (error) {
-          console.error('Error getting PowerBI token:', error);
-      }
-    }
+    fetchPBIToken();
 
-    return () => {
-      fetchPBIToken();
-    };
+    const interval = setInterval(async () => {
+      await fetchPBIToken();
+    }, 30 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
-  return (
-    <PowerBIEmbed
-      embedConfig={{
-        type: type,
+  useEffect(() => {
+    if (embedContainer.current && accessToken !== "") {
+      const embedConfig = {
+        type,
         id: reportId,
-        embedUrl: embedUrl,
-        accessToken: powerBIToken,
+        embedUrl,
+        accessToken,
         tokenType: models.TokenType.Aad,
-        pageName: pageName,
+        pageName,
         settings: {
           panes: {
             filters: {
@@ -109,27 +62,51 @@ const PowerBI = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props): 
             displayOption: models.DisplayOption.FitToPage,
           },
         },
-      }}
-      eventHandlers={
-        new Map([
-          ['loaded', function () { 
-          }],
-          ['rendered', function () { 
-          }],
-          ['error', errorHandler],
-          ['visualClicked', () => {
-          }],
-          ['pageChanged', 
-            (event) => console.log(event)
-          ],
-        ])
       }
-      cssClassName={"reportClass"}
-      getEmbeddedComponent={(embeddedReport) => {
-        setReport(embeddedReport as Report);
-      }}
-    />
-  )
-}
 
-export default PowerBI;
+      const powerbiService = new service.Service(
+        factories.hpmFactory,
+        factories.wpmpFactory,
+        factories.routerFactory
+      );
+      try {
+        const report = powerbiService.embed(embedContainer.current, embedConfig);
+        report.on('loaded', () => {
+          console.log('Report loaded successfully');
+        });
+        report.on('rendered', () => {
+          console.log('Report rendered successfully');
+        });
+        report.on('error', (event) => {
+          const errorMsg = event.detail;
+          console.error('Power BI Error:', errorMsg);
+          setError(errorMsg);
+        });
+      } catch (err) {
+        console.error('Embedding Error:', err);
+        setError('An error occurred while embedding the report.');
+      }
+    }
+  }, [accessToken]);
+
+  return (
+    <div style={{ height: '100%', width: '100%' }}>
+      {error ? (
+        <div style={{ 
+          background: 'white',
+          color: 'red' 
+        }}>
+          <p>Error embedding Power BI report:</p>
+          <pre>{error}</pre>
+        </div>
+      ) : (
+        <div
+          ref={embedContainer}
+          style={{ height: '100%', width: '100%' }}
+        ></div>
+      )}
+    </div>
+  );
+};
+
+export default PowerBIEmbed;
