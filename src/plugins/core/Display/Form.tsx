@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, Input, FormHelperText, Select, useColorMode } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import "@styles/Admin.css"
-import { Form } from "react-bootstrap";
 import { useDepartments } from "@core/Department";
 import { useTemplateList } from "@templates";
 import { useDisplays, emptyDisplay, Nexus_Display } from '@core/Display';
@@ -28,7 +27,7 @@ export const DisplaysForm = ({ id, editMode, onChange }: Props) => {
 
 
   return (
-    <Form
+    <form
       className={colorMode === 'dark' ? "Admin-Form" : "Admin-Form-Light"}
     >
       <FormControl isDisabled={true}>
@@ -98,7 +97,7 @@ export const DisplaysForm = ({ id, editMode, onChange }: Props) => {
         </Select>
         <FormHelperText>The template to be used for this display.</FormHelperText>
       </FormControl>
-    </Form>
+    </form>
   )
 
 }

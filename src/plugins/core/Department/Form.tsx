@@ -1,7 +1,6 @@
 import { FormControl, FormLabel, Input, FormHelperText, useColorMode } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import "@styles/Admin.css"
-import { Form } from "react-bootstrap";
 import { useDepartments, Nexus_Department, emptyDepartment } from "@core/Department";
 
 interface Props {
@@ -28,8 +27,8 @@ export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element 
   }, [department, id]);
 
   return (
-    <Form 
-    className={colorMode === 'dark' ? "Admin-Form" : "Admin-Form-Light"}
+    <form
+      className={colorMode === 'dark' ? "Admin-Form" : "Admin-Form-Light"}
     >
       <FormControl isDisabled={true}>
         <FormLabel>Id</FormLabel>
@@ -65,6 +64,6 @@ export const DepartmentsForm = ({ id, editMode, onChange }: Props): JSX.Element 
         />
         <FormHelperText>The icon to be displayed next to the department.</FormHelperText>
       </FormControl>
-    </Form>
+    </form>
   )
 }
