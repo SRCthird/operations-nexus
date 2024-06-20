@@ -13,7 +13,6 @@ type Props = {
 
 const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props) => {
   const [accessToken, setAccessToken] = useState("");
-  const [error, setError] = useState<any>();
   const embedContainer = useRef(null);
 
   const embedUrl = !customEmbedUrl
@@ -70,7 +69,10 @@ const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Pro
         factories.routerFactory
       );
       try {
-        const report = powerbiService.embed(embedContainer.current, embedConfig);
+        const report = powerbiService.embed(
+          embedContainer.current,
+          embedConfig
+        );
         report.on('loaded', () => {
           console.log('Report loaded successfully');
         });
@@ -80,32 +82,18 @@ const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Pro
         report.on('error', (event) => {
           const errorMsg = event.detail;
           console.error('Power BI Error:', errorMsg);
-          setError(errorMsg);
         });
       } catch (err) {
         console.error('Embedding Error:', err);
-        setError('An error occurred while embedding the report.');
       }
     }
   }, [accessToken]);
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      {error ? (
-        <div style={{ 
-          background: 'white',
-          color: 'red' 
-        }}>
-          <p>Error embedding Power BI report:</p>
-          <pre>{error}</pre>
-        </div>
-      ) : (
-        <div
-          ref={embedContainer}
-          style={{ height: '100%', width: '100%' }}
-        ></div>
-      )}
-    </div>
+    <div
+      ref={embedContainer}
+      style={{ height: '100%', width: '100%' }}
+    ></div>
   );
 };
 
