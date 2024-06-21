@@ -3,6 +3,7 @@ import { models, service, factories } from 'powerbi-client';
 import { getPowerBIToken } from '@src/components/AzureUtils';
 import { PowerBITypes } from './types';
 import { Embed } from 'embed';
+import { powerBiConfig } from '@src/Config';
 
 type Props = {
   type: PowerBITypes;
@@ -11,14 +12,13 @@ type Props = {
   customEmbedUrl?: string,
   pageName?: string
 }
-
 const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props) => {
   const [accessToken, setAccessToken] = useState("");
   const [report, setReport] = useState<Embed>();
   const embedContainer = useRef<HTMLInputElement | null>(null);
 
   const embedUrl = !customEmbedUrl
-    ? `https://app.powerbi.com/${type}Embed?${type}Id=${reportId}&groupId=${groupId}&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1GLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19`
+    ? `https://app.powerbi.com/${type}Embed?${type}Id=${reportId}&groupId=${groupId}&config=${btoa(JSON.stringify(powerBiConfig))}`
     : customEmbedUrl;
 
   const fetchPBIToken = async () => {

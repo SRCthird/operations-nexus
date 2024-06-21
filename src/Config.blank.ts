@@ -24,6 +24,17 @@ export const authorityUrl: string = `https://login.microsoftonline.com/${tenantI
 export const powerBiApiUrl: string = "https://api.powerbi.com/";
 
 /**
+ * Power BI Config
+ */
+export const powerBiConfig = {
+  clusterUrl: "",
+  embedFeatures: {
+    modernEmbed: true,
+    usageMetricsVNext: true
+  }
+}
+
+/**
  * End point URL for Action Tracker Sharepoint API
  */
 export const sharePointApiUrl: string = "https://<!-- your company -->.sharepoint.com/sites/<!-- your site --> /_api/web/lists/GetByTitle('<!-- your list -->')";
