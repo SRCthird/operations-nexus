@@ -5,6 +5,7 @@ from time import sleep
 import win32com.client as win32
 import pythoncom
 import requests
+from dotenv import load_dotenv
 
 
 class Slides:
@@ -271,16 +272,21 @@ class Slides:
 
 
 if __name__ == '__main__':
+    load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+    host = os.getenv('HOST') or ""
+    if host == "":
+        raise EnvironmentError('Missing the HOST environment variable')
+
     def stop():
         try:
-            requests.get('http://localhost:5000')
+            requests.get(host)
             return True
         except Exception as e:
             print(e)
         return False
 
     def update_version(location: str):
-        url = f"http://localhost:5000/api/departments/{location}"
+        url = f"{host}/api/departments/{location}"
         response = requests.get(url)
         if response.status_code == 200:
             current_version = response.json().get('pptxVersion', 0)
@@ -307,7 +313,7 @@ if __name__ == '__main__':
             return []
 
     slides = Slides(
-        fetch_departments("http://localhost:5000/api/departments"),
+        fetch_departments(f"{host}/api/departments"),
         public="../dist/public",
         source="pptx",
         output="image"
