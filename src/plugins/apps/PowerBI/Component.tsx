@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { models, service, factories } from 'powerbi-client';
 import { getPowerBIToken } from '@src/components/AzureUtils';
 import { PowerBITypes } from './types';
+import { Embed } from 'embed';
 
 type Props = {
   type: PowerBITypes;
@@ -13,7 +14,8 @@ type Props = {
 
 const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Props) => {
   const [accessToken, setAccessToken] = useState("");
-  const embedContainer = useRef(null);
+  const [report, setReport] = useState<Embed>();
+  const embedContainer = useRef<HTMLInputElement | null>(null);
 
   const embedUrl = !customEmbedUrl
     ? `https://app.powerbi.com/${type}Embed?${type}Id=${reportId}&groupId=${groupId}&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1GLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19`
@@ -32,10 +34,12 @@ const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Pro
     fetchPBIToken();
 
     const interval = setInterval(async () => {
+      if (report !== undefined) await report.reload();
       await fetchPBIToken();
     }, 30 * 60 * 1000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -68,25 +72,30 @@ const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Pro
         factories.wpmpFactory,
         factories.routerFactory
       );
-      try {
-        const report = powerbiService.embed(
-          embedContainer.current,
-          embedConfig
-        );
-        report.on('loaded', () => {
-          console.log('Report loaded successfully');
-        });
-        report.on('rendered', () => {
-          console.log('Report rendered successfully');
-        });
-        report.on('error', (event) => {
-          const errorMsg = event.detail;
-          console.error('Power BI Error:', errorMsg);
-        });
-      } catch (err) {
-        console.error('Embedding Error:', err);
-      }
+      setReport(() => {
+        if (embedContainer.current === null) return;
+        try {
+          const _report = powerbiService.embed(
+            embedContainer.current,
+            embedConfig
+          )
+          _report.on('loaded', () => {
+            console.log('Report loaded successfully');
+          });
+          _report.on('rendered', () => {
+            console.log('Report rendered successfully');
+          });
+          _report.on('error', (event) => {
+            const errorMsg = event.detail;
+            console.error('Power BI Error:', errorMsg);
+          });
+          return _report;
+        } catch (err) {
+          console.error('Embedding Error:', err);
+        }
+      });
     }
+    // eslint-disable-next-line
   }, [accessToken]);
 
   return (
