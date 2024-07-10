@@ -2,6 +2,8 @@ import { Box, Spinner } from "@chakra-ui/react";
 import { App, Apps } from '@apps';
 import PowerBI, { PowerBITypes } from "./PowerBI";
 import Slideshow from "./PowerPoint";
+import { useEffect, useState } from "react";
+import { minutes } from "@src/utils/time";
 
 interface Props {
   app?: App;
@@ -9,6 +11,15 @@ interface Props {
 }
 
 const BuildApp = ({ app, slideShowKey }: Props) => {
+  const [ key, setKey ] = useState(0);
+  useEffect(() => {
+
+    const interval = setInterval(async () => {
+      setKey(prev => prev + 1)
+    }, minutes(30));
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (!app) {
     return (
@@ -20,6 +31,7 @@ const BuildApp = ({ app, slideShowKey }: Props) => {
   if (app.type === Apps.PowerBI) {
     return (
       <PowerBI
+        key={key}
         type={app.powerBI?.type || PowerBITypes.report}
         reportId={app.powerBI?.reportID!}
         groupId={app.powerBI?.groupID!}

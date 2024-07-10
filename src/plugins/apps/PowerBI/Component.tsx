@@ -21,25 +21,17 @@ const PowerBIEmbed = ({ type, reportId, groupId, customEmbedUrl, pageName }: Pro
     ? `https://app.powerbi.com/${type}Embed?${type}Id=${reportId}&groupId=${groupId}&config=${btoa(JSON.stringify(powerBiConfig))}`
     : customEmbedUrl;
 
-  const fetchPBIToken = async () => {
-    try {
-      const token = await getPowerBIToken();
-      if (token) setAccessToken(token);
-    } catch (error) {
-      console.error('Error getting PowerBI token:', error);
-    }
-  }
 
   useEffect(() => {
+    const fetchPBIToken = async () => {
+      try {
+        const token = await getPowerBIToken();
+        if (token) setAccessToken(token);
+      } catch (error) {
+        console.error('Error getting PowerBI token:', error);
+      }
+    }
     fetchPBIToken();
-
-    const interval = setInterval(async () => {
-      if (report !== undefined) await report.reload();
-      await fetchPBIToken();
-    }, 30 * 60 * 1000);
-
-    return () => clearInterval(interval);
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
