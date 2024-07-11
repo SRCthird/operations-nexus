@@ -6,6 +6,7 @@ import win32com.client as win32
 import pythoncom
 import requests
 from dotenv import load_dotenv
+from typing import Callable, Optional, List
 
 
 class Slides:
@@ -15,12 +16,20 @@ class Slides:
 
     def __init__(
         self,
-        locations: list = list(),
+        locations: Optional[List[str]] = None,
+        locations_function: Optional[Callable[[], List]] = None,
         public: str = "static",
         source: str = "pptx",
         output: str = "image"
     ):
-        self.locations: list[str] = locations
+        self.locations_function: Optional[Callable[[], List]] = locations_function 
+
+        if locations is None and locations_function is not None:
+            locations = locations_function()
+
+        assert locations is not None, "No loctions or locations_function given"
+        self.locations: List[str] = locations
+
         self.root = os.path.dirname(os.path.realpath(__file__))
         self.locationDict = {
             location: [] for location in self.locations}
@@ -89,7 +98,7 @@ class Slides:
 
         :rtype: void
         """
-        if len(self.locations) > 0:  # If locations are not empty
+        if len(self.locations) > 0:
             for location in self.locations:
                 self.locationDict[location] = self.getUpdate(location)
 
@@ -119,7 +128,7 @@ class Slides:
         """
         return self.locations
 
-    def setLocations(self, locations):
+    def setLocations(self, locations: List[str]):
         """
         Manually add all locations to the locations list.
 
@@ -180,7 +189,7 @@ class Slides:
             return result
         except Exception as e:
             print("An error occurred:", e)
-            os.mkdir(path)
+            os.makedirs(path, exist_ok=True)
         return []
 
     def convertToPNG(self, file: str, location: str):
@@ -253,7 +262,11 @@ class Slides:
             return 1
         return 0
 
-    def run(self, callStop=lambda: True, onChange=lambda: None):
+    def run(
+        self,
+        callStop: Callable[[], bool] = lambda: True,
+        onChange: Callable[[str], None] = lambda location: None
+    ):
         """
         Run the Slides class on loop until CTL+C is pressed.
 
@@ -262,6 +275,8 @@ class Slides:
         """
         try:
             while callStop():
+                if self.locations_function is not None:
+                    self.locations = self.locations_function()
                 for location in self.locations:
                     if self.check(location) == 1:
                         onChange(location)
@@ -285,7 +300,7 @@ if __name__ == '__main__':
             print(e)
         return False
 
-    def update_version(location: str):
+    def update_version(location: str) -> None:
         url = f"{host}/api/departments/{location}"
         response = requests.get(url)
         if response.status_code == 200:
@@ -302,18 +317,21 @@ if __name__ == '__main__':
             print("Failed to retrieve current version:",
                   response.status_code, response.text)
 
-    def fetch_departments(url):
+    def fetch_departments() -> List[str]:
+        url = f"{host}/api/departments"
         try:
             response = requests.get(url)
             response.raise_for_status()
 
-            return [department.get("department") for department in response.json()]
+            return [
+                department.get("department") for department in response.json()
+            ]
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
             return []
 
     slides = Slides(
-        fetch_departments(f"{host}/api/departments"),
+        locations_function=fetch_departments,
         public="../dist/public",
         source="pptx",
         output="image"
