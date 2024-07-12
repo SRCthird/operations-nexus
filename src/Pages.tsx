@@ -82,7 +82,7 @@ const Pages = ({ token }: Props): JSX.Element => {
         {(!admin.isLoading && admin.result) &&
           <Route
             path="/admin"
-            element={<Admin title="Test" />}
+            element={<Admin title="Admin Center" />}
           />
         }
         {!admin.isLoading &&
