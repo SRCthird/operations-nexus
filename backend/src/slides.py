@@ -301,21 +301,24 @@ if __name__ == '__main__':
         return False
 
     def update_version(location: str) -> None:
-        url = f"{host}/api/departments/{location}"
-        response = requests.get(url)
-        if response.status_code == 200:
-            current_version = response.json().get('pptxVersion', 0)
-            new_version = current_version + 1
-            patch_data = {"pptxVersion": new_version}
-            patch_response = requests.patch(url, json=patch_data)
-            if patch_response.status_code == 200:
-                print("Successfully updated version to:", new_version)
+        try:
+            url = f"{host}/api/departments/{location}"
+            response = requests.get(url)
+            if response.status_code == 200:
+                current_version = response.json().get('pptxVersion', 0)
+                new_version = current_version + 1
+                patch_data = {"pptxVersion": new_version}
+                patch_response = requests.patch(url, json=patch_data)
+                if patch_response.status_code == 200:
+                    print("Successfully updated version to:", new_version)
+                else:
+                    print("Failed to update version:",
+                          patch_response.status_code, patch_response.text)
             else:
-                print("Failed to update version:",
-                      patch_response.status_code, patch_response.text)
-        else:
-            print("Failed to retrieve current version:",
-                  response.status_code, response.text)
+                print("Failed to retrieve current version:",
+                      response.status_code, response.text)
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
 
     def fetch_departments() -> List[str]:
         url = f"{host}/api/departments"
@@ -337,6 +340,6 @@ if __name__ == '__main__':
         output="image"
     )
     slides.run(
-        callStop=stop,
+        # callStop=stop,
         onChange=update_version
     )
