@@ -51,6 +51,7 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
+                iFrame: true,
               }
             }
           }
@@ -71,6 +72,7 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
+                iFrame: true,
               }
             }
           }
@@ -99,6 +101,7 @@ export class DisplaysService {
               include: {
                 powerBI: true,
                 powerPoint: true,
+                iFrame: true,
               }
             }
           }

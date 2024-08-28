@@ -2,6 +2,7 @@ import { DeleteIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import { useState } from 'react';
 import { Dispatch, SetStateAction } from "react";
+import { emptyIFrame, IFrameForm } from "./IFrame";
 import { emptyPowerBI, PowerBIForm } from "./PowerBI";
 import { emptyPowerPoint, PowerPointForm } from "./PowerPoint";
 import { App, Apps } from './types';
@@ -40,6 +41,13 @@ export const AppForm = ({ app, onDelete, setApp, editMode }: Props) => {
         {app.type === Apps.PowerPoint &&
           <PowerPointForm
             app={app.powerPoint || emptyPowerPoint}
+            setApp={setApp}
+            editMode={editMode}
+          />
+        }
+        {app.type === Apps.IFrame &&
+          <IFrameForm
+            app={app.iFrame || emptyIFrame}
             setApp={setApp}
             editMode={editMode}
           />

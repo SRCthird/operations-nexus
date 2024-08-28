@@ -84,6 +84,7 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
+            iFrame: true,
           }
         }
       }
@@ -97,6 +98,7 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
+            iFrame: true,
           }
         }
       }
@@ -119,6 +121,7 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
+            iFrame: true,
           }
         }
       }
@@ -180,6 +183,7 @@ export class TemplateService {
           include: {
             powerBI: true,
             powerPoint: true,
+            iFrame: true,
           }
         }
       }

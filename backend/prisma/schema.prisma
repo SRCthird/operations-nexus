@@ -72,6 +72,7 @@ model Template {
 enum Apps {
   PowerBI
   PowerPoint
+  IFrame
 }
 
 model App {
@@ -81,6 +82,7 @@ model App {
 
   powerBI       App_PowerBI?       @relation("AppPowerBI")
   powerPoint    App_PowerPoint?    @relation("AppPowerPoint")
+  iFrame        App_IFrame?        @relation("AppIFrame")
 
   templates Template[]
 }
@@ -111,4 +113,11 @@ model App_PowerPoint {
 
   app         App              @relation("AppPowerPoint", fields: [id], references: [id])
   departments Nexus_Department @relation(fields: [department], references: [department])
+}
+
+model App_IFrame {
+  id  Int     @id
+  url String
+
+  app App @relation("AppIFrame", fields: [id], references: [id])
 }

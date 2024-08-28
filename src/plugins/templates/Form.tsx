@@ -15,6 +15,7 @@ export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
   const { colorMode } = useColorMode();
   const { apps: pbiApps } = useApps({ type: Apps.PowerBI });
   const { apps: pptApps } = useApps({ type: Apps.PowerPoint });
+  const { apps: iArameApps } = useApps({ type: Apps.IFrame });
 
   return (
     <Box 
@@ -108,6 +109,7 @@ export const TemplateForm = ({ template, editMode, setTemplate }: Props) => {
             }
             pptApps={pptApps}
             pbiApps={pbiApps}
+            iFrameApps={iArameApps}
           />
         );
       })}

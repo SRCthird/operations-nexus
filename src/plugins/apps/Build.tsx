@@ -4,6 +4,7 @@ import PowerBI, { PowerBITypes } from "./PowerBI";
 import Slideshow from "./PowerPoint";
 import { useEffect, useState } from "react";
 import { minutes } from "@src/utils/time";
+import IFrame from "./IFrame";
 
 interface Props {
   app?: App;
@@ -46,6 +47,14 @@ const BuildApp = ({ app, slideShowKey }: Props) => {
         key={slideShowKey}
         main={app.powerPoint?.main!}
         location={app.powerPoint?.department!}
+      />
+    )
+  }
+  if (app.type === Apps.IFrame) {
+    return (
+      <IFrame
+        title={app.name}
+        url={app.iFrame?.url!}
       />
     )
   }

@@ -12,9 +12,10 @@ interface Props {
   onChange: (value: App) => void;
   pptApps: { name: string }[];
   pbiApps: { name: string }[];
+  iFrameApps: { name: string }[];
 }
 
-export const AppFormControl = ({ app: _app, onDelete, editMode, onChange, pptApps, pbiApps }: Props) => {
+export const AppFormControl = ({ app: _app, onDelete, editMode, onChange, pptApps, pbiApps, iFrameApps }: Props) => {
   const [key, updateKey] = useState(0);
   const [app, setApp] = useState<App>(_app);
   const { app: newApp } = useApps({ name: app.name });
@@ -96,12 +97,26 @@ export const AppFormControl = ({ app: _app, onDelete, editMode, onChange, pptApp
                 )}
               </>
             )}
+            {app.type === Apps.IFrame && (
+              <>
+                {iFrameApps.map((iframe) => (
+                  <option key={iframe.name} value={iframe.name}>
+                    {iframe.name}
+                  </option>
+                ))}
+                {!iFrameApps.some((iframe) => iframe.name === app.name) && app.name && (
+                  <option key={app.name} value={app.name}>
+                    {app.name}
+                  </option>
+                )}
+              </>
+            )}
           </Select>
         </FormControl>
       ) : (
         <FormControl isDisabled={!editMode}>
           <FormLabel>App Name</FormLabel>
-          <Input 
+          <Input
             placeholder="App Name"
             value={app.name}
             onChange={(value) => {
