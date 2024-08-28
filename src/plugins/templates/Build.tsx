@@ -16,6 +16,7 @@ import Transition2x2_3on2 from "./components/Transition2x2_3on2";
 import { useEffect, useState } from "react";
 import api from "@src/utils/api";
 import { isEqual } from 'lodash';
+import FullScreen from "./components/FullScreen";
 
 interface Props {
   token: string;
@@ -173,6 +174,17 @@ const BuildTemplate = ({ token, slideShowKey, display: _display }: Props) => {
             <BuildApp
               app={display.template.apps[4]}
               slideShowKey={slideShowKey}
+            />
+          }
+        />
+      )
+    case Templates.FullScreen:
+      return (
+        <FullScreen
+          app={
+            <BuildApp
+            app={display.template.apps[0]}
+            slideShowKey={slideShowKey}
             />
           }
         />

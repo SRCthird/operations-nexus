@@ -49,6 +49,7 @@ enum Design {
   FullDisplay3
   FullDisplay4
   FullDisplay5
+  FullScreen
   FullWithCircle
   ThreeOnTwo
   OneByThree

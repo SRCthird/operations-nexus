@@ -1,0 +1,19 @@
+.full-screen {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
+.full-screen .Containers,
+.full-screen .Title {
+    background-color: rgba(128, 128, 128, 0.25); 
+    border: solid;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.full-screen .Containers {
+  overflow: hidden;
+  position: relative;
+  height: 80vh;
+}

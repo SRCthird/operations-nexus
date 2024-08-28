@@ -16,6 +16,7 @@ export enum Templates {
   FullDisplay3 = 'FullDisplay3',
   FullDisplay4 = 'FullDisplay4',
   FullDisplay5 = 'FullDisplay5',
+  FullScreen = 'FullScreen',
   FullWithCircle = 'FullWithCircle',
   ThreeOnTwo = 'ThreeOnTwo',
   OneByThree = 'OneByThree',
